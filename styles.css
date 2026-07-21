@@ -203,152 +203,158 @@ footer p {
   }
 }
 
-/* One A4 sheet: margins ~12 mm, compact type, no page breaks */
+/* One A4 sheet — overrides screen styles; use browser margins “None” / “Minimum” if still wide */
 @page {
   size: A4 portrait;
-  margin: 12mm;
+  margin: 8mm;
 }
 
 @media print {
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
   html,
   body {
-    width: auto;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
+    width: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     background: #fff !important;
-    color: #000;
-    font-size: 9.5pt;
-    line-height: 1.28;
+    color: #000 !important;
+    font-size: 8pt !important; /* ~80% of screen body */
+    line-height: 1.22 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
   a {
-    color: #000;
-    text-decoration: none;
+    color: #000 !important;
+    text-decoration: none !important;
   }
 
   .hero,
   main,
   footer {
-    max-width: none;
-    width: 100%;
-    margin: 0;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
   }
 
   .hero {
-    gap: 8mm;
-    align-items: center;
-    padding: 0 0 3mm;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 4mm !important;
+    padding: 0 0 1.5mm !important;
+    text-align: left !important;
   }
 
   .photo {
-    width: 28mm;
-    height: 28mm;
-    border: 0.4pt solid #bbb;
-    box-shadow: none;
+    width: 14mm !important;
+    height: 14mm !important;
+    flex-shrink: 0 !important;
+    border-radius: 0 !important;
+    border: 0.3pt solid #999 !important;
+    box-shadow: none !important;
+    object-fit: cover !important;
   }
 
   .brand {
-    font-size: 16pt;
-    margin-bottom: 1mm;
+    font-size: 12.5pt !important;
+    margin: 0 0 0.5mm !important;
   }
 
   .hero h1 {
-    margin: 0 0 2mm;
-    font-size: 10pt;
-    color: #333;
+    margin: 0 0 1mm !important;
+    font-size: 8pt !important;
+    color: #333 !important;
   }
 
   .lede {
-    margin: 0 0 2mm;
-    max-width: none;
+    margin: 0 0 1mm !important;
+    max-width: none !important;
   }
 
   .contacts {
-    font-size: 9pt;
-    color: #333;
+    font-size: 7.5pt !important;
+    color: #333 !important;
   }
 
   main {
-    padding: 0;
+    padding: 0 !important;
   }
 
   section {
-    margin-top: 3mm;
-    padding-top: 2.5mm;
-    border-top-color: #ccc;
+    margin-top: 1.5mm !important;
+    padding-top: 1.2mm !important;
+    border-top: 0.3pt solid #ccc !important;
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
   h2 {
-    margin: 0 0 1.5mm;
-    font-size: 11pt;
+    margin: 0 0 0.8mm !important;
+    font-size: 9pt !important;
   }
 
   .timeline {
-    gap: 2mm;
+    gap: 1mm !important;
   }
 
   .timeline li {
-    grid-template-columns: 22mm 1fr;
-    gap: 1mm 3mm;
+    display: grid !important;
+    grid-template-columns: 18mm 1fr !important;
+    gap: 0.5mm 2mm !important;
   }
 
   .when {
-    font-size: 8.5pt;
-    color: #444;
+    font-size: 7pt !important;
+    color: #444 !important;
   }
 
   .timeline p,
   .plain + .note,
   section > p {
-    margin: 0.5mm 0 0;
-    color: #333;
+    margin: 0.3mm 0 0 !important;
+    color: #333 !important;
   }
 
   .chips {
-    gap: 1.5mm;
+    gap: 0.8mm !important;
   }
 
   .chips li {
-    padding: 0.6mm 2mm;
-    font-size: 8.5pt;
+    padding: 0.3mm 1.2mm !important;
+    font-size: 7pt !important;
     background: #eee !important;
     color: #000 !important;
-    border: 0.3pt solid #ccc;
+    border: 0.3pt solid #ccc !important;
   }
 
   .plain {
-    padding-left: 4mm;
+    padding-left: 3mm !important;
   }
 
   .plain li {
-    margin: 0.3mm 0;
+    margin: 0.15mm 0 !important;
   }
 
   .note {
-    margin-top: 1.5mm;
-    font-size: 8.5pt;
-    color: #333;
+    margin-top: 0.8mm !important;
+    font-size: 7pt !important;
+    color: #333 !important;
   }
 
   footer {
-    padding: 0;
-    font-size: 8pt;
-    color: #555;
+    padding: 0 !important;
+    font-size: 6.5pt !important;
+    color: #555 !important;
   }
 
   footer p {
-    padding-top: 2.5mm;
-    border-top-color: #ccc;
-  }
-
-  /* Keep whole CV on page 1 */
-  body {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    padding-top: 1.2mm !important;
+    border-top: 0.3pt solid #ccc !important;
   }
 }
