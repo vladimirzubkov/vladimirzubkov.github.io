@@ -256,14 +256,17 @@ footer p {
 
   .photo {
     grid-column: 1 !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: 40mm !important; /* ~2× previous print size */
+    width: 40mm !important;
+    height: 40mm !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
     border-radius: 0 !important;
     border: 0.3pt solid #999 !important;
     box-shadow: none !important;
-    object-fit: contain !important;
-    object-position: top left !important;
+    background: none !important;
+    object-fit: cover !important; /* fill frame, no white gap inside border */
+    object-position: center top !important;
   }
 
   .hero-text {
