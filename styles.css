@@ -202,3 +202,153 @@ footer p {
     gap: 0.2rem;
   }
 }
+
+/* One A4 sheet: margins ~12 mm, compact type, no page breaks */
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: #fff !important;
+    color: #000;
+    font-size: 9.5pt;
+    line-height: 1.28;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .hero,
+  main,
+  footer {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+  }
+
+  .hero {
+    gap: 8mm;
+    align-items: center;
+    padding: 0 0 3mm;
+  }
+
+  .photo {
+    width: 28mm;
+    height: 28mm;
+    border: 0.4pt solid #bbb;
+    box-shadow: none;
+  }
+
+  .brand {
+    font-size: 16pt;
+    margin-bottom: 1mm;
+  }
+
+  .hero h1 {
+    margin: 0 0 2mm;
+    font-size: 10pt;
+    color: #333;
+  }
+
+  .lede {
+    margin: 0 0 2mm;
+    max-width: none;
+  }
+
+  .contacts {
+    font-size: 9pt;
+    color: #333;
+  }
+
+  main {
+    padding: 0;
+  }
+
+  section {
+    margin-top: 3mm;
+    padding-top: 2.5mm;
+    border-top-color: #ccc;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h2 {
+    margin: 0 0 1.5mm;
+    font-size: 11pt;
+  }
+
+  .timeline {
+    gap: 2mm;
+  }
+
+  .timeline li {
+    grid-template-columns: 22mm 1fr;
+    gap: 1mm 3mm;
+  }
+
+  .when {
+    font-size: 8.5pt;
+    color: #444;
+  }
+
+  .timeline p,
+  .plain + .note,
+  section > p {
+    margin: 0.5mm 0 0;
+    color: #333;
+  }
+
+  .chips {
+    gap: 1.5mm;
+  }
+
+  .chips li {
+    padding: 0.6mm 2mm;
+    font-size: 8.5pt;
+    background: #eee !important;
+    color: #000 !important;
+    border: 0.3pt solid #ccc;
+  }
+
+  .plain {
+    padding-left: 4mm;
+  }
+
+  .plain li {
+    margin: 0.3mm 0;
+  }
+
+  .note {
+    margin-top: 1.5mm;
+    font-size: 8.5pt;
+    color: #333;
+  }
+
+  footer {
+    padding: 0;
+    font-size: 8pt;
+    color: #555;
+  }
+
+  footer p {
+    padding-top: 2.5mm;
+    border-top-color: #ccc;
+  }
+
+  /* Keep whole CV on page 1 */
+  body {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
