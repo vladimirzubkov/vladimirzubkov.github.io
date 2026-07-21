@@ -206,7 +206,7 @@ footer p {
 /* One A4 sheet — Ctrl+F5 before print; browser margins: Minimum / None */
 @page {
   size: A4 portrait;
-  margin: 12mm;
+  margin: 14.4mm; /* 12mm + 20% */
 }
 
 @media print {
@@ -224,7 +224,7 @@ footer p {
     background: #fff !important;
     color: #000 !important;
     font-size: 14pt !important;
-    line-height: 1.28 !important;
+    line-height: 1.35 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -242,41 +242,48 @@ footer p {
     margin: 0 !important;
   }
 
+  /* Same rail as Education dates → name/bio line up with uni text (red line) */
   .hero {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: 8mm !important;
-    padding: 0 0 3mm !important;
+    display: grid !important;
+    grid-template-columns: 40mm 1fr !important;
+    column-gap: 3.6mm !important;
+    align-items: start !important;
+    gap: unset !important;
+    row-gap: 0 !important;
+    padding: 0 0 3.6mm !important;
     text-align: left !important;
   }
 
-  /* 14mm × 4/3 ≈ 18.7mm height; width from file aspect ratio */
   .photo {
-    width: auto !important;
-    height: 18.7mm !important;
-    max-width: 28mm !important;
-    flex-shrink: 0 !important;
+    grid-column: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 40mm !important; /* ~2× previous print size */
     border-radius: 0 !important;
     border: 0.3pt solid #999 !important;
     box-shadow: none !important;
     object-fit: contain !important;
-    object-position: top center !important;
+    object-position: top left !important;
+  }
+
+  .hero-text {
+    grid-column: 2 !important;
+    min-width: 0 !important;
   }
 
   .brand {
     font-size: 20pt !important;
-    margin: 0 0 1mm !important;
+    margin: 0 0 1.2mm !important;
   }
 
   .hero h1 {
-    margin: 0 0 2mm !important;
+    margin: 0 0 2.4mm !important;
     font-size: 14pt !important;
     color: #333 !important;
   }
 
   .lede {
-    margin: 0 0 2mm !important;
+    margin: 0 0 2.4mm !important;
     max-width: none !important;
   }
 
@@ -290,26 +297,28 @@ footer p {
   }
 
   section {
-    margin-top: 3mm !important;
-    padding-top: 2.5mm !important;
+    margin-top: 3.6mm !important;
+    padding-top: 3mm !important;
     border-top: 0.3pt solid #ccc !important;
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
   h2 {
-    margin: 0 0 1.5mm !important;
+    margin: 0 0 1.8mm !important;
     font-size: 15pt !important;
   }
 
   .timeline {
-    gap: 2mm !important;
+    gap: 2.4mm !important;
   }
 
   .timeline li {
     display: grid !important;
-    grid-template-columns: 28mm 1fr !important;
-    gap: 1mm 3mm !important;
+    grid-template-columns: 40mm 1fr !important;
+    column-gap: 3.6mm !important;
+    gap: unset !important;
+    row-gap: 0 !important;
   }
 
   .when {
@@ -320,16 +329,16 @@ footer p {
   .timeline p,
   .plain + .note,
   section > p {
-    margin: 0.5mm 0 0 !important;
+    margin: 0.6mm 0 0 !important;
     color: #333 !important;
   }
 
   .chips {
-    gap: 1.5mm !important;
+    gap: 1.8mm !important;
   }
 
   .chips li {
-    padding: 0.6mm 2mm !important;
+    padding: 0.7mm 2.4mm !important;
     font-size: 12pt !important;
     background: #eee !important;
     color: #000 !important;
@@ -337,15 +346,15 @@ footer p {
   }
 
   .plain {
-    padding-left: 4mm !important;
+    padding-left: 4.8mm !important;
   }
 
   .plain li {
-    margin: 0.3mm 0 !important;
+    margin: 0.36mm 0 !important;
   }
 
   .note {
-    margin-top: 1.5mm !important;
+    margin-top: 1.8mm !important;
     font-size: 12pt !important;
     color: #333 !important;
   }
@@ -357,7 +366,7 @@ footer p {
   }
 
   footer p {
-    padding-top: 2.5mm !important;
+    padding-top: 3mm !important;
     border-top: 0.3pt solid #ccc !important;
   }
 }
