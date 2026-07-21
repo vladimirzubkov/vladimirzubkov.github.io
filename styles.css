@@ -255,7 +255,7 @@ footer p {
   /* Natural aspect; only height set; border hugs the image box */
   .photo {
     width: auto !important;
-    height: 37.4mm !important;
+    height: 30mm !important;
     max-width: none !important;
     max-height: none !important;
     padding: 0 !important;
