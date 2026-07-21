@@ -242,35 +242,34 @@ footer p {
     margin: 0 !important;
   }
 
-  /* Same rail as Education dates → name/bio line up with uni text (red line) */
+  /* Gap is OUTSIDE the bordered photo */
   .hero {
-    display: grid !important;
-    grid-template-columns: 40mm 1fr !important;
-    column-gap: 3.6mm !important;
-    align-items: start !important;
-    gap: unset !important;
-    row-gap: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 3.6mm !important;
     padding: 0 0 3.6mm !important;
     text-align: left !important;
   }
 
+  /* Natural aspect; only height set; border hugs the image box */
   .photo {
-    grid-column: 1 !important;
-    width: 40mm !important;
-    height: 40mm !important;
+    width: auto !important;
+    height: 37.4mm !important;
+    max-width: none !important;
     max-height: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    display: block !important;
     border-radius: 0 !important;
     border: 0.3pt solid #999 !important;
     box-shadow: none !important;
-    background: none !important;
-    object-fit: cover !important; /* fill frame, no white gap inside border */
-    object-position: center top !important;
+    background: transparent !important;
+    object-fit: unset !important;
   }
 
   .hero-text {
-    grid-column: 2 !important;
+    flex: 1 1 auto !important;
     min-width: 0 !important;
   }
 
@@ -318,7 +317,7 @@ footer p {
 
   .timeline li {
     display: grid !important;
-    grid-template-columns: 40mm 1fr !important;
+    grid-template-columns: 28mm 1fr !important;
     column-gap: 3.6mm !important;
     gap: unset !important;
     row-gap: 0 !important;
