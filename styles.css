@@ -43,6 +43,93 @@ a:hover {
   color: #15565e;
 }
 
+.topbar {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar .back-link {
+  margin-right: auto;
+  font-size: 0.95rem;
+}
+
+.lang-switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 0.15rem;
+}
+
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+}
+
+.lang-switch button.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.lang-switch button:hover {
+  color: var(--ink);
+}
+
+.page-hero,
+.page-main {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.page-hero {
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.page-hero .eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.page-hero h1 {
+  margin: 0 0 0.85rem;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+.page-main {
+  padding-bottom: 3rem;
+}
+
+.project-link {
+  font-weight: 700;
+}
+
+.project-more {
+  display: inline-block;
+  margin-left: 0.35rem;
+  white-space: nowrap;
+}
+
 .hero {
   display: flex;
   gap: 1.75rem;
@@ -121,7 +208,7 @@ h2 {
 
 .timeline li {
   display: grid;
-  grid-template-columns: 7.5rem 1fr;
+  grid-template-columns: 8.5rem 1fr;
   gap: 0.75rem 1rem;
 }
 
@@ -129,6 +216,8 @@ h2 {
   color: var(--muted);
   font-size: 0.92rem;
   font-variant-numeric: tabular-nums;
+  white-space: pre-line;
+  line-height: 1.35;
 }
 
 .timeline p,
@@ -245,9 +334,17 @@ footer {
     text-decoration: none !important;
   }
 
+  .topbar,
+  .lang-switch,
+  .project-more {
+    display: none !important;
+  }
+
   .hero,
   main,
-  footer {
+  footer,
+  .page-hero,
+  .page-main {
     max-width: none !important;
     width: 100% !important;
     margin: 0 !important;
@@ -328,15 +425,17 @@ footer {
 
   .timeline li {
     display: grid !important;
-    grid-template-columns: 28mm 1fr !important;
+    grid-template-columns: 32mm 1fr !important;
     column-gap: 3.6mm !important;
     gap: unset !important;
     row-gap: 0 !important;
   }
 
   .when {
-    font-size: 12pt !important;
+    font-size: 10pt !important;
     color: #444 !important;
+    white-space: pre-line !important;
+    line-height: 1.25 !important;
   }
 
   .timeline p,

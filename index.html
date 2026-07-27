@@ -3,20 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vladimir Zubkov</title>
-  <meta name="description" content="Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.">
+  <title data-i18n="meta_title">Vladimir Zubkov</title>
+  <meta name="description" data-i18n="meta_desc" content="Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="topbar">
+    <nav class="lang-switch" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="cs" aria-pressed="false">CS</button>
+      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    </nav>
+  </div>
+
   <header class="hero">
     <img class="photo" src="Src/foto.jpg" width="760" height="908" alt="Vladimir Zubkov">
     <div class="hero-text">
       <p class="brand">Vladimir Zubkov</p>
-      <h1>Eternal student, developer, Prague</h1>
-      <p class="lede">
+      <h1 data-i18n="tagline">Eternal student, developer, Prague</h1>
+      <p class="lede" data-i18n="lede">
         I like building useful tools and learning from people around them.
         Background in finance and software engineering; currently shipping a Telegram trading bot and research code.
       </p>
@@ -25,34 +33,42 @@
         ·
         <a href="https://github.com/vladimirzubkov">GitHub</a>
         ·
-        Praha
+        <span data-i18n="location">Prague</span>
       </p>
     </div>
   </header>
 
   <main>
     <section>
-      <h2>Education</h2>
+      <h2 data-i18n="education">Education</h2>
       <ul class="timeline">
         <li>
-          <span class="when">2021 – 2023</span>
+          <span class="when" data-i18n="edu_cvut_when" data-i18n-html>09/2021 – 05/2023
+09/2024 – present</span>
           <div>
-            <strong>Czech Technical University in Prague (ČVUT)</strong>
-            <p>Software Engineering and Technology — bachelor studies (year 2). Java, Python, design of client and enterprise applications.</p>
+            <strong data-i18n="edu_cvut_school">Faculty of Electrical Engineering, CTU in Prague (ČVUT)</strong>
+            <p data-i18n="edu_cvut_detail">Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (ongoing).</p>
           </div>
         </li>
         <li>
-          <span class="when">1999 – 2005</span>
+          <span class="when" data-i18n="edu_upa_when">09/2021 – 06/2024</span>
           <div>
-            <strong>Belarus State Economic University</strong>
-            <p>Finance and banking — university degree.</p>
+            <strong data-i18n="edu_upa_school">Jan Perner Transport Faculty, University of Pardubice (UPa)</strong>
+            <p data-i18n="edu_upa_detail">Transport Technology and Management, specialization Logistics.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when" data-i18n="edu_bseu_when">1999 – 2005</span>
+          <div>
+            <strong data-i18n="edu_bseu_school">Belarus State Economic University</strong>
+            <p data-i18n="edu_bseu_detail">Finance and banking — university degree.</p>
           </div>
         </li>
       </ul>
     </section>
 
     <section>
-      <h2>Skills</h2>
+      <h2 data-i18n="skills">Skills</h2>
       <ul class="chips">
         <li>Java</li>
         <li>Python</li>
@@ -64,57 +80,44 @@
     </section>
 
     <section>
-      <h2>Languages</h2>
+      <h2 data-i18n="languages">Languages</h2>
       <ul class="plain">
-        <li><strong>Czech</strong> — advanced (C1 CCE, ÚJOP, 2021)</li>
-        <li><strong>English</strong> — advanced</li>
-        <li><strong>Russian</strong> — native</li>
+        <li data-i18n="lang_cs">Czech — advanced (C1 CCE, ÚJOP, 2021)</li>
+        <li data-i18n="lang_en">English — advanced</li>
+        <li data-i18n="lang_ru">Russian — native</li>
       </ul>
-      <p class="note">Permanent residence in the Czech Republic.</p>
+      <p class="note" data-i18n="residence">Permanent residence in the Czech Republic.</p>
     </section>
 
     <section>
-      <h2>Selected work</h2>
+      <h2 data-i18n="work">Selected work</h2>
       <p>
-        <strong>Econophysica</strong> — Telegram bot for MOEX quotes, portfolios and research signals.
-        Live metrics and survey summaries will appear here later.
+        <a class="project-link" href="projects/econophysica.html"><strong>Econophysica</strong></a>
+        — <span data-i18n="work_bot">Telegram bot for MOEX quotes, portfolios, alerts and research signals. Built on Cloudflare Workers.</span>
+        <a class="project-more" href="projects/econophysica.html" data-i18n="work_bot_link">Project page →</a>
       </p>
       <p>
-        Open-source and other projects:
+        <span data-i18n="work_oss">Open-source and other projects:</span>
         <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>
       </p>
     </section>
 
     <section>
-      <h2>Interests</h2>
-      <p>Running, swimming, tennis.</p>
+      <h2 data-i18n="interests">Interests</h2>
+      <p data-i18n="interests_body">Running, swimming, tennis.</p>
     </section>
   </main>
 
   <footer>
     <p class="footer-line">
       <span class="footer-left">
-        Hosted on GitHub Pages ·
+        <span data-i18n="hosted">Hosted on GitHub Pages ·</span>
         <a href="https://vladimirzubkov.github.io/">vladimirzubkov.github.io/</a>
       </span>
-      <span class="footer-right">Updated <time id="updated" datetime=""></time></span>
+      <span class="footer-right"><span data-i18n="updated">Updated</span> <time id="updated" datetime=""></time></span>
     </p>
   </footer>
-  <script>
-    (function () {
-      var el = document.getElementById("updated");
-      if (!el) return;
-      var d = new Date(document.lastModified);
-      if (Number.isNaN(d.getTime())) d = new Date();
-      el.setAttribute("datetime", d.toISOString());
-      el.textContent = d.toLocaleString("cs-CZ", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    })();
-  </script>
+  <script src="i18n.js"></script>
+  <script>CVI18n.init();</script>
 </body>
 </html>
