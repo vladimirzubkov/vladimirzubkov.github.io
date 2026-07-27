@@ -34,6 +34,7 @@
       work_bot:
         "Telegram bot for MOEX quotes, portfolios, alerts and research signals. Built on Cloudflare Workers.",
       work_bot_link: "Project page →",
+      work_name: "<s>Econophysica</s> Astrologia",
       work_oss: "Open-source and other projects:",
       interests: "Interests",
       interests_body: "Running, swimming, tennis.",
@@ -41,9 +42,10 @@
       updated: "Updated",
       lang_label: "Language",
       back_home: "← Back to CV",
-      project_title: "Econophysica — Telegram bot for MOEX",
+      project_eyebrow: "<s>Econophysica</s> Astrologia",
+      project_title: "<s>Econophysica</s> Astrologia — Telegram bot for MOEX",
       project_meta:
-        "Econophysica: Telegram trading bot for Moscow Exchange — architecture and features.",
+        "Astrologia (formerly Econophysica): Telegram trading bot for Moscow Exchange — architecture and features.",
       project_lead:
         "A production Telegram bot that helps users follow Moscow Exchange (MOEX) instruments: live quotes and charts, price alerts, portfolios, paper-style research signals, and daily digests.",
       project_arch: "Architecture",
@@ -58,6 +60,8 @@
       project_stack: "Stack",
       project_stack_body:
         "Cloudflare Workers · KV · R2 · Telegram Bot API · MOEX ISS · Python research pipeline (offline fits → JSON in KV).",
+      project_manual: "User manual (PDF)",
+      project_manual_hint: "English PDF for this language.",
       project_note:
         "Source for the bot is private. This page describes the public product shape only — no secrets, tokens or user data.",
       project_try: "Live worker health:",
@@ -92,6 +96,7 @@
       work_bot:
         "Telegram bot pro kotace MOEX, portfolia, alerty a výzkumné signály. Běží na Cloudflare Workers.",
       work_bot_link: "Stránka projektu →",
+      work_name: "<s>Econophysica</s> Astrologia",
       work_oss: "Open-source a další projekty:",
       interests: "Zájmy",
       interests_body: "Běh, plavání, tenis.",
@@ -99,9 +104,10 @@
       updated: "Aktualizováno",
       lang_label: "Jazyk",
       back_home: "← Zpět na CV",
-      project_title: "Econophysica — Telegram bot pro MOEX",
+      project_eyebrow: "<s>Econophysica</s> Astrologia",
+      project_title: "<s>Econophysica</s> Astrologia — Telegram bot pro MOEX",
       project_meta:
-        "Econophysica: Telegram bot pro Moskevskou burzu — architektura a funkce.",
+        "Astrologia (dříve Econophysica): Telegram bot pro Moskevskou burzu — architektura a funkce.",
       project_lead:
         "Produkční Telegram bot pro sledování nástrojů Moskevské burzy (MOEX): kotace a grafy, cenové alerty, portfolia, výzkumné signály a denní digest.",
       project_arch: "Architektura",
@@ -116,6 +122,8 @@
       project_stack: "Stack",
       project_stack_body:
         "Cloudflare Workers · KV · R2 · Telegram Bot API · MOEX ISS · Python research pipeline (offline fity → JSON v KV).",
+      project_manual: "Uživatelský manuál (PDF)",
+      project_manual_hint: "Anglická verze PDF (pro češtinu).",
       project_note:
         "Zdrojový kód bota je soukromý. Tato stránka popisuje jen veřejnou podobu produktu — bez secretů, tokenů a uživatelských dat.",
       project_try: "Health live workeru:",
@@ -150,6 +158,7 @@
       work_bot:
         "Telegram-бот для котировок MOEX, портфелей, алертов и исследовательских сигналов. На Cloudflare Workers.",
       work_bot_link: "Страница проекта →",
+      work_name: "<s>Econophysica</s> Astrologia",
       work_oss: "Open-source и другие проекты:",
       interests: "Интересы",
       interests_body: "Бег, плавание, теннис.",
@@ -157,9 +166,10 @@
       updated: "Обновлено",
       lang_label: "Язык",
       back_home: "← Назад к резюме",
-      project_title: "Econophysica — Telegram-бот для MOEX",
+      project_eyebrow: "<s>Econophysica</s> Astrologia",
+      project_title: "<s>Econophysica</s> Astrologia — Telegram-бот для MOEX",
       project_meta:
-        "Econophysica: Telegram-бот для Московской биржи — архитектура и возможности.",
+        "Astrologia (бывш. Econophysica): Telegram-бот для Московской биржи — архитектура и возможности.",
       project_lead:
         "Продакшен Telegram-бот для инструментов Московской биржи (MOEX): котировки и графики, ценовые алерты, портфели, исследовательские сигналы и дайджесты.",
       project_arch: "Архитектура",
@@ -174,6 +184,8 @@
       project_stack: "Стек",
       project_stack_body:
         "Cloudflare Workers · KV · R2 · Telegram Bot API · MOEX ISS · Python research pipeline (офлайн fit → JSON в KV).",
+      project_manual: "Руководство пользователя (PDF)",
+      project_manual_hint: "Русская версия PDF.",
       project_note:
         "Исходники бота закрыты. Здесь только публичное описание продукта — без секретов, токенов и данных пользователей.",
       project_try: "Health живого worker:",
@@ -201,6 +213,10 @@
     return pack[key] != null ? pack[key] : strings.en[key] || key;
   }
 
+  function stripHtml(s) {
+    return String(s).replace(/<[^>]+>/g, "");
+  }
+
   function apply(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = "en";
     document.documentElement.lang = lang === "cs" ? "cs" : lang === "ru" ? "ru" : "en";
@@ -214,9 +230,9 @@
       if (el.hasAttribute("data-i18n-html")) {
         el.innerHTML = val.replace(/\n/g, "<br>");
       } else if (el.tagName === "META") {
-        el.setAttribute("content", val);
+        el.setAttribute("content", stripHtml(val));
       } else if (el.tagName === "TITLE") {
-        el.textContent = val;
+        el.textContent = stripHtml(val);
       } else {
         el.textContent = val;
       }
@@ -230,6 +246,13 @@
       var active = btn.getAttribute("data-lang") === lang;
       btn.classList.toggle("is-active", active);
       btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+
+    // RU → Russian PDF; EN/CS → English PDF. Links only on product page.
+    var manualHref =
+      lang === "ru" ? "../manuals/Astrologia.pdf" : "../manuals/Astrologia_en.pdf";
+    document.querySelectorAll("[data-manual-pdf]").forEach(function (el) {
+      el.setAttribute("href", manualHref);
     });
 
     var stamp = document.getElementById("updated");
