@@ -250,9 +250,12 @@
 
     // RU → Russian PDF; EN/CS → English PDF. Links only on product page.
     var manualHref =
-      lang === "ru" ? "../manuals/Astrologia.pdf" : "../manuals/Astrologia_en.pdf";
+      lang === "ru"
+        ? "../manuals/Bot+Astrologya_ru.pdf"
+        : "../manuals/Bot+Astrologya_en.pdf";
     document.querySelectorAll("[data-manual-pdf]").forEach(function (el) {
       el.setAttribute("href", manualHref);
+      el.textContent = lang === "ru" ? "Bot+Astrologya_ru.pdf" : "Bot+Astrologya_en.pdf";
     });
 
     var stamp = document.getElementById("updated");

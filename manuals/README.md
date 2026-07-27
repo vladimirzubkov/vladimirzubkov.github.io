@@ -1,8 +1,8 @@
 # Manuals (latest only)
 
-Stable names overwritten by `scripts\publish_astrologia_github.bat` from the Sasha repo:
+Stable names overwritten by `scripts\publish_astrologia_github.bat`:
 
-- `Astrologia.pdf` — Russian
-- `Astrologia_en.pdf` — English
+- `Bot+Astrologya_ru.pdf` — Russian
+- `Bot+Astrologya_en.pdf` — English
 
-Do not add dated copies here. Link to these files only from `projects/econophysica.html`.
+Do not add dated copies here. Link only from `projects/econophysica.html`.
