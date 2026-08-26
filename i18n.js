@@ -10,7 +10,7 @@
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
       tagline: "Eternal student, software developer, Prague",
       lede:
-        "Learning to build useful tools. Background in finance and software development.",
+        "Learning to build useful tools. Background in finance, logistics and software engineering.",
       location: "Prague",
       education: "Education",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – present",
@@ -72,7 +72,7 @@
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
       tagline: "Věčný student, vývojář softwaru, Praha",
       lede:
-        "Učím se vytvářet užitečné nástroje. Zázemí ve financích a vývoji softwaru.",
+        "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
       location: "Praha",
       education: "Vzdělání",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – dosud",
@@ -134,7 +134,7 @@
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
       tagline: "Вечный студент, разработчик ПО, Прага",
       lede:
-        "Учусь делать полезные инструменты. Бэкграунд в финансах и разработке программного обеспечения.",
+        "Учусь делать полезные инструменты. Бэкграунд в финансах, логистике и разработке программного обеспечения.",
       location: "Прага",
       education: "Образование",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – н.в.",
