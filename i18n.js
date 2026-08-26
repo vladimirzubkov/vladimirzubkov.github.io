@@ -8,7 +8,8 @@
       meta_title: "Vladimir Zubkov",
       meta_desc:
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
-      tagline: "Eternal student, software developer located in Prague",
+      tagline:
+        "Lifelong Learner, Software Developer located in Prague (Permanent Residence)",
       lede:
         "Learning to build useful tools. Background in finance, logistics and software engineering.",
       contacts_line:
@@ -76,7 +77,8 @@
       meta_title: "Vladimir Zubkov",
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
-      tagline: "Věčný student, vývojář softwaru se sídlem v Praze",
+      tagline:
+        "Celoživotní student, vývojář softwaru se sídlem v Praze (trvalý pobyt)",
       lede:
         "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
       contacts_line:
@@ -144,7 +146,8 @@
       meta_title: "Владимир Зубков",
       meta_desc:
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
-      tagline: "Вечный студент, разработчик ПО, базирующийся в Праге",
+      tagline:
+        "Вечный ученик, разработчик ПО, базирующийся в Праге (ПМЖ)",
       lede:
         "Учусь делать полезные инструменты. Бэкграунд в финансах, логистике и разработке программного обеспечения.",
       contacts_line:
