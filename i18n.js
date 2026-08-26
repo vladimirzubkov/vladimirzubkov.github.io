@@ -10,7 +10,7 @@
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
       tagline: "Eternal student, developer, Prague",
       lede:
-        "I like building useful tools and learning from people around them. Background in finance and software engineering; currently shipping a Telegram trading bot and research code.",
+        "I like building useful tools and learning from people around them. Background in finance and software engineering.",
       location: "Prague",
       education: "Education",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – present",
@@ -72,7 +72,7 @@
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
       tagline: "Věčný student, vývojář, Praha",
       lede:
-        "Rád vytvářím užitečné nástroje a učím se od lidí kolem nich. Zázemí ve financích a softwarovém inženýrství; právě provozuji Telegram bota pro obchodování a výzkumný kód.",
+        "Rád vytvářím užitečné nástroje a učím se od lidí kolem nich. Zázemí ve financích a softwarovém inženýrství.",
       location: "Praha",
       education: "Vzdělání",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – dosud",
@@ -134,7 +134,7 @@
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
       tagline: "Вечный студент, разработчик, Прага",
       lede:
-        "Люблю делать полезные инструменты и учиться у людей вокруг них. Бэкграунд в финансах и software engineering; сейчас веду Telegram-бота для торговли и исследовательский код.",
+        "Люблю делать полезные инструменты и учиться у людей вокруг них. Бэкграунд в финансах и software engineering.",
       location: "Прага",
       education: "Образование",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – н.в.",
@@ -274,9 +274,29 @@
     }
   }
 
+  function loadVisitorCount() {
+    var el = document.getElementById("visitor-count");
+    if (!el) return;
+    var url =
+      "https://api.countapi.xyz/hit/vladimirzubkov.github.io/visits";
+    fetch(url)
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (data) {
+        if (data && typeof data.value === "number") {
+          el.textContent = String(data.value);
+        }
+      })
+      .catch(function () {
+        el.textContent = "—";
+      });
+  }
+
   function init() {
     var lang = detectLang();
     apply(lang);
+    loadVisitorCount();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {
       btn.addEventListener("click", function () {
         apply(btn.getAttribute("data-lang"));

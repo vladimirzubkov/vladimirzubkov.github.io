@@ -259,6 +259,14 @@ section > p {
   font-size: 0.95rem;
 }
 
+.is-hidden {
+  display: none !important;
+}
+
+.visitor-count {
+  font-variant-numeric: tabular-nums;
+}
+
 footer {
   max-width: 44rem;
   margin: 0 auto;
