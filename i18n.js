@@ -11,16 +11,21 @@
       tagline: "Eternal student, software developer, Prague",
       lede:
         "Learning to build useful tools. Background in finance, logistics and software engineering.",
+      contact_label: "Contact:",
+      location_label: "Location:",
+      github_label: "GitHub:",
       location: "Prague",
       education: "Education",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – present",
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
-        "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (ongoing).",
+        "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (running).",
       edu_upa_when: "09/2021 – 06/2024",
       edu_upa_school: "Jan Perner Transport Faculty, University of Pardubice (UPa)",
       edu_upa_detail:
         "Transport Technology and Management, specialization Logistics.",
+      edu_upa_thesis:
+        'Bachelor thesis: &quot;Means of optimizing the system of city logistics by the example of the city of Prague&quot; (<a href="https://theses.cz/id/5otu4x/">thesis</a>, 58 pages) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">text on the topic</a>, 210 pages)',
       edu_bseu_when: "1999 – 2005",
       edu_bseu_school: "Belarus State Economic University",
       edu_bseu_detail: "Finance and banking — university degree.",
@@ -73,6 +78,9 @@
       tagline: "Věčný student, vývojář softwaru, Praha",
       lede:
         "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
+      contact_label: "Kontakt:",
+      location_label: "Místo:",
+      github_label: "GitHub:",
       location: "Praha",
       education: "Vzdělání",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – dosud",
@@ -83,6 +91,8 @@
       edu_upa_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPa)",
       edu_upa_detail:
         "Technologie a management v dopravě, specializace Logistika.",
+      edu_upa_thesis:
+        'Bakalářská práce: &quot;Prostředky optimalizace systému městské logistiky na příkladu města Praha&quot; (<a href="https://theses.cz/id/5otu4x/">práce</a>, 58 stran) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">texty na téma</a>, 210 stran)',
       edu_bseu_when: "1999 – 2005",
       edu_bseu_school: "Běloruská státní ekonomická univerzita",
       edu_bseu_detail: "Finance a bankovnictví — vysokoškolské vzdělání.",
@@ -135,6 +145,9 @@
       tagline: "Вечный студент, разработчик ПО, Прага",
       lede:
         "Учусь делать полезные инструменты. Бэкграунд в финансах, логистике и разработке программного обеспечения.",
+      contact_label: "Контакт:",
+      location_label: "Город:",
+      github_label: "GitHub:",
       location: "Прага",
       education: "Образование",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – н.в.",
@@ -145,6 +158,8 @@
       edu_upa_school: "Транспортный факультет Яна Пернера, Университет Пардубице (UPa)",
       edu_upa_detail:
         "Технологии и менеджмент на транспорте, специализация Логистика.",
+      edu_upa_thesis:
+        'Бакалаврская работа: &quot;Средства оптимизации системы городской логистики на примере города Прага&quot; (<a href="https://theses.cz/id/5otu4x/">работа</a>, 58 стр.) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">тексты по теме</a>, 210 стр.)',
       edu_bseu_when: "1999 – 2005",
       edu_bseu_school: "Белорусский государственный экономический университет",
       edu_bseu_detail: "Финансы и банковское дело — высшее образование.",

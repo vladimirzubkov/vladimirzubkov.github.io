@@ -179,6 +179,14 @@ a:hover {
   font-size: 0.95rem;
 }
 
+.contacts + .contacts {
+  margin-top: 0.35rem;
+}
+
+.thesis-note {
+  font-style: italic;
+}
+
 main {
   max-width: 44rem;
   margin: 0 auto;
