@@ -14,9 +14,9 @@
       contacts_line:
         'Contact: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Education <em class="accent-running">(currently running)</em>',
-      edu_cvut_when_primary: "09/2021 – 05/2023",
-      edu_cvut_when_secondary:
+      edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">present</em>',
+      edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
         "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (running).",
@@ -82,9 +82,9 @@
       contacts_line:
         'Kontakt: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Vzdělání <em class="accent-running">(aktuálně probíhá)</em>',
-      edu_cvut_when_primary: "09/2021 – 05/2023",
-      edu_cvut_when_secondary:
+      edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">dosud</em>',
+      edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_detail:
         "Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium (probíhá).",
@@ -150,9 +150,9 @@
       contacts_line:
         'Контакт: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Образование <em class="accent-running">(сейчас учусь)</em>',
-      edu_cvut_when_primary: "09/2021 – 05/2023",
-      edu_cvut_when_secondary:
+      edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">н.в.</em>',
+      edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Факультет электротехники, ČVUT в Праге",
       edu_cvut_detail:
         "Программная инженерия и технологии, специализация Enterprise-системы. Бакалавриат (учится).",
