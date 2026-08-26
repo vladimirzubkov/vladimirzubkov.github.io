@@ -426,7 +426,7 @@ footer {
   section {
     margin-top: 3.6mm !important;
     padding-top: 3mm !important;
-    border-top: 0.3pt solid #ccc !important;
+    border-top: none !important;
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -502,7 +502,7 @@ footer {
     flex-wrap: nowrap !important;
     margin: 0 !important;
     padding-top: 3mm !important;
-    border-top: 0.3pt solid #ccc !important;
+    border-top: none !important;
   }
 
   .footer-right {
