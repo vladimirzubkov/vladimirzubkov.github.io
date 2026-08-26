@@ -8,9 +8,9 @@
       meta_title: "Vladimir Zubkov",
       meta_desc:
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
-      tagline: "Eternal student, developer, Prague",
+      tagline: "Eternal student, software developer, Prague",
       lede:
-        "I like building useful tools and learning from people around them. Background in finance and software engineering.",
+        "Learning to build useful tools. Background in finance and software development.",
       location: "Prague",
       education: "Education",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – present",
@@ -70,9 +70,9 @@
       meta_title: "Vladimir Zubkov",
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
-      tagline: "Věčný student, vývojář, Praha",
+      tagline: "Věčný student, vývojář softwaru, Praha",
       lede:
-        "Rád vytvářím užitečné nástroje a učím se od lidí kolem nich. Zázemí ve financích a softwarovém inženýrství.",
+        "Učím se vytvářet užitečné nástroje. Zázemí ve financích a vývoji softwaru.",
       location: "Praha",
       education: "Vzdělání",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – dosud",
@@ -132,9 +132,9 @@
       meta_title: "Владимир Зубков",
       meta_desc:
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
-      tagline: "Вечный студент, разработчик, Прага",
+      tagline: "Вечный студент, разработчик ПО, Прага",
       lede:
-        "Люблю делать полезные инструменты и учиться у людей вокруг них. Бэкграунд в финансах и software engineering.",
+        "Учусь делать полезные инструменты. Бэкграунд в финансах и разработке программного обеспечения.",
       location: "Прага",
       education: "Образование",
       edu_cvut_when: "09/2021 – 05/2023\n09/2024 – н.в.",
@@ -277,9 +277,7 @@
   function loadVisitorCount() {
     var el = document.getElementById("visitor-count");
     if (!el) return;
-    var url =
-      "https://api.countapi.xyz/hit/vladimirzubkov.github.io/visits";
-    fetch(url)
+    fetch("https://badge-visitor-count.vercel.app/api/hit/vladimirzubkov.github.io")
       .then(function (r) {
         return r.json();
       })
