@@ -35,7 +35,6 @@
       lang_cs: "Czech — advanced (C1 CCE, ÚJOP, 2021)",
       lang_en: "English — advanced",
       lang_ru: "Russian — native",
-      residence: "Permanent residence in the Czech Republic.",
       work: "Selected work",
       work_bot:
         "Telegram bot for MOEX quotes, portfolios, alerts and research signals. Built on Cloudflare Workers.",
@@ -44,7 +43,6 @@
       work_oss: "Open-source and other projects:",
       interests: "Interests",
       interests_body: "Running, swimming, tennis.",
-      other: "Other",
       hosted: "Hosted on GitHub Pages ·",
       updated: "Updated",
       lang_label: "Language",
@@ -104,7 +102,6 @@
       lang_cs: "Čeština — pokročilá (C1 CCE, ÚJOP, 2021)",
       lang_en: "Angličtina — pokročilá",
       lang_ru: "Ruština — mateřský jazyk",
-      residence: "Trvalý pobyt v České republice.",
       work: "Vybraná práce",
       work_bot:
         "Telegram bot pro kotace MOEX, portfolia, alerty a výzkumné signály. Běží na Cloudflare Workers.",
@@ -113,7 +110,6 @@
       work_oss: "Open-source a další projekty:",
       interests: "Zájmy",
       interests_body: "Běh, plavání, tenis.",
-      other: "Ostatní",
       hosted: "Hostováno na GitHub Pages ·",
       updated: "Aktualizováno",
       lang_label: "Jazyk",
@@ -173,7 +169,6 @@
       lang_cs: "Чешский — продвинутый (C1 CCE, ÚJOP, 2021)",
       lang_en: "Английский — продвинутый",
       lang_ru: "Русский — родной",
-      residence: "ПМЖ в Чехии.",
       work: "Избранные проекты",
       work_bot:
         "Telegram-бот для котировок MOEX, портфелей, алертов и исследовательских сигналов. На Cloudflare Workers.",
@@ -182,7 +177,6 @@
       work_oss: "Open-source и другие проекты:",
       interests: "Интересы",
       interests_body: "Бег, плавание, теннис.",
-      other: "Прочее",
       hosted: "Хостинг GitHub Pages ·",
       updated: "Обновлено",
       lang_label: "Язык",
