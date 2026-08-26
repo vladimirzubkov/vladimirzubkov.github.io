@@ -352,7 +352,8 @@ footer {
 
   .topbar,
   .lang-switch,
-  .project-more {
+  .project-more,
+  .footer-left {
     display: none !important;
   }
 
