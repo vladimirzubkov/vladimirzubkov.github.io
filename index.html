@@ -13,12 +13,19 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="topbar">
-    <nav class="lang-switch" aria-label="Language">
-      <button type="button" data-lang="en" aria-pressed="true">EN</button>
-      <button type="button" data-lang="cs" aria-pressed="false">CS</button>
-      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
-    </nav>
+  <div class="topbar is-sticky">
+    <div class="topbar-tools">
+      <nav class="lang-switch" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="cs" aria-pressed="false">CS</button>
+        <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+      </nav>
+      <label class="sticky-toggle">
+        <input type="checkbox" id="sticky-lang" checked>
+        <span class="sticky-toggle-ui" aria-hidden="true"></span>
+        <span class="visually-hidden" data-i18n="sticky_label">Pin language bar while scrolling</span>
+      </label>
+    </div>
   </div>
 
   <header class="hero">

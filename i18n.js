@@ -1,6 +1,7 @@
 /** EN / CS / RU for CV + project pages. Default: English. */
 (function (global) {
   var STORAGE_KEY = "cv-lang";
+  var STICKY_KEY = "cv-sticky-lang";
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -46,6 +47,7 @@
       hosted: "Hosted on GitHub Pages ·",
       updated: "Updated",
       lang_label: "Language",
+      sticky_label: "Pin language bar while scrolling",
       back_home: "← Back to CV",
       project_eyebrow: "<s>Econophysica</s> Astrologia",
       project_title: "<s>Econophysica</s> Astrologia — Telegram bot for MOEX",
@@ -113,6 +115,7 @@
       hosted: "Hostováno na GitHub Pages ·",
       updated: "Aktualizováno",
       lang_label: "Jazyk",
+      sticky_label: "Připnout jazykový panel při rolování",
       back_home: "← Zpět na CV",
       project_eyebrow: "<s>Econophysica</s> Astrologia",
       project_title: "<s>Econophysica</s> Astrologia — Telegram bot pro MOEX",
@@ -180,6 +183,7 @@
       hosted: "Хостинг GitHub Pages ·",
       updated: "Обновлено",
       lang_label: "Язык",
+      sticky_label: "Закрепить панель языка при прокрутке",
       back_home: "← Назад к резюме",
       project_eyebrow: "<s>Econophysica</s> Astrologia",
       project_title: "<s>Econophysica</s> Astrologia — Telegram-бот для MOEX",
@@ -306,10 +310,38 @@
       });
   }
 
+  function initStickyTopbar() {
+    var topbar = document.querySelector(".topbar");
+    var toggle = document.getElementById("sticky-lang");
+    if (!topbar || !toggle) return;
+
+    var enabled = true;
+    try {
+      var saved = localStorage.getItem(STICKY_KEY);
+      if (saved === "0") enabled = false;
+    } catch (e) {}
+
+    function setSticky(on) {
+      topbar.classList.toggle("is-sticky", on);
+      toggle.checked = on;
+    }
+
+    setSticky(enabled);
+
+    toggle.addEventListener("change", function () {
+      var on = toggle.checked;
+      setSticky(on);
+      try {
+        localStorage.setItem(STICKY_KEY, on ? "1" : "0");
+      } catch (e) {}
+    });
+  }
+
   function init() {
     var lang = detectLang();
     apply(lang);
     loadVisitorCount();
+    initStickyTopbar();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {
       btn.addEventListener("click", function () {
         apply(btn.getAttribute("data-lang"));
