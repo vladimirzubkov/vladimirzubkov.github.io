@@ -8,15 +8,15 @@
       meta_title: "Vladimir Zubkov",
       meta_desc:
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
-      tagline: "Eternal student, software developer, Prague",
+      tagline: "Eternal student, software developer located in Prague",
       lede:
         "Learning to build useful tools. Background in finance, logistics and software engineering.",
-      contact_label: "Contact:",
-      location_label: "Location:",
-      github_label: "GitHub:",
-      location: "Prague",
-      education: "Education",
-      edu_cvut_when: "09/2021 – 05/2023\n09/2024 – present",
+      contacts_line:
+        'Contact: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
+      education: 'Education <em class="accent-running">(currently running)</em>',
+      edu_cvut_when_primary: "09/2021 – 05/2023",
+      edu_cvut_when_secondary:
+        '09/2024 – <em class="accent-running">present</em>',
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
         "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (running).",
@@ -76,15 +76,15 @@
       meta_title: "Vladimir Zubkov",
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
-      tagline: "Věčný student, vývojář softwaru, Praha",
+      tagline: "Věčný student, vývojář softwaru se sídlem v Praze",
       lede:
         "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
-      contact_label: "Kontakt:",
-      location_label: "Místo:",
-      github_label: "GitHub:",
-      location: "Praha",
-      education: "Vzdělání",
-      edu_cvut_when: "09/2021 – 05/2023\n09/2024 – dosud",
+      contacts_line:
+        'Kontakt: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
+      education: 'Vzdělání <em class="accent-running">(aktuálně probíhá)</em>',
+      edu_cvut_when_primary: "09/2021 – 05/2023",
+      edu_cvut_when_secondary:
+        '09/2024 – <em class="accent-running">dosud</em>',
       edu_cvut_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_detail:
         "Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium (probíhá).",
@@ -144,15 +144,15 @@
       meta_title: "Владимир Зубков",
       meta_desc:
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
-      tagline: "Вечный студент, разработчик ПО, Прага",
+      tagline: "Вечный студент, разработчик ПО, базирующийся в Праге",
       lede:
         "Учусь делать полезные инструменты. Бэкграунд в финансах, логистике и разработке программного обеспечения.",
-      contact_label: "Контакт:",
-      location_label: "Город:",
-      github_label: "GitHub:",
-      location: "Прага",
-      education: "Образование",
-      edu_cvut_when: "09/2021 – 05/2023\n09/2024 – н.в.",
+      contacts_line:
+        'Контакт: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
+      education: 'Образование <em class="accent-running">(сейчас учусь)</em>',
+      edu_cvut_when_primary: "09/2021 – 05/2023",
+      edu_cvut_when_secondary:
+        '09/2024 – <em class="accent-running">н.в.</em>',
       edu_cvut_school: "Факультет электротехники, ČVUT в Праге",
       edu_cvut_detail:
         "Программная инженерия и технологии, специализация Enterprise-системы. Бакалавриат (учится).",
