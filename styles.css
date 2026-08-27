@@ -63,7 +63,16 @@ a:hover {
   background: rgba(243, 246, 250, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+.topbar.is-sticky.is-stuck {
   border-bottom: 1px solid var(--line);
+}
+
+.topbar-sentinel {
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
 }
 
 .topbar-tools {

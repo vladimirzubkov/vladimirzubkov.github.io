@@ -313,17 +313,36 @@
   function initStickyTopbar() {
     var topbar = document.querySelector(".topbar");
     var toggle = document.getElementById("sticky-lang");
+    var sentinel = document.querySelector(".topbar-sentinel");
     if (!topbar || !toggle) return;
 
+    var stickObserver = null;
     var enabled = true;
     try {
       var saved = localStorage.getItem(STICKY_KEY);
       if (saved === "0") enabled = false;
     } catch (e) {}
 
+    function bindStuckObserver() {
+      if (stickObserver) {
+        stickObserver.disconnect();
+        stickObserver = null;
+      }
+      topbar.classList.remove("is-stuck");
+      if (!topbar.classList.contains("is-sticky") || !sentinel) return;
+      stickObserver = new IntersectionObserver(
+        function (entries) {
+          topbar.classList.toggle("is-stuck", !entries[0].isIntersecting);
+        },
+        { threshold: 0 }
+      );
+      stickObserver.observe(sentinel);
+    }
+
     function setSticky(on) {
       topbar.classList.toggle("is-sticky", on);
       toggle.checked = on;
+      bindStuckObserver();
     }
 
     setSticky(enabled);
