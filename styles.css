@@ -47,26 +47,26 @@ a:hover {
 .topbar {
   max-width: 44rem;
   margin: 0 auto;
-  padding: 1rem 1.25rem 0;
+  padding: 0.65rem 1.25rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid transparent;
 }
 
 .topbar.is-sticky {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding-top: 0.65rem;
-  padding-bottom: 0.65rem;
   background: rgba(243, 246, 250, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .topbar.is-sticky.is-stuck {
-  border-bottom: 1px solid var(--line);
+  border-bottom-color: var(--line);
 }
 
 .topbar-sentinel {
