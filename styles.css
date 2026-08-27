@@ -9,6 +9,13 @@
   --running: #f97316;
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --content-max: 44rem;
+  --lede-max: 36rem;
+}
+
+html[lang="ru"] {
+  --content-max: 48.4rem;
+  --lede-max: 39.6rem;
 }
 
 *,
@@ -45,7 +52,7 @@ a:hover {
 }
 
 .topbar {
-  max-width: 44rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 0.65rem 1.25rem;
   display: flex;
@@ -203,7 +210,7 @@ a:hover {
 
 .page-hero,
 .page-main {
-  max-width: 44rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 1.25rem;
 }
@@ -248,7 +255,7 @@ a:hover {
   display: flex;
   gap: 1.75rem;
   align-items: flex-start;
-  max-width: 44rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 3.5rem 1.25rem 2rem;
 }
@@ -284,7 +291,7 @@ a:hover {
 
 .lede {
   margin: 0 0 1rem;
-  max-width: 36rem;
+  max-width: var(--lede-max);
 }
 
 .contacts {
@@ -345,7 +352,7 @@ a:hover {
 }
 
 main {
-  max-width: 44rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 1.25rem 3rem;
 }
@@ -419,7 +426,7 @@ section > p {
 }
 
 footer {
-  max-width: 44rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 1.25rem 2.5rem;
   color: var(--muted);
