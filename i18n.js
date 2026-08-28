@@ -2,6 +2,10 @@
 (function (global) {
   var STORAGE_KEY = "cv-lang";
   var STICKY_KEY = "cv-sticky-lang";
+  var LANG_FADE_OUT_MS = 120;
+  var LANG_WIDTH_MS = 250;
+  var currentLang = null;
+  var langSwitching = false;
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -240,6 +244,10 @@
     return String(s).replace(/<[^>]+>/g, "");
   }
 
+  function prefersReducedMotion() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
   function apply(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = "en";
     document.documentElement.lang = lang === "cs" ? "cs" : lang === "ru" ? "ru" : "en";
@@ -295,6 +303,38 @@
         minute: "2-digit",
       });
     }
+
+    currentLang = lang;
+  }
+
+  function switchLang(lang) {
+    if (SUPPORTED.indexOf(lang) === -1) lang = "en";
+    if (lang === currentLang || langSwitching) return;
+
+    if (prefersReducedMotion()) {
+      apply(lang);
+      return;
+    }
+
+    langSwitching = true;
+    var root = document.documentElement;
+    var main = document.querySelector("main");
+    if (main) main.setAttribute("aria-busy", "true");
+
+    root.classList.add("is-lang-fading");
+
+    window.setTimeout(function () {
+      apply(lang);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          root.classList.remove("is-lang-fading");
+          window.setTimeout(function () {
+            if (main) main.removeAttribute("aria-busy");
+            langSwitching = false;
+          }, LANG_WIDTH_MS);
+        });
+      });
+    }, LANG_FADE_OUT_MS);
   }
 
   function loadVisitorCount() {
@@ -367,10 +407,10 @@
     initStickyTopbar();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        apply(btn.getAttribute("data-lang"));
+        switchLang(btn.getAttribute("data-lang"));
       });
     });
   }
 
-  global.CVI18n = { init: init, apply: apply, detectLang: detectLang, t: t };
+  global.CVI18n = { init: init, apply: apply, switchLang: switchLang, detectLang: detectLang, t: t };
 })(window);

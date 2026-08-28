@@ -1,3 +1,15 @@
+@property --content-max {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 44rem;
+}
+
+@property --lede-max {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 36rem;
+}
+
 :root {
   --ink: #1a2332;
   --muted: #5a6578;
@@ -11,6 +23,9 @@
   --sans: "Source Sans 3", "Segoe UI", sans-serif;
   --content-max: 44rem;
   --lede-max: 36rem;
+  --lang-fade-out: 0.12s;
+  --lang-fade-in: 0.18s;
+  --lang-width: 0.25s;
 }
 
 html[lang="ru"] {
@@ -26,6 +41,38 @@ html[lang="ru"] {
 
 html {
   scroll-behavior: smooth;
+  transition:
+    --content-max var(--lang-width) ease,
+    --lede-max var(--lang-width) ease;
+}
+
+.lang-fade-target {
+  transition: opacity var(--lang-fade-in) ease;
+}
+
+html.is-lang-fading .lang-fade-target {
+  opacity: 0;
+  transition: opacity var(--lang-fade-out) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    transition: none;
+  }
+
+  .topbar,
+  .hero,
+  main,
+  footer,
+  .page-hero,
+  .page-main,
+  .lede {
+    transition: none;
+  }
+
+  .lang-fade-target {
+    transition: none !important;
+  }
 }
 
 body {
@@ -61,6 +108,7 @@ a:hover {
   gap: 1rem;
   box-sizing: border-box;
   border-bottom: 1px solid transparent;
+  transition: max-width var(--lang-width) ease;
 }
 
 .topbar.is-sticky {
@@ -213,6 +261,7 @@ a:hover {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 1.25rem;
+  transition: max-width var(--lang-width) ease;
 }
 
 .page-hero {
@@ -258,6 +307,7 @@ a:hover {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 3.5rem 1.25rem 2rem;
+  transition: max-width var(--lang-width) ease;
 }
 
 .photo {
@@ -292,6 +342,7 @@ a:hover {
 .lede {
   margin: 0 0 1rem;
   max-width: var(--lede-max);
+  transition: max-width var(--lang-width) ease;
 }
 
 .contacts {
@@ -355,6 +406,7 @@ main {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 1.25rem 3rem;
+  transition: max-width var(--lang-width) ease;
 }
 
 section {
@@ -431,6 +483,7 @@ footer {
   padding: 0 1.25rem 2.5rem;
   color: var(--muted);
   font-size: 0.88rem;
+  transition: max-width var(--lang-width) ease;
 }
 
 .footer-line {
@@ -486,6 +539,15 @@ footer {
 }
 
 @media print {
+  html {
+    transition: none !important;
+  }
+
+  .lang-fade-target {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
   * {
     box-shadow: none !important;
     text-shadow: none !important;
@@ -525,6 +587,7 @@ footer {
     max-width: none !important;
     width: 100% !important;
     margin: 0 !important;
+    transition: none !important;
   }
 
   /* Gap is OUTSIDE the bordered photo */
