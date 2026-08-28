@@ -85,7 +85,7 @@
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
       tagline:
-        "Celoživotní student, vývojář softwaru se sídlem v Praze (trvalý pobyt)",
+        "Celoživotní student, vývojář softwaru se sídlem v Praze (trvalý\u00a0pobyt)",
       lede:
         "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
       contacts_line:
