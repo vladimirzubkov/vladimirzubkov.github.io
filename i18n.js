@@ -3,6 +3,7 @@
   var STORAGE_KEY = "cv-lang";
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 120;
+  var LANG_FADE_IN_MS = 250;
   var LANG_WIDTH_MS = 250;
   var BRAND_FX_MS = 500;
   var currentLang = null;
@@ -306,6 +307,18 @@
     if (nextHeight > 0) pageBody.style.height = nextHeight + "px";
   }
 
+  function finalizePageBodyHeight(pageBody) {
+    if (!pageBody) return;
+    syncPageBodyHeight(pageBody);
+    pageBody.classList.add("page-body--no-transition");
+    pageBody.classList.remove("page-body--anim-height");
+    pageBody.style.height = "auto";
+    pageBody.style.overflow = "";
+    requestAnimationFrame(function () {
+      pageBody.classList.remove("page-body--no-transition");
+    });
+  }
+
   function animatePageBodyHeightDuringWidth(pageBody) {
     if (!pageBody) return Promise.resolve();
     syncPageBodyHeight(pageBody);
@@ -316,15 +329,15 @@
       resizeObserver.observe(child);
     });
     resizeObserver.observe(pageBody);
-    return waitMs(LANG_WIDTH_MS + 80).then(function () {
+    return waitMs(LANG_WIDTH_MS + 60).then(function () {
       resizeObserver.disconnect();
-      syncPageBodyHeight(pageBody);
-      return waitMs(80);
-    }).then(function () {
-      pageBody.classList.remove("page-body--anim-height");
-      pageBody.style.height = "";
-      pageBody.style.overflow = "";
+      finalizePageBodyHeight(pageBody);
     });
+  }
+
+  function beginLangFadeIn(root) {
+    root.classList.remove("is-lang-fading");
+    return waitMs(LANG_FADE_IN_MS);
   }
 
   function animateBrandCrossfade(brandEl, toLang) {
@@ -435,18 +448,25 @@
         var brand = getBrandEl();
         if (brand) brandPromise = animateBrandCrossfade(brand, lang);
       }
-      var heightPromise = animatePageBodyHeightDuringWidth(heightLock);
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          root.classList.remove("is-lang-fading");
-          window.setTimeout(function () {
-            Promise.all([brandPromise, heightPromise]).then(function () {
-              if (main) main.removeAttribute("aria-busy");
-              langSwitching = false;
+      var readyPromise = widthChanges
+        ? animatePageBodyHeightDuringWidth(heightLock)
+        : new Promise(function (resolve) {
+            requestAnimationFrame(function () {
+              requestAnimationFrame(resolve);
             });
-          }, LANG_WIDTH_MS);
+          });
+
+      readyPromise
+        .then(function () {
+          return beginLangFadeIn(root);
+        })
+        .then(function () {
+          return brandPromise;
+        })
+        .then(function () {
+          if (main) main.removeAttribute("aria-busy");
+          langSwitching = false;
         });
-      });
     }, LANG_FADE_OUT_MS);
   }
 

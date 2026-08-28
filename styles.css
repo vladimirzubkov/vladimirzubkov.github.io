@@ -82,7 +82,8 @@ html.is-lang-fading .lang-fade-target {
     transition: none !important;
   }
 
-  .page-body--anim-height {
+  .page-body--anim-height,
+  .page-body--no-transition {
     transition: none !important;
   }
 }
@@ -316,10 +317,9 @@ a:hover {
   display: flex;
   gap: 1.75rem;
   align-items: flex-start;
-  max-width: var(--content-max);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 3.5rem 1.25rem 0;
-  transition: max-width var(--lang-width) ease;
 }
 
 .page-body {
@@ -331,6 +331,10 @@ a:hover {
 .page-body--anim-height {
   overflow: hidden;
   transition: height var(--lang-width) ease;
+}
+
+.page-body--no-transition {
+  transition: none !important;
 }
 
 .hero-copy {
