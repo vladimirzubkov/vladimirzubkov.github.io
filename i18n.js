@@ -257,19 +257,24 @@
     return document.querySelector("[data-brand]");
   }
 
-  function clearBrandFxClasses(brandEl) {
-    brandEl.classList.remove("brand--morph-out", "brand--morph-in", "brand--morph-run");
+  function brandScriptForLang(lang) {
+    return lang === "ru" ? "cyrillic" : "latin";
   }
 
-  function setBrandBaseText(brandEl, text) {
-    var base = brandEl.querySelector(".brand-text--base");
-    if (base) base.textContent = text;
-    brandEl.setAttribute("aria-label", text);
-  }
-
-  function finalizeBrand(brandEl, text) {
-    setBrandBaseText(brandEl, text);
-    clearBrandFxClasses(brandEl);
+  function syncBrandState(brandEl, lang, instant) {
+    var script = brandScriptForLang(lang);
+    var latin = brandEl.querySelector(".brand-text--latin");
+    var cyrillic = brandEl.querySelector(".brand-text--cyrillic");
+    if (instant) brandEl.classList.add("brand--no-transition");
+    brandEl.setAttribute("data-brand-active", script);
+    brandEl.setAttribute("aria-label", brandNameForLang(lang));
+    if (latin) latin.setAttribute("aria-hidden", script === "cyrillic" ? "true" : "false");
+    if (cyrillic) cyrillic.setAttribute("aria-hidden", script === "latin" ? "true" : "false");
+    if (instant) {
+      requestAnimationFrame(function () {
+        brandEl.classList.remove("brand--no-transition");
+      });
+    }
   }
 
   function waitMs(ms) {
@@ -278,27 +283,16 @@
     });
   }
 
-  function animateBrandMorph(brandEl, nextText) {
-    clearBrandFxClasses(brandEl);
-    brandEl.classList.add("brand--morph-out");
-    return waitMs(BRAND_FX_MS / 2).then(function () {
-      setBrandBaseText(brandEl, nextText);
-      brandEl.classList.remove("brand--morph-out");
-      brandEl.classList.add("brand--morph-in");
-      return waitMs(20);
-    }).then(function () {
-      brandEl.classList.add("brand--morph-run");
-      return waitMs(BRAND_FX_MS / 2);
-    }).then(function () {
-      finalizeBrand(brandEl, nextText);
-    });
+  function animateBrandCrossfade(brandEl, toLang) {
+    syncBrandState(brandEl, toLang, false);
+    return waitMs(BRAND_FX_MS);
   }
 
   function animateBrandIfNeeded(fromLang, toLang) {
     if (!brandNameChanges(fromLang, toLang)) return Promise.resolve();
     var brand = getBrandEl();
     if (!brand) return Promise.resolve();
-    return animateBrandMorph(brand, brandNameForLang(toLang));
+    return animateBrandCrossfade(brand, toLang);
   }
 
   function prefersReducedMotion() {
@@ -329,7 +323,7 @@
 
     if (!opts.skipBrand) {
       var brand = getBrandEl();
-      if (brand) finalizeBrand(brand, brandNameForLang(lang));
+      if (brand) syncBrandState(brand, lang, true);
     }
 
     document.querySelectorAll("[data-i18n-title]").forEach(function (el) {
@@ -380,7 +374,7 @@
     if (prefersReducedMotion()) {
       if (brandChanges) {
         var brandReduced = getBrandEl();
-        if (brandReduced) finalizeBrand(brandReduced, brandNameForLang(lang));
+        if (brandReduced) syncBrandState(brandReduced, lang, true);
         apply(lang, { skipBrand: true });
       } else {
         apply(lang);
@@ -478,7 +472,7 @@
   function init() {
     var lang = detectLang();
     var brand = getBrandEl();
-    if (brand) finalizeBrand(brand, brandNameForLang(lang));
+    if (brand) syncBrandState(brand, lang, true);
     apply(lang, { skipBrand: !!brand });
     loadVisitorCount();
     initStickyTopbar();

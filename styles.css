@@ -76,7 +76,8 @@ html.is-lang-fading .lang-fade-target {
   }
 
   .brand,
-  .brand-text--base {
+  .brand-text--latin,
+  .brand-text--cyrillic {
     transition: none !important;
   }
 }
@@ -334,6 +335,7 @@ a:hover {
 }
 
 .brand {
+  display: grid;
   position: relative;
   overflow: hidden;
   margin: 0 0 0.35rem;
@@ -346,39 +348,29 @@ a:hover {
 }
 
 .brand-text {
+  grid-area: 1 / 1;
   display: block;
   margin: 0;
   white-space: nowrap;
   font: inherit;
   letter-spacing: inherit;
   line-height: inherit;
+  transition: opacity var(--brand-fx-duration) ease;
 }
 
-.brand-text--base {
-  position: relative;
-  z-index: 1;
-  transition:
-    opacity calc(var(--brand-fx-duration) / 2) ease,
-    filter calc(var(--brand-fx-duration) / 2) ease,
-    transform calc(var(--brand-fx-duration) / 2) ease;
-}
-
-.brand.brand--morph-out .brand-text--base {
+.brand-text--latin,
+.brand-text--cyrillic {
   opacity: 0;
-  filter: blur(4px);
-  transform: scaleX(0.92);
 }
 
-.brand.brand--morph-in .brand-text--base {
-  opacity: 0;
-  filter: blur(4px);
-  transform: scaleX(0.92);
-}
-
-.brand.brand--morph-in.brand--morph-run .brand-text--base {
+.brand[data-brand-active="latin"] .brand-text--latin,
+.brand[data-brand-active="cyrillic"] .brand-text--cyrillic {
   opacity: 1;
-  filter: blur(0);
-  transform: scaleX(1);
+}
+
+.brand--no-transition .brand-text--latin,
+.brand--no-transition .brand-text--cyrillic {
+  transition: none !important;
 }
 
 .hero h1 {
