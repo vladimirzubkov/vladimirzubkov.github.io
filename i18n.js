@@ -29,7 +29,7 @@
         "Transport Technology and Management, specialization Logistics.",
       edu_upa_thesis:
         'Bachelor thesis: &quot;Means of optimizing the system of city logistics by the example of the city of Prague&quot; (<a href="https://theses.cz/id/5otu4x/">thesis</a>, 58 pages) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">text on the topic</a>, 210 pages)',
-      edu_bseu_when: "1999 – 2005",
+      edu_bseu_when: "1999–2005",
       edu_bseu_school: "Belarus State Economic University",
       edu_bseu_detail: "Finance and banking — university degree.",
       skills: "Skills",
@@ -98,7 +98,7 @@
         "Technologie a management v dopravě, specializace Logistika.",
       edu_upa_thesis:
         'Bakalářská práce: &quot;Prostředky optimalizace systému městské logistiky na příkladu města Praha&quot; (<a href="https://theses.cz/id/5otu4x/">práce</a>, 58 stran) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">texty na téma</a>, 210 stran)',
-      edu_bseu_when: "1999 – 2005",
+      edu_bseu_when: "1999–2005",
       edu_bseu_school: "Běloruská státní ekonomická univerzita",
       edu_bseu_detail: "Finance a bankovnictví — vysokoškolské vzdělání.",
       skills: "Dovednosti",
@@ -156,19 +156,19 @@
         'Контакт: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Образование <em class="accent-running">(сейчас учусь)</em>',
       edu_cvut_when_primary:
-        '09/2024 – <em class="accent-running">н.в.</em>',
-      edu_cvut_when_secondary: "09/2021 – 05/2023",
+        '09/2024 — <em class="accent-running">н.в.</em>',
+      edu_cvut_when_secondary: "09/2021 — 05/2023",
       edu_cvut_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_detail:
         "Программная инженерия и технологии, специализация «Корпоративные информационные системы». Бакалавриат (в процессе обучения, оканчиваю).",
-      edu_upa_when: "09/2021 – 06/2024",
+      edu_upa_when: "09/2021 — 06/2024",
       edu_upa_school: "Транспортный факультет Яна Пернера, Университет Пардубице (UPCE)",
       edu_upa_detail:
         "Технологии и менеджмент на транспорте, специализация Логистика.",
       edu_upa_thesis:
         'Бакалаврская работа: &quot;Средства оптимизации системы городской логистики на примере города Прага&quot; (<a href="https://theses.cz/id/5otu4x/">работа</a>, 58 стр.) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">тексты по теме</a>, 210 стр.)',
-      edu_bseu_when: "1999 – 2005",
+      edu_bseu_when: "1999—2005",
       edu_bseu_school: "Белорусский государственный экономический университет",
       edu_bseu_detail: "Финансы и банковское дело — высшее образование.",
       skills: "Навыки",
