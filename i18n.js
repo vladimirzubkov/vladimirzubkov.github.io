@@ -4,7 +4,7 @@
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 120;
   var LANG_WIDTH_MS = 250;
-  var BRAND_FX_MS = 350;
+  var BRAND_FX_MS = 500;
   var currentLang = null;
   var langSwitching = false;
   var SUPPORTED = ["en", "cs", "ru"];
@@ -35,7 +35,7 @@
       edu_upce_thesis:
         'Bachelor thesis: &quot;Means of optimizing the system of city logistics by the example of the city of Prague&quot; (<a href="https://theses.cz/id/5otu4x/">thesis</a>, 58 pages) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">text on the topic</a>, 210 pages)',
       edu_bseu_when: "1999–2005",
-      edu_bseu_school: "Belarus State Economic University (BSEU)",
+      edu_bseu_school: "Belarus State Economic University",
       edu_bseu_detail: "Finance and banking — university degree.",
       skills: "Skills",
       languages: "Languages",
@@ -104,7 +104,7 @@
       edu_upce_thesis:
         'Bakalářská práce: &quot;Prostředky optimalizace systému městské logistiky na příkladu města Praha&quot; (<a href="https://theses.cz/id/5otu4x/">práce</a>, 58 stran) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">texty na téma</a>, 210 stran)',
       edu_bseu_when: "1999–2005",
-      edu_bseu_school: "Běloruská státní ekonomická univerzita (BSEU)",
+      edu_bseu_school: "Běloruská státní ekonomická univerzita",
       edu_bseu_detail: "Finance a bankovnictví — vysokoškolské vzdělání.",
       skills: "Dovednosti",
       languages: "Jazyky",
@@ -174,7 +174,7 @@
       edu_upce_thesis:
         'Бакалаврская работа: &quot;Средства оптимизации системы городской логистики на примере города Прага&quot; (<a href="https://theses.cz/id/5otu4x/">работа</a>, 58 стр.) (<a href="https://github.com/vladimirzubkov/upce-bc/blob/main/Texty_na_t%C3%A9ma_m%C4%9Bstsk%C3%A9_logistiky.pdf">тексты по теме</a>, 210 стр.)',
       edu_bseu_when: "1999—2005",
-      edu_bseu_school: "Белорусский государственный экономический университет (БГЭУ)",
+      edu_bseu_school: "Белорусский государственный экономический университет",
       edu_bseu_detail: "Финансы и банковское дело — высшее образование.",
       skills: "Навыки",
       languages: "Языки",
