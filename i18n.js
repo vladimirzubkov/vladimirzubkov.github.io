@@ -7,6 +7,7 @@
   var strings = {
     en: {
       meta_title: "Vladimir Zubkov",
+      brand_name: "Vladimir Zubkov",
       meta_desc:
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
       tagline:
@@ -75,6 +76,7 @@
     },
     cs: {
       meta_title: "Vladimir Zubkov",
+      brand_name: "Vladimir Zubkov",
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
       tagline:
@@ -143,6 +145,7 @@
     },
     ru: {
       meta_title: "Владимир Зубков",
+      brand_name: "Владимир Зубков",
       meta_desc:
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
       tagline:
