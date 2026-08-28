@@ -290,27 +290,40 @@
     return brandNameChanges(fromLang, toLang);
   }
 
-  function beginHeroCopyHeightLock() {
-    var heroCopy = document.querySelector(".hero-copy");
-    if (!heroCopy) return null;
-    var startHeight = heroCopy.offsetHeight;
-    heroCopy.classList.add("hero-copy--anim-height");
-    heroCopy.style.height = startHeight + "px";
-    return { el: heroCopy, startHeight: startHeight };
+  function beginPageBodyHeightLock() {
+    var pageBody = document.querySelector(".page-body");
+    if (!pageBody) return null;
+    var startHeight = pageBody.getBoundingClientRect().height;
+    pageBody.classList.add("page-body--anim-height");
+    pageBody.style.height = startHeight + "px";
+    pageBody.style.overflow = "hidden";
+    return pageBody;
   }
 
-  function animateHeroCopyHeightToContent(lock) {
-    if (!lock) return Promise.resolve();
-    var heroCopy = lock.el;
-    heroCopy.style.height = "auto";
-    var endHeight = heroCopy.offsetHeight;
-    heroCopy.style.height = lock.startHeight + "px";
-    return waitMs(20).then(function () {
-      heroCopy.style.height = endHeight + "px";
-      return waitMs(LANG_WIDTH_MS);
+  function syncPageBodyHeight(pageBody) {
+    if (!pageBody) return;
+    var nextHeight = pageBody.scrollHeight;
+    if (nextHeight > 0) pageBody.style.height = nextHeight + "px";
+  }
+
+  function animatePageBodyHeightDuringWidth(pageBody) {
+    if (!pageBody) return Promise.resolve();
+    syncPageBodyHeight(pageBody);
+    var resizeObserver = new ResizeObserver(function () {
+      syncPageBodyHeight(pageBody);
+    });
+    Array.prototype.forEach.call(pageBody.children, function (child) {
+      resizeObserver.observe(child);
+    });
+    resizeObserver.observe(pageBody);
+    return waitMs(LANG_WIDTH_MS + 80).then(function () {
+      resizeObserver.disconnect();
+      syncPageBodyHeight(pageBody);
+      return waitMs(80);
     }).then(function () {
-      heroCopy.classList.remove("hero-copy--anim-height");
-      heroCopy.style.height = "";
+      pageBody.classList.remove("page-body--anim-height");
+      pageBody.style.height = "";
+      pageBody.style.overflow = "";
     });
   }
 
@@ -413,7 +426,7 @@
     if (main) main.setAttribute("aria-busy", "true");
 
     var brandPromise = Promise.resolve();
-    var heightLock = widthChanges ? beginHeroCopyHeightLock() : null;
+    var heightLock = widthChanges ? beginPageBodyHeightLock() : null;
     root.classList.add("is-lang-fading");
 
     window.setTimeout(function () {
@@ -422,7 +435,7 @@
         var brand = getBrandEl();
         if (brand) brandPromise = animateBrandCrossfade(brand, lang);
       }
-      var heightPromise = animateHeroCopyHeightToContent(heightLock);
+      var heightPromise = animatePageBodyHeightDuringWidth(heightLock);
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           root.classList.remove("is-lang-fading");
