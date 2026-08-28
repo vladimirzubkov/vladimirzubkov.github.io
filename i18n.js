@@ -23,7 +23,7 @@
       edu_cvut_detail:
         "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (running).",
       edu_upa_when: "09/2021 – 06/2024",
-      edu_upa_school: "Jan Perner Transport Faculty, University of Pardubice (UPa)",
+      edu_upa_school: "Jan Perner Transport Faculty, University of Pardubice (UPCE)",
       edu_upa_detail:
         "Transport Technology and Management, specialization Logistics.",
       edu_upa_thesis:
@@ -91,7 +91,7 @@
       edu_cvut_detail:
         "Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium (probíhá).",
       edu_upa_when: "09/2021 – 06/2024",
-      edu_upa_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPa)",
+      edu_upa_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPCE)",
       edu_upa_detail:
         "Technologie a management v dopravě, specializace Logistika.",
       edu_upa_thesis:
@@ -159,7 +159,7 @@
       edu_cvut_detail:
         "Программная инженерия и технологии, специализация Enterprise-системы. Бакалавриат (учится).",
       edu_upa_when: "09/2021 – 06/2024",
-      edu_upa_school: "Транспортный факультет Яна Пернера, Университет Пардубице (UPa)",
+      edu_upa_school: "Транспортный факультет Яна Пернера, Университет Пардубице (UPCE)",
       edu_upa_detail:
         "Технологии и менеджмент на транспорте, специализация Логистика.",
       edu_upa_thesis:
