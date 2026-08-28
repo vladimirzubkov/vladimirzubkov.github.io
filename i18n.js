@@ -4,6 +4,8 @@
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 120;
   var LANG_WIDTH_MS = 250;
+  var BRAND_WIPE_PENDING_KEY = "cv-brand-wipe-pending";
+  var BRAND_FX_MS = 250;
   var currentLang = null;
   var langSwitching = false;
   var SUPPORTED = ["en", "cs", "ru"];
@@ -252,22 +254,138 @@
     return (fromLang === "ru") !== (toLang === "ru");
   }
 
-  function setBrandFadeTarget(fromLang, toLang) {
-    var brand = document.querySelector(".brand");
-    if (!brand) return;
-    brand.classList.toggle("lang-fade-target", brandNameChanges(fromLang, toLang));
+  function getBrandEl() {
+    return document.querySelector("[data-brand]");
   }
 
-  function clearBrandFadeTarget() {
-    var brand = document.querySelector(".brand");
-    if (brand) brand.classList.remove("lang-fade-target");
+  function clearBrandFxClasses(brandEl) {
+    brandEl.classList.remove(
+      "brand--morph-out",
+      "brand--morph-in",
+      "brand--morph-run",
+      "brand--wipe-active",
+      "brand--wipe-to-ru",
+      "brand--wipe-to-latin",
+      "brand--wipe-run"
+    );
+    brandEl.style.removeProperty("--wipe-pos");
+  }
+
+  function setBrandBaseText(brandEl, text) {
+    var base = brandEl.querySelector(".brand-text--base");
+    if (base) base.textContent = text;
+    brandEl.setAttribute("aria-label", text);
+  }
+
+  function finalizeBrand(brandEl, text) {
+    setBrandBaseText(brandEl, text);
+    var alt = brandEl.querySelector(".brand-text--alt");
+    if (alt) {
+      alt.textContent = "";
+      alt.setAttribute("aria-hidden", "true");
+    }
+    clearBrandFxClasses(brandEl);
+  }
+
+  function isWipePending() {
+    try {
+      return sessionStorage.getItem(BRAND_WIPE_PENDING_KEY) === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setWipePending(on) {
+    try {
+      if (on) sessionStorage.setItem(BRAND_WIPE_PENDING_KEY, "1");
+      else sessionStorage.removeItem(BRAND_WIPE_PENDING_KEY);
+    } catch (e) {}
+  }
+
+  function pickBrandEffect() {
+    if (isWipePending()) {
+      setWipePending(false);
+      return "wipe";
+    }
+    var effect = Math.random() < 0.5 ? "morph" : "wipe";
+    if (effect === "wipe") setWipePending(true);
+    return effect;
+  }
+
+  function waitMs(ms) {
+    return new Promise(function (resolve) {
+      window.setTimeout(resolve, ms);
+    });
+  }
+
+  function waitBrandTransition(brandEl) {
+    return new Promise(function (resolve) {
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        brandEl.removeEventListener("transitionend", onEnd);
+        resolve();
+      }
+      function onEnd(e) {
+        if (e.target === brandEl) finish();
+      }
+      brandEl.addEventListener("transitionend", onEnd);
+      window.setTimeout(finish, BRAND_FX_MS + 60);
+    });
+  }
+
+  function animateBrandMorph(brandEl, nextText) {
+    clearBrandFxClasses(brandEl);
+    brandEl.classList.add("brand--morph-out");
+    return waitMs(BRAND_FX_MS / 2).then(function () {
+      setBrandBaseText(brandEl, nextText);
+      brandEl.classList.remove("brand--morph-out");
+      brandEl.classList.add("brand--morph-in");
+      return waitMs(20);
+    }).then(function () {
+      brandEl.classList.add("brand--morph-run");
+      return waitMs(BRAND_FX_MS / 2);
+    }).then(function () {
+      finalizeBrand(brandEl, nextText);
+    });
+  }
+
+  function animateBrandWipe(brandEl, nextText, toRu) {
+    var alt = brandEl.querySelector(".brand-text--alt");
+    clearBrandFxClasses(brandEl);
+    if (alt) {
+      alt.textContent = nextText;
+      alt.removeAttribute("aria-hidden");
+    }
+    brandEl.classList.add("brand--wipe-active");
+    brandEl.classList.add(toRu ? "brand--wipe-to-ru" : "brand--wipe-to-latin");
+    return waitMs(20).then(function () {
+      brandEl.classList.add("brand--wipe-run");
+      return waitBrandTransition(brandEl);
+    }).then(function () {
+      finalizeBrand(brandEl, nextText);
+    });
+  }
+
+  function animateBrandIfNeeded(fromLang, toLang) {
+    if (!brandNameChanges(fromLang, toLang)) return Promise.resolve();
+    var brand = getBrandEl();
+    if (!brand) return Promise.resolve();
+    var nextText = brandNameForLang(toLang);
+    var effect = pickBrandEffect();
+    if (effect === "wipe") {
+      return animateBrandWipe(brand, nextText, toLang === "ru");
+    }
+    return animateBrandMorph(brand, nextText);
   }
 
   function prefersReducedMotion() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
-  function apply(lang) {
+  function apply(lang, opts) {
+    opts = opts || {};
     if (SUPPORTED.indexOf(lang) === -1) lang = "en";
     document.documentElement.lang = lang === "cs" ? "cs" : lang === "ru" ? "ru" : "en";
     try {
@@ -276,8 +394,7 @@
 
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
-      var val = key === "brand_name" ? brandNameForLang(lang) : t(lang, key);
-      if (key === "brand_name" && el.textContent === val) return;
+      var val = t(lang, key);
       if (el.hasAttribute("data-i18n-html")) {
         el.innerHTML = val.replace(/\n/g, "<br>");
       } else if (el.tagName === "META") {
@@ -288,6 +405,11 @@
         el.textContent = val;
       }
     });
+
+    if (!opts.skipBrand) {
+      var brand = getBrandEl();
+      if (brand) finalizeBrand(brand, brandNameForLang(lang));
+    }
 
     document.querySelectorAll("[data-i18n-title]").forEach(function (el) {
       el.setAttribute("title", t(lang, el.getAttribute("data-i18n-title")));
@@ -331,8 +453,20 @@
     if (SUPPORTED.indexOf(lang) === -1) lang = "en";
     if (lang === currentLang || langSwitching) return;
 
+    var fromLang = currentLang;
+    var brandChanges = brandNameChanges(fromLang, lang);
+
     if (prefersReducedMotion()) {
-      apply(lang);
+      if (brandChanges) {
+        var brandReduced = getBrandEl();
+        if (brandReduced) {
+          pickBrandEffect();
+          finalizeBrand(brandReduced, brandNameForLang(lang));
+        }
+        apply(lang, { skipBrand: true });
+      } else {
+        apply(lang);
+      }
       return;
     }
 
@@ -341,18 +475,19 @@
     var main = document.querySelector("main");
     if (main) main.setAttribute("aria-busy", "true");
 
-    setBrandFadeTarget(currentLang, lang);
+    var brandPromise = animateBrandIfNeeded(fromLang, lang);
     root.classList.add("is-lang-fading");
 
     window.setTimeout(function () {
-      apply(lang);
+      apply(lang, { skipBrand: brandChanges });
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           root.classList.remove("is-lang-fading");
           window.setTimeout(function () {
-            clearBrandFadeTarget();
-            if (main) main.removeAttribute("aria-busy");
-            langSwitching = false;
+            brandPromise.then(function () {
+              if (main) main.removeAttribute("aria-busy");
+              langSwitching = false;
+            });
           }, LANG_WIDTH_MS);
         });
       });
@@ -424,7 +559,9 @@
 
   function init() {
     var lang = detectLang();
-    apply(lang);
+    var brand = getBrandEl();
+    if (brand) finalizeBrand(brand, brandNameForLang(lang));
+    apply(lang, { skipBrand: !!brand });
     loadVisitorCount();
     initStickyTopbar();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {

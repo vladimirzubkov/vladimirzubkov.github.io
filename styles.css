@@ -10,6 +10,12 @@
   initial-value: 36rem;
 }
 
+@property --wipe-pos {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
 :root {
   --ink: #1a2332;
   --muted: #5a6578;
@@ -26,6 +32,8 @@
   --lang-fade-out: 0.12s;
   --lang-fade-in: 0.25s;
   --lang-width: 0.25s;
+  --brand-fx-duration: 0.25s;
+  --brand-wipe-angle: 120deg;
 }
 
 html[lang="ru"] {
@@ -72,6 +80,16 @@ html.is-lang-fading .lang-fade-target {
 
   .lang-fade-target {
     transition: none !important;
+  }
+
+  .brand,
+  .brand-text--base {
+    transition: none !important;
+  }
+
+  .brand-text--alt,
+  .brand-wipe {
+    display: none !important;
   }
 }
 
@@ -328,12 +346,124 @@ a:hover {
 }
 
 .brand {
+  position: relative;
+  overflow: hidden;
   margin: 0 0 0.35rem;
+  padding: 0.12rem 0;
   font-family: var(--serif);
   font-size: clamp(2rem, 5vw, 2.6rem);
   font-weight: 650;
   letter-spacing: -0.02em;
   line-height: 1.1;
+  --wipe-pos: 0%;
+}
+
+.brand-text {
+  display: block;
+  margin: 0;
+  white-space: nowrap;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+.brand-text--base {
+  position: relative;
+  z-index: 1;
+  transition:
+    opacity calc(var(--brand-fx-duration) / 2) ease,
+    filter calc(var(--brand-fx-duration) / 2) ease,
+    transform calc(var(--brand-fx-duration) / 2) ease;
+}
+
+.brand-text--alt {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.brand.brand--morph-out .brand-text--base {
+  opacity: 0;
+  filter: blur(4px);
+  transform: scaleX(0.92);
+}
+
+.brand.brand--morph-in .brand-text--base {
+  opacity: 0;
+  filter: blur(4px);
+  transform: scaleX(0.92);
+}
+
+.brand.brand--morph-in.brand--morph-run .brand-text--base {
+  opacity: 1;
+  filter: blur(0);
+  transform: scaleX(1);
+}
+
+.brand.brand--wipe-active .brand-text--base {
+  -webkit-mask-image: linear-gradient(
+    var(--brand-wipe-angle),
+    #000 calc(var(--wipe-pos) - 0.6%),
+    transparent calc(var(--wipe-pos) + 0.6%)
+  );
+  mask-image: linear-gradient(
+    var(--brand-wipe-angle),
+    #000 calc(var(--wipe-pos) - 0.6%),
+    transparent calc(var(--wipe-pos) + 0.6%)
+  );
+}
+
+.brand.brand--wipe-active .brand-text--alt {
+  -webkit-mask-image: linear-gradient(
+    var(--brand-wipe-angle),
+    transparent calc(var(--wipe-pos) - 0.6%),
+    #000 calc(var(--wipe-pos) + 0.6%)
+  );
+  mask-image: linear-gradient(
+    var(--brand-wipe-angle),
+    transparent calc(var(--wipe-pos) - 0.6%),
+    #000 calc(var(--wipe-pos) + 0.6%)
+  );
+}
+
+.brand.brand--wipe-to-ru {
+  --wipe-pos: 100%;
+  transition: --wipe-pos var(--brand-fx-duration) ease-in-out;
+}
+
+.brand.brand--wipe-to-ru.brand--wipe-run {
+  --wipe-pos: 0%;
+}
+
+.brand.brand--wipe-to-latin {
+  --wipe-pos: 0%;
+  transition: --wipe-pos var(--brand-fx-duration) ease-in-out;
+}
+
+.brand.brand--wipe-to-latin.brand--wipe-run {
+  --wipe-pos: 100%;
+}
+
+.brand-wipe {
+  position: absolute;
+  top: -15%;
+  bottom: -15%;
+  left: var(--wipe-pos);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  opacity: 0;
+  transform: rotate(30deg);
+  transform-origin: center center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.brand.brand--wipe-active .brand-wipe {
+  opacity: 0.9;
 }
 
 .hero h1 {
@@ -551,6 +681,15 @@ footer {
   .lang-fade-target {
     opacity: 1 !important;
     transition: none !important;
+  }
+
+  .brand-text--alt,
+  .brand-wipe {
+    display: none !important;
+  }
+
+  .brand {
+    overflow: visible !important;
   }
 
   * {
