@@ -310,6 +310,11 @@ a:hover {
   transition: max-width var(--lang-width) ease;
 }
 
+.hero-copy {
+  flex: 1;
+  min-width: 0;
+}
+
 .photo {
   width: 160px;
   height: 160px;
@@ -616,6 +621,7 @@ footer {
     object-fit: unset !important;
   }
 
+  .hero-copy,
   .hero-text {
     flex: 1 1 auto !important;
     min-width: 0 !important;

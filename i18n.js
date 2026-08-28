@@ -244,6 +244,25 @@
     return String(s).replace(/<[^>]+>/g, "");
   }
 
+  function brandNameForLang(lang) {
+    return lang === "ru" ? strings.ru.brand_name : strings.en.brand_name;
+  }
+
+  function brandNameChanges(fromLang, toLang) {
+    return (fromLang === "ru") !== (toLang === "ru");
+  }
+
+  function setBrandFadeTarget(fromLang, toLang) {
+    var brand = document.querySelector(".brand");
+    if (!brand) return;
+    brand.classList.toggle("lang-fade-target", brandNameChanges(fromLang, toLang));
+  }
+
+  function clearBrandFadeTarget() {
+    var brand = document.querySelector(".brand");
+    if (brand) brand.classList.remove("lang-fade-target");
+  }
+
   function prefersReducedMotion() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
@@ -257,7 +276,8 @@
 
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
-      var val = t(lang, key);
+      var val = key === "brand_name" ? brandNameForLang(lang) : t(lang, key);
+      if (key === "brand_name" && el.textContent === val) return;
       if (el.hasAttribute("data-i18n-html")) {
         el.innerHTML = val.replace(/\n/g, "<br>");
       } else if (el.tagName === "META") {
@@ -321,6 +341,7 @@
     var main = document.querySelector("main");
     if (main) main.setAttribute("aria-busy", "true");
 
+    setBrandFadeTarget(currentLang, lang);
     root.classList.add("is-lang-fading");
 
     window.setTimeout(function () {
@@ -329,6 +350,7 @@
         requestAnimationFrame(function () {
           root.classList.remove("is-lang-fading");
           window.setTimeout(function () {
+            clearBrandFadeTarget();
             if (main) main.removeAttribute("aria-busy");
             langSwitching = false;
           }, LANG_WIDTH_MS);
