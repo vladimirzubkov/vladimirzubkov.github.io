@@ -22,7 +22,7 @@
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
-        "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (running).",
+        "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (currently studying, completing).",
       edu_upa_when: "09/2021 – 06/2024",
       edu_upa_school: "Jan Perner Transport Faculty, University of Pardubice (UPCE)",
       edu_upa_detail:
@@ -91,7 +91,7 @@
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_detail:
-        "Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium (probíhá).",
+        "Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium (probíhá studium, dokončuji).",
       edu_upa_when: "09/2021 – 06/2024",
       edu_upa_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPCE)",
       edu_upa_detail:
