@@ -362,7 +362,7 @@ a:hover {
   display: grid;
   position: relative;
   overflow: hidden;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.35rem -2px;
   padding: 0.12rem 0;
   font-family: var(--serif);
   font-size: clamp(2rem, 5vw, 2.6rem);
