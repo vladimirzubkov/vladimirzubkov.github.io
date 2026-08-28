@@ -4,7 +4,6 @@
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 120;
   var LANG_WIDTH_MS = 250;
-  var BRAND_WIPE_PENDING_KEY = "cv-brand-wipe-pending";
   var BRAND_FX_MS = 250;
   var currentLang = null;
   var langSwitching = false;
@@ -259,16 +258,7 @@
   }
 
   function clearBrandFxClasses(brandEl) {
-    brandEl.classList.remove(
-      "brand--morph-out",
-      "brand--morph-in",
-      "brand--morph-run",
-      "brand--wipe-active",
-      "brand--wipe-to-ru",
-      "brand--wipe-to-latin",
-      "brand--wipe-run"
-    );
-    brandEl.style.removeProperty("--wipe-pos");
+    brandEl.classList.remove("brand--morph-out", "brand--morph-in", "brand--morph-run");
   }
 
   function setBrandBaseText(brandEl, text) {
@@ -279,59 +269,12 @@
 
   function finalizeBrand(brandEl, text) {
     setBrandBaseText(brandEl, text);
-    var alt = brandEl.querySelector(".brand-text--alt");
-    if (alt) {
-      alt.textContent = "";
-      alt.setAttribute("aria-hidden", "true");
-    }
     clearBrandFxClasses(brandEl);
-  }
-
-  function isWipePending() {
-    try {
-      return sessionStorage.getItem(BRAND_WIPE_PENDING_KEY) === "1";
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function setWipePending(on) {
-    try {
-      if (on) sessionStorage.setItem(BRAND_WIPE_PENDING_KEY, "1");
-      else sessionStorage.removeItem(BRAND_WIPE_PENDING_KEY);
-    } catch (e) {}
-  }
-
-  function pickBrandEffect() {
-    if (isWipePending()) {
-      setWipePending(false);
-      return "wipe";
-    }
-    var effect = Math.random() < 0.5 ? "morph" : "wipe";
-    if (effect === "wipe") setWipePending(true);
-    return effect;
   }
 
   function waitMs(ms) {
     return new Promise(function (resolve) {
       window.setTimeout(resolve, ms);
-    });
-  }
-
-  function waitBrandTransition(brandEl) {
-    return new Promise(function (resolve) {
-      var done = false;
-      function finish() {
-        if (done) return;
-        done = true;
-        brandEl.removeEventListener("transitionend", onEnd);
-        resolve();
-      }
-      function onEnd(e) {
-        if (e.target === brandEl) finish();
-      }
-      brandEl.addEventListener("transitionend", onEnd);
-      window.setTimeout(finish, BRAND_FX_MS + 60);
     });
   }
 
@@ -351,33 +294,11 @@
     });
   }
 
-  function animateBrandWipe(brandEl, nextText, toRu) {
-    var alt = brandEl.querySelector(".brand-text--alt");
-    clearBrandFxClasses(brandEl);
-    if (alt) {
-      alt.textContent = nextText;
-      alt.removeAttribute("aria-hidden");
-    }
-    brandEl.classList.add("brand--wipe-active");
-    brandEl.classList.add(toRu ? "brand--wipe-to-ru" : "brand--wipe-to-latin");
-    return waitMs(20).then(function () {
-      brandEl.classList.add("brand--wipe-run");
-      return waitBrandTransition(brandEl);
-    }).then(function () {
-      finalizeBrand(brandEl, nextText);
-    });
-  }
-
   function animateBrandIfNeeded(fromLang, toLang) {
     if (!brandNameChanges(fromLang, toLang)) return Promise.resolve();
     var brand = getBrandEl();
     if (!brand) return Promise.resolve();
-    var nextText = brandNameForLang(toLang);
-    var effect = pickBrandEffect();
-    if (effect === "wipe") {
-      return animateBrandWipe(brand, nextText, toLang === "ru");
-    }
-    return animateBrandMorph(brand, nextText);
+    return animateBrandMorph(brand, brandNameForLang(toLang));
   }
 
   function prefersReducedMotion() {
@@ -459,10 +380,7 @@
     if (prefersReducedMotion()) {
       if (brandChanges) {
         var brandReduced = getBrandEl();
-        if (brandReduced) {
-          pickBrandEffect();
-          finalizeBrand(brandReduced, brandNameForLang(lang));
-        }
+        if (brandReduced) finalizeBrand(brandReduced, brandNameForLang(lang));
         apply(lang, { skipBrand: true });
       } else {
         apply(lang);
