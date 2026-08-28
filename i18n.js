@@ -4,7 +4,7 @@
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 120;
   var LANG_WIDTH_MS = 250;
-  var BRAND_FX_MS = 250;
+  var BRAND_FX_MS = 350;
   var currentLang = null;
   var langSwitching = false;
   var SUPPORTED = ["en", "cs", "ru"];
