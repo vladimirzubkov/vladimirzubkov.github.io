@@ -80,6 +80,10 @@ html.is-lang-fading .lang-fade-target {
   .brand-text--cyrillic {
     transition: none !important;
   }
+
+  .hero-copy.hero-copy--anim-height {
+    transition: none !important;
+  }
 }
 
 body {
@@ -320,6 +324,15 @@ a:hover {
 .hero-copy {
   flex: 1;
   min-width: 0;
+}
+
+.hero-copy.hero-copy--anim-height {
+  overflow: hidden;
+  transition: height var(--lang-width) ease;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .photo {

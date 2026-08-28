@@ -15,8 +15,9 @@
       brand_name: "Vladimir Zubkov",
       meta_desc:
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
-      tagline:
-        "Lifelong Learner, Software Developer located in Prague (Permanent Residence)",
+      tagline_lead:
+        "Lifelong Learner, Software Developer located in Prague ",
+      tagline_paren: "(Permanent Residence)",
       lede:
         "Learning to build useful tools. Background in finance, logistics and software engineering.",
       contacts_line:
@@ -84,8 +85,9 @@
       brand_name: "Vladimir Zubkov",
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
-      tagline:
-        "Celoživotní student, vývojář softwaru se sídlem v Praze (trvalý\u00a0pobyt)",
+      tagline_lead:
+        "Celoživotní student, vývojář softwaru se sídlem v Praze ",
+      tagline_paren: "(trvalý pobyt)",
       lede:
         "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
       contacts_line:
@@ -153,8 +155,9 @@
       brand_name: "Владимир Зубков",
       meta_desc:
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
-      tagline:
-        "Вечный ученик, разработчик ПО, базирующийся в Праге (ПМЖ)",
+      tagline_lead:
+        "Вечный ученик, разработчик ПО, базирующийся в Праге ",
+      tagline_paren: "(ПМЖ)",
       lede:
         "Учусь делать полезные инструменты. Бэкграунд в финансах, логистике и разработке программного обеспечения.",
       contacts_line:
@@ -283,6 +286,34 @@
     });
   }
 
+  function layoutWidthChanges(fromLang, toLang) {
+    return brandNameChanges(fromLang, toLang);
+  }
+
+  function beginHeroCopyHeightLock() {
+    var heroCopy = document.querySelector(".hero-copy");
+    if (!heroCopy) return null;
+    var startHeight = heroCopy.offsetHeight;
+    heroCopy.classList.add("hero-copy--anim-height");
+    heroCopy.style.height = startHeight + "px";
+    return { el: heroCopy, startHeight: startHeight };
+  }
+
+  function animateHeroCopyHeightToContent(lock) {
+    if (!lock) return Promise.resolve();
+    var heroCopy = lock.el;
+    heroCopy.style.height = "auto";
+    var endHeight = heroCopy.offsetHeight;
+    heroCopy.style.height = lock.startHeight + "px";
+    return waitMs(20).then(function () {
+      heroCopy.style.height = endHeight + "px";
+      return waitMs(LANG_WIDTH_MS);
+    }).then(function () {
+      heroCopy.classList.remove("hero-copy--anim-height");
+      heroCopy.style.height = "";
+    });
+  }
+
   function animateBrandCrossfade(brandEl, toLang) {
     syncBrandState(brandEl, toLang, false);
     return waitMs(BRAND_FX_MS);
@@ -363,6 +394,7 @@
 
     var fromLang = currentLang;
     var brandChanges = brandNameChanges(fromLang, lang);
+    var widthChanges = layoutWidthChanges(fromLang, lang);
 
     if (prefersReducedMotion()) {
       if (brandChanges) {
@@ -381,6 +413,7 @@
     if (main) main.setAttribute("aria-busy", "true");
 
     var brandPromise = Promise.resolve();
+    var heightLock = widthChanges ? beginHeroCopyHeightLock() : null;
     root.classList.add("is-lang-fading");
 
     window.setTimeout(function () {
@@ -389,11 +422,12 @@
         var brand = getBrandEl();
         if (brand) brandPromise = animateBrandCrossfade(brand, lang);
       }
+      var heightPromise = animateHeroCopyHeightToContent(heightLock);
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           root.classList.remove("is-lang-fading");
           window.setTimeout(function () {
-            brandPromise.then(function () {
+            Promise.all([brandPromise, heightPromise]).then(function () {
               if (main) main.removeAttribute("aria-busy");
               langSwitching = false;
             });
