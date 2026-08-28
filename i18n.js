@@ -21,13 +21,13 @@
         "Learning to build useful tools. Background in finance, logistics and software engineering.",
       contacts_line:
         'Contact: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
-      education: 'Education <em class="accent-running">(currently running)</em>',
+      education: 'Education <em class="accent-running">(currently studying)</em>',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">present</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
-        "Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies (currently studying, completing).",
+        'Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies <em class="accent-running">(studying, completing)</em>.',
       edu_upce_when: "09/2021 – 06/2024",
       edu_upce_school: "Jan Perner Transport Faculty, University of Pardubice (UPCE)",
       edu_upce_detail:
@@ -85,18 +85,18 @@
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
       tagline:
-        "Celoživotní student, vývojář softwaru se sídlem v Praze (trvalý pobyt)",
+        "Celoživotní student, vývojář softwaru se sídlem v Praze\u00a0(trvalý pobyt)",
       lede:
         "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
       contacts_line:
         'Kontakt: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
-      education: 'Vzdělání <em class="accent-running">(aktuálně probíhá)</em>',
+      education: 'Vzdělání <em class="accent-running">(aktuálně studuji)</em>',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">dosud</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_detail:
-        "Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium (probíhá studium, dokončuji).",
+        'Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium <em class="accent-running">(běží, dokončuji)</em>.',
       edu_upce_when: "09/2021 – 06/2024",
       edu_upce_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPCE)",
       edu_upce_detail:
@@ -166,7 +166,7 @@
       edu_cvut_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_detail:
-        "Программная инженерия и технологии, специализация «Корпоративные информационные системы». Бакалавриат (в процессе обучения, оканчиваю).",
+        'Программная инженерия и технологии, специализация «Корпоративные информационные системы». Бакалавриат <em class="accent-running">(в процессе обучения, оканчиваю)</em>.',
       edu_upce_when: "09/2021 — 06/2024",
       edu_upce_school: "Транспортный факультет Яна Пернера, Университет Пардубице (УПЦЕ)",
       edu_upce_detail:
