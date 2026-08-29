@@ -670,10 +670,10 @@ footer {
     text-align: left !important;
   }
 
-  /* Natural aspect; only height set; border hugs the image box */
+  /* Photo column matches timeline date column (32mm) + same 3.6mm gap → text aligns */
   .photo {
-    width: auto !important;
-    height: 30mm !important;
+    width: 32mm !important;
+    height: auto !important;
     max-width: none !important;
     max-height: none !important;
     padding: 0 !important;
