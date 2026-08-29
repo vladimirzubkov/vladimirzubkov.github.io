@@ -6,6 +6,8 @@
   var LANG_FADE_IN_MS = 250;
   var LANG_WIDTH_MS = 250;
   var BRAND_FX_MS = 500;
+  // Baseline (2026-08-29): fade-in after width settle (LANG_WIDTH_MS + 60 buffer);
+  // height lock via ResizeObserver; brand crossfade 500ms on RU boundary only.
   var currentLang = null;
   var langSwitching = false;
   var SUPPORTED = ["en", "cs", "ru"];
@@ -329,7 +331,7 @@
       resizeObserver.observe(child);
     });
     resizeObserver.observe(pageBody);
-    return waitMs(LANG_WIDTH_MS + 60).then(function () {
+    return waitMs(LANG_WIDTH_MS).then(function () {
       resizeObserver.disconnect();
       finalizePageBodyHeight(pageBody);
     });
@@ -448,18 +450,12 @@
         var brand = getBrandEl();
         if (brand) brandPromise = animateBrandCrossfade(brand, lang);
       }
-      var readyPromise = widthChanges
+      var heightPromise = widthChanges
         ? animatePageBodyHeightDuringWidth(heightLock)
-        : new Promise(function (resolve) {
-            requestAnimationFrame(function () {
-              requestAnimationFrame(resolve);
-            });
-          });
+        : Promise.resolve();
+      var fadeInPromise = beginLangFadeIn(root);
 
-      readyPromise
-        .then(function () {
-          return beginLangFadeIn(root);
-        })
+      Promise.all([heightPromise, fadeInPromise])
         .then(function () {
           return brandPromise;
         })
