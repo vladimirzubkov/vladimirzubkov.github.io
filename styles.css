@@ -622,10 +622,24 @@ footer {
     text-shadow: none !important;
   }
 
-  html,
-  body {
+  html {
     width: auto !important;
     min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 14pt !important;
+    line-height: 1.35 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    display: flex !important;
+    flex-direction: column !important;
+    width: auto !important;
+    min-height: 268.2mm !important; /* A4 content height: 297mm - 2 * 14.4mm */
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
@@ -801,6 +815,7 @@ footer {
   }
 
   footer {
+    margin-top: auto !important;
     padding: 0 !important;
     font-size: 10pt !important;
     color: #555 !important;
