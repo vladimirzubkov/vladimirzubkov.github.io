@@ -2,7 +2,7 @@
 (function (global) {
   var STORAGE_KEY = "cv-lang";
   var STICKY_KEY = "cv-sticky-lang";
-  var LANG_FADE_OUT_MS = 120;
+  var LANG_FADE_OUT_MS = 150;
   var LANG_FADE_IN_MS = 250;
   var LANG_WIDTH_MS = 250;
   var BRAND_FX_MS = 500;
