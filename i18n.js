@@ -2,10 +2,10 @@
 (function (global) {
   var STORAGE_KEY = "cv-lang";
   var STICKY_KEY = "cv-sticky-lang";
-  var LANG_FADE_OUT_MS = 150;
+  var LANG_FADE_OUT_MS = 130;
   var LANG_FADE_IN_MS = 250;
   var LANG_WIDTH_MS = 250;
-  var BRAND_FX_MS = 500;
+  var BRAND_FX_MS = 470;
   // Baseline (2026-08-29): fade-in after width settle (LANG_WIDTH_MS + 60 buffer);
   // height lock via ResizeObserver; brand crossfade 500ms on RU boundary only.
   var currentLang = null;

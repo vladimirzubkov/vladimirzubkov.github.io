@@ -23,10 +23,10 @@
   --sans: "Source Sans 3", "Segoe UI", sans-serif;
   --content-max: 44rem;
   --lede-max: 36rem;
-  --lang-fade-out: 0.15s;
+  --lang-fade-out: 0.13s;
   --lang-fade-in: 0.25s;
   --lang-width: 0.25s;
-  --brand-fx-duration: 0.5s;
+  --brand-fx-duration: 0.47s;
   --section-gap: 2.25rem;
 }
 
