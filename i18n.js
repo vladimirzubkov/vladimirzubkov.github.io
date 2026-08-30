@@ -486,38 +486,27 @@
   function initStickyTopbar() {
     var topbar = document.querySelector(".topbar");
     var toggle = document.getElementById("sticky-lang");
-    var sentinel = document.querySelector(".topbar-sentinel");
     if (!topbar || !toggle) return;
 
-    var stickObserver = null;
     var enabled = true;
     try {
       var saved = localStorage.getItem(STICKY_KEY);
       if (saved === "0") enabled = false;
     } catch (e) {}
 
-    function bindStuckObserver() {
-      if (stickObserver) {
-        stickObserver.disconnect();
-        stickObserver = null;
-      }
-      topbar.classList.remove("is-stuck");
-      if (!topbar.classList.contains("is-sticky") || !sentinel) return;
-      stickObserver = new IntersectionObserver(
-        function (entries) {
-          topbar.classList.toggle("is-stuck", !entries[0].isIntersecting);
-        },
-        { threshold: 0 }
-      );
-      stickObserver.observe(sentinel);
+    function updateStuck() {
+      if (!topbar.classList.contains("is-sticky")) return;
+      topbar.classList.toggle("is-stuck", window.scrollY > 0);
     }
 
     function setSticky(on) {
       topbar.classList.toggle("is-sticky", on);
       toggle.checked = on;
-      bindStuckObserver();
+      if (!on) topbar.classList.remove("is-stuck");
+      else updateStuck();
     }
 
+    window.addEventListener("scroll", updateStuck, { passive: true });
     setSticky(enabled);
 
     toggle.addEventListener("change", function () {
