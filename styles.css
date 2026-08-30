@@ -43,6 +43,7 @@ html[lang="ru"] {
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   transition:
     --content-max var(--lang-width) ease,
     --lede-max var(--lang-width) ease;
@@ -112,6 +113,7 @@ a:hover {
 }
 
 .topbar {
+  width: 100%;
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 0.65rem 1.25rem;
@@ -120,7 +122,6 @@ a:hover {
   align-items: center;
   gap: 1rem;
   box-sizing: border-box;
-  border-bottom: 1px solid transparent;
   transition: max-width var(--lang-width) ease;
 }
 
@@ -133,8 +134,20 @@ a:hover {
   -webkit-backdrop-filter: blur(8px);
 }
 
-.topbar.is-sticky.is-stuck {
-  border-bottom-color: var(--line);
+.topbar.is-sticky::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--line);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.topbar.is-sticky.is-stuck::after {
+  opacity: 1;
 }
 
 .topbar-sentinel {
@@ -148,6 +161,7 @@ a:hover {
   align-items: center;
   gap: 0.55rem;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 .sticky-toggle {
@@ -246,6 +260,7 @@ a:hover {
   border: 1px solid var(--line);
   background: var(--paper);
   padding: 0.15rem;
+  flex-shrink: 0;
 }
 
 .lang-switch button {
@@ -258,6 +273,7 @@ a:hover {
   font-weight: 600;
   padding: 0.35rem 0.55rem;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .lang-switch button.is-active {
