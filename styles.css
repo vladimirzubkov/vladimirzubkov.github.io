@@ -28,6 +28,8 @@
   --lang-width: 0.25s;
   --brand-fx-duration: 0.5s;
   --section-gap: 2.25rem;
+  --print-a4-height: 268.2mm; /* A4 297mm − 2 × 14.4mm @page margins */
+  --print-scale: 1;
 }
 
 html[lang="ru"] {
@@ -607,17 +609,13 @@ footer {
   }
 }
 
-/* One A4 sheet — Ctrl+F5 before print; browser margins: Minimum / None */
+/* One A4 sheet — beforeprint JS may lower --print-scale to fit content */
 @page {
   size: A4 portrait;
   margin: 14.4mm; /* 12mm + 20% */
 }
 
 @media print {
-  html {
-    transition: none !important;
-  }
-
   .lang-fade-target {
     opacity: 1 !important;
     transition: none !important;
@@ -641,6 +639,8 @@ footer {
     color: #000 !important;
     font-size: 14pt !important;
     line-height: 1.35 !important;
+    transition: none !important;
+    zoom: var(--print-scale, 1);
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -649,7 +649,7 @@ footer {
     display: flex !important;
     flex-direction: column !important;
     width: auto !important;
-    min-height: 268.2mm !important; /* A4 content height: 297mm - 2 * 14.4mm */
+    min-height: var(--print-a4-height) !important; /* A4 content height: 297mm - 2 * 14.4mm */
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;

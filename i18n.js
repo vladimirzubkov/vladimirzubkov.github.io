@@ -537,6 +537,39 @@
     });
   }
 
+  function initPrintFit() {
+    var A4_HEIGHT_MM = 268.2;
+
+    function measureA4HeightPx() {
+      var probe = document.createElement("div");
+      probe.style.cssText =
+        "position:absolute;left:-9999px;top:0;height:" +
+        A4_HEIGHT_MM +
+        "mm;width:1px;pointer-events:none;visibility:hidden;";
+      document.body.appendChild(probe);
+      var height = probe.offsetHeight;
+      document.body.removeChild(probe);
+      return height;
+    }
+
+    function fitPrintToA4() {
+      var root = document.documentElement;
+      root.style.setProperty("--print-scale", "1");
+      var maxHeight = measureA4HeightPx();
+      var contentHeight = document.body.scrollHeight;
+      if (!maxHeight || contentHeight <= maxHeight) return;
+      var scale = Math.min(1, (maxHeight / contentHeight) * 0.995);
+      root.style.setProperty("--print-scale", String(scale));
+    }
+
+    function resetPrintFit() {
+      document.documentElement.style.removeProperty("--print-scale");
+    }
+
+    window.addEventListener("beforeprint", fitPrintToA4);
+    window.addEventListener("afterprint", resetPrintFit);
+  }
+
   function init() {
     var lang = detectLang();
     var brand = getBrandEl();
@@ -544,6 +577,7 @@
     apply(lang, { skipBrand: !!brand });
     loadVisitorCount();
     initStickyTopbar();
+    initPrintFit();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {
       btn.addEventListener("click", function () {
         switchLang(btn.getAttribute("data-lang"));
