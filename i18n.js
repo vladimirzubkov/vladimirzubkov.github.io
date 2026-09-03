@@ -573,7 +573,7 @@
       return;
 
     var PHOTO_FULL = 160;
-    var PHOTO_MIN = 100;
+    var PHOTO_MIN = 120;
     var BRAND_MIN = 28;
     var COLLAPSE_RANGE = 180;
     var metrics = null;
@@ -616,12 +616,16 @@
       return el.getBoundingClientRect().left;
     }
 
+    function textColumnLeft() {
+      return eduTextLeft();
+    }
+
     function collapsedTargets(photoSize, brandSize) {
       var topbarRect = topbar.getBoundingClientRect();
       var topbarH = topbar.offsetHeight;
       var endPhotoLeft = contentLeft();
       var endPhotoTop = topbarRect.top + (topbarH - photoSize) / 2;
-      var endBrandLeft = endPhotoLeft + photoSize + 12;
+      var endBrandLeft = textColumnLeft();
       var endBrandTop = topbarRect.top + (topbarH - brandSize * 1.1) / 2;
       return {
         photoTop: endPhotoTop,
@@ -699,6 +703,7 @@
       var shadowBlur = lerp(28, 10, progress);
       var shadowY = lerp(8, 3, progress);
       var shadowAlpha = lerp(0.12, 0.08, progress);
+      var objectPosY = lerp(0, 8, progress);
 
       photo.style.cssText =
         "position:fixed;top:" +
@@ -717,7 +722,9 @@
         shadowBlur +
         "px rgba(26,35,50," +
         shadowAlpha +
-        ");z-index:101;margin:0;";
+        ");object-fit:cover;object-position:center " +
+        objectPosY +
+        "%;z-index:101;margin:0;";
 
       brand.style.cssText =
         "position:fixed;top:" +
