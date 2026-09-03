@@ -615,6 +615,7 @@ footer {
     width: 181.2mm;
     margin: 0;
     background: #fff;
+    zoom: var(--print-scale, 1);
   }
 
   html.is-print-measure body {
@@ -892,8 +893,6 @@ footer {
     margin-top: 3.6mm !important;
     padding-top: 3mm !important;
     border-top: none !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
   }
 
   h2 {

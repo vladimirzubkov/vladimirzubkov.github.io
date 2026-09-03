@@ -539,7 +539,8 @@
 
   function initPrintFit() {
     var A4_HEIGHT_MM = 268.2;
-    var FIT_TOLERANCE = 1.01;
+    var SCALE_SAFETY = 0.992;
+    var MAX_ITERATIONS = 6;
 
     function measureA4HeightPx() {
       var probe = document.createElement("div");
@@ -553,12 +554,21 @@
       return height;
     }
 
+    function readPrintScale() {
+      var value = getComputedStyle(document.documentElement)
+        .getPropertyValue("--print-scale")
+        .trim();
+      var scale = parseFloat(value);
+      return Number.isFinite(scale) && scale > 0 ? scale : 1;
+    }
+
     function measurePrintContentHeight() {
       var root = document.documentElement;
-      root.classList.add("is-print-measure");
+      var inPrint = window.matchMedia && window.matchMedia("print").matches;
+      if (!inPrint) root.classList.add("is-print-measure");
       void root.offsetHeight;
       var height = document.body.scrollHeight;
-      root.classList.remove("is-print-measure");
+      if (!inPrint) root.classList.remove("is-print-measure");
       return height;
     }
 
@@ -566,10 +576,22 @@
       var root = document.documentElement;
       root.style.setProperty("--print-scale", "1");
       var maxHeight = measureA4HeightPx();
-      var contentHeight = measurePrintContentHeight();
-      if (!maxHeight || contentHeight <= maxHeight * FIT_TOLERANCE) return;
-      var scale = Math.min(1, maxHeight / contentHeight);
-      root.style.setProperty("--print-scale", String(scale));
+      if (!maxHeight) return;
+
+      for (var i = 0; i < MAX_ITERATIONS; i++) {
+        var contentHeight = measurePrintContentHeight();
+        if (!contentHeight || contentHeight <= maxHeight) return;
+        var currentScale = readPrintScale();
+        var nextScale = Math.min(
+          1,
+          currentScale * (maxHeight / contentHeight) * SCALE_SAFETY
+        );
+        if (nextScale >= currentScale - 0.0005) {
+          root.style.setProperty("--print-scale", String(nextScale));
+          return;
+        }
+        root.style.setProperty("--print-scale", String(nextScale));
+      }
     }
 
     function resetPrintFit() {
