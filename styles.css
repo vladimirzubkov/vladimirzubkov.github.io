@@ -610,6 +610,10 @@ footer {
   }
 }
 
+.print-page-number {
+  display: none;
+}
+
 /* Screen-only clone of print layout for accurate height measurement before zoom */
 @media screen {
   html.is-print-measure {
@@ -996,5 +1000,29 @@ footer {
     margin-left: auto !important;
     text-align: right !important;
     white-space: nowrap !important;
+  }
+
+  html.print-multi-page body {
+    min-height: 0 !important;
+  }
+
+  html.print-multi-page footer {
+    margin-top: 0 !important;
+  }
+
+  html.print-multi-page .print-page-number {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: calc(10pt * var(--print-u));
+    color: #555 !important;
+    pointer-events: none;
+  }
+
+  html.print-multi-page .print-page-number::after {
+    content: counter(page) " / " counter(pages);
   }
 }

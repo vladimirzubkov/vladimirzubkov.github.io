@@ -10,6 +10,7 @@
   // height lock via ResizeObserver; brand crossfade 500ms on RU boundary only.
   var currentLang = null;
   var langSwitching = false;
+  var refitPrintLayout = null;
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -433,6 +434,9 @@
     }
 
     currentLang = lang;
+    if (refitPrintLayout) {
+      window.requestAnimationFrame(refitPrintLayout);
+    }
   }
 
   function switchLang(lang) {
@@ -539,9 +543,10 @@
 
   function initPrintFit() {
     var A4_HEIGHT_MM = 268.2;
+    var MIN_SCALE = 0.75;
     var SCALE_SAFETY = 0.99;
-    var MEASURE_PADDING = 1.04;
-    var MAX_ITERATIONS = 8;
+    var MEASURE_PADDING = 1.06;
+    var MAX_ITERATIONS = 10;
 
     function measureA4HeightPx() {
       var probe = document.createElement("div");
@@ -563,63 +568,100 @@
       return Number.isFinite(scale) && scale > 0 ? scale : 1;
     }
 
-    function measurePrintContentHeight() {
+    function withPrintMeasure(fn) {
       var root = document.documentElement;
       var inPrint = window.matchMedia && window.matchMedia("print").matches;
       if (!inPrint) root.classList.add("is-print-measure");
       void root.offsetHeight;
-      var height = document.body.scrollHeight;
+      var result = fn();
       if (!inPrint) root.classList.remove("is-print-measure");
-      return height;
+      return result;
+    }
+
+    function measurePrintContentHeight() {
+      return withPrintMeasure(function () {
+        var pageBody = document.querySelector(".page-body");
+        var footer = document.querySelector("footer");
+        if (pageBody && footer) {
+          var topRect = pageBody.getBoundingClientRect();
+          var footRect = footer.getBoundingClientRect();
+          return footRect.bottom - topRect.top;
+        }
+        return document.body.scrollHeight;
+      });
+    }
+
+    function updatePrintMode(maxHeight) {
+      var root = document.documentElement;
+      var overflow =
+        measurePrintContentHeight() * MEASURE_PADDING > maxHeight + 1;
+      var atMin = readPrintScale() <= MIN_SCALE + 0.001;
+      root.classList.toggle("print-multi-page", overflow && atMin);
     }
 
     function fitPrintToA4() {
       var root = document.documentElement;
       root.style.setProperty("--print-scale", "1");
+      root.classList.remove("print-multi-page");
       var maxHeight = measureA4HeightPx();
       if (!maxHeight) return;
 
       for (var i = 0; i < MAX_ITERATIONS; i++) {
         var contentHeight = measurePrintContentHeight() * MEASURE_PADDING;
-        if (!contentHeight || contentHeight <= maxHeight) return;
+        if (!contentHeight || contentHeight <= maxHeight) {
+          updatePrintMode(maxHeight);
+          return;
+        }
         var currentScale = readPrintScale();
         var nextScale = Math.min(
           1,
-          currentScale * (maxHeight / contentHeight) * SCALE_SAFETY
+          Math.max(
+            MIN_SCALE,
+            currentScale * (maxHeight / contentHeight) * SCALE_SAFETY
+          )
         );
         root.style.setProperty("--print-scale", String(nextScale));
-        if (currentScale - nextScale < 0.001) return;
+        if (currentScale - nextScale < 0.001) break;
       }
+      updatePrintMode(maxHeight);
     }
 
-    function resetPrintFit() {
-      var root = document.documentElement;
-      root.style.removeProperty("--print-scale");
-      root.classList.remove("is-print-measure");
+    function cleanupMeasure() {
+      document.documentElement.classList.remove("is-print-measure");
     }
 
     function scheduleFit() {
       fitPrintToA4();
       window.requestAnimationFrame(function () {
         fitPrintToA4();
-        window.requestAnimationFrame(fitPrintToA4);
       });
     }
 
+    refitPrintLayout = fitPrintToA4;
+
+    var photo = document.querySelector(".photo");
+    if (photo && !photo.complete) {
+      photo.addEventListener("load", scheduleFit, { once: true });
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(scheduleFit);
+    }
+    scheduleFit();
+
     window.addEventListener("beforeprint", scheduleFit);
-    window.addEventListener("afterprint", resetPrintFit);
+    window.addEventListener("afterprint", cleanupMeasure);
 
     if (window.matchMedia) {
       var printMql = window.matchMedia("print");
       if (printMql.addEventListener) {
         printMql.addEventListener("change", function (event) {
           if (event.matches) scheduleFit();
-          else resetPrintFit();
+          else cleanupMeasure();
         });
       } else if (printMql.addListener) {
         printMql.addListener(function (event) {
           if (event.matches) scheduleFit();
-          else resetPrintFit();
+          else cleanupMeasure();
         });
       }
     }
@@ -640,5 +682,14 @@
     });
   }
 
-  global.CVI18n = { init: init, apply: apply, switchLang: switchLang, detectLang: detectLang, t: t };
+  global.CVI18n = {
+    init: init,
+    apply: apply,
+    switchLang: switchLang,
+    detectLang: detectLang,
+    t: t,
+    refitPrint: function () {
+      if (refitPrintLayout) refitPrintLayout();
+    },
+  };
 })(window);
