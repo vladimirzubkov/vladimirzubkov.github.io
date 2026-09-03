@@ -539,6 +539,7 @@
 
   function initPrintFit() {
     var A4_HEIGHT_MM = 268.2;
+    var FIT_TOLERANCE = 1.01;
 
     function measureA4HeightPx() {
       var probe = document.createElement("div");
@@ -552,22 +553,54 @@
       return height;
     }
 
+    function measurePrintContentHeight() {
+      var root = document.documentElement;
+      root.classList.add("is-print-measure");
+      void root.offsetHeight;
+      var height = document.body.scrollHeight;
+      root.classList.remove("is-print-measure");
+      return height;
+    }
+
     function fitPrintToA4() {
       var root = document.documentElement;
       root.style.setProperty("--print-scale", "1");
       var maxHeight = measureA4HeightPx();
-      var contentHeight = document.body.scrollHeight;
-      if (!maxHeight || contentHeight <= maxHeight) return;
-      var scale = Math.min(1, (maxHeight / contentHeight) * 0.995);
+      var contentHeight = measurePrintContentHeight();
+      if (!maxHeight || contentHeight <= maxHeight * FIT_TOLERANCE) return;
+      var scale = Math.min(1, maxHeight / contentHeight);
       root.style.setProperty("--print-scale", String(scale));
     }
 
     function resetPrintFit() {
-      document.documentElement.style.removeProperty("--print-scale");
+      var root = document.documentElement;
+      root.style.removeProperty("--print-scale");
+      root.classList.remove("is-print-measure");
     }
 
-    window.addEventListener("beforeprint", fitPrintToA4);
+    function scheduleFit() {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(fitPrintToA4);
+      });
+    }
+
+    window.addEventListener("beforeprint", scheduleFit);
     window.addEventListener("afterprint", resetPrintFit);
+
+    if (window.matchMedia) {
+      var printMql = window.matchMedia("print");
+      if (printMql.addEventListener) {
+        printMql.addEventListener("change", function (event) {
+          if (event.matches) scheduleFit();
+          else resetPrintFit();
+        });
+      } else if (printMql.addListener) {
+        printMql.addListener(function (event) {
+          if (event.matches) scheduleFit();
+          else resetPrintFit();
+        });
+      }
+    }
   }
 
   function init() {

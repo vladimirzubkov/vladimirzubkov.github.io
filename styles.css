@@ -609,6 +609,153 @@ footer {
   }
 }
 
+/* Screen-only clone of print layout for accurate height measurement before zoom */
+@media screen {
+  html.is-print-measure {
+    width: 181.2mm;
+    margin: 0;
+    background: #fff;
+  }
+
+  html.is-print-measure body {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-height: var(--print-a4-height) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 14pt !important;
+    line-height: 1.35 !important;
+  }
+
+  html.is-print-measure .topbar,
+  html.is-print-measure .footer-left {
+    display: none !important;
+  }
+
+  html.is-print-measure .page-body,
+  html.is-print-measure .hero,
+  html.is-print-measure main,
+  html.is-print-measure footer {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    transition: none !important;
+  }
+
+  html.is-print-measure .hero {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 3.6mm !important;
+    padding: 0 0 3.6mm !important;
+    text-align: left !important;
+  }
+
+  html.is-print-measure .photo {
+    width: 32mm !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    border: 0.3pt solid #999 !important;
+    box-shadow: none !important;
+    object-fit: unset !important;
+  }
+
+  html.is-print-measure .brand {
+    font-size: 20pt !important;
+    margin: 0 0 1.2mm !important;
+  }
+
+  html.is-print-measure .hero h1 {
+    margin: 0 0 2.4mm !important;
+    font-size: 14pt !important;
+    color: #333 !important;
+  }
+
+  html.is-print-measure .lede {
+    margin: 0 0 2.4mm !important;
+    max-width: none !important;
+  }
+
+  html.is-print-measure .contacts {
+    font-size: 12pt !important;
+    color: #333 !important;
+  }
+
+  html.is-print-measure main {
+    padding: 0 !important;
+  }
+
+  html.is-print-measure section {
+    margin-top: 3.6mm !important;
+    padding-top: 3mm !important;
+    border-top: none !important;
+  }
+
+  html.is-print-measure h2 {
+    margin: 0 0 1.8mm !important;
+    font-size: 15pt !important;
+  }
+
+  html.is-print-measure .timeline {
+    gap: 2.4mm !important;
+  }
+
+  html.is-print-measure .timeline-head,
+  html.is-print-measure .timeline-body {
+    display: grid !important;
+    grid-template-columns: 32mm 1fr !important;
+    column-gap: 3.6mm !important;
+    align-items: baseline !important;
+  }
+
+  html.is-print-measure .timeline-body {
+    margin-top: 0.6mm !important;
+    row-gap: 0 !important;
+  }
+
+  html.is-print-measure .when-primary,
+  html.is-print-measure .when-secondary {
+    font-size: 10pt !important;
+    color: #444 !important;
+    line-height: 1.25 !important;
+  }
+
+  html.is-print-measure .timeline p,
+  html.is-print-measure section > p,
+  html.is-print-measure .plain li {
+    margin: 0.6mm 0 0 !important;
+    color: #333 !important;
+  }
+
+  html.is-print-measure .chips {
+    gap: 1.8mm !important;
+  }
+
+  html.is-print-measure .chips li {
+    padding: 0.7mm 2.4mm !important;
+    font-size: 12pt !important;
+  }
+
+  html.is-print-measure .plain {
+    padding-left: 4.8mm !important;
+  }
+
+  html.is-print-measure footer {
+    margin-top: auto !important;
+    padding: 0 !important;
+    font-size: 10pt !important;
+  }
+
+  html.is-print-measure .footer-line {
+    margin: 0 !important;
+    padding-top: 3mm !important;
+    border-top: none !important;
+  }
+}
+
 /* One A4 sheet — beforeprint JS may lower --print-scale to fit content */
 @page {
   size: A4 portrait;
