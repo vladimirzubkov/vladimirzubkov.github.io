@@ -561,11 +561,25 @@
     }
 
     function readPrintScale() {
-      var inline = document.documentElement.style
-        .getPropertyValue("--print-scale")
-        .trim();
+      var root = document.documentElement;
+      var inline = root.style.getPropertyValue("--print-u").trim();
+      if (!inline) inline = root.style.getPropertyValue("--print-scale").trim();
       var scale = parseFloat(inline);
       return Number.isFinite(scale) && scale > 0 ? scale : 1;
+    }
+
+    function applyPrintScale(scale) {
+      var root = document.documentElement;
+      var value = String(scale);
+      root.style.setProperty("--print-scale", value);
+      root.style.setProperty("--print-u", value);
+    }
+
+    function clearPrintScale() {
+      var root = document.documentElement;
+      root.style.removeProperty("--print-scale");
+      root.style.removeProperty("--print-u");
+      root.style.removeProperty("--print-page-total");
     }
 
     function withPrintMeasure(fn) {
@@ -593,22 +607,36 @@
 
     function updatePrintMode(maxHeight) {
       var root = document.documentElement;
-      var overflow =
-        measurePrintContentHeight() * MEASURE_PADDING > maxHeight + 1;
-      var atMin = readPrintScale() <= MIN_SCALE + 0.001;
-      root.classList.toggle("print-multi-page", overflow && atMin);
+      var contentHeight = measurePrintContentHeight();
+      var scale = readPrintScale();
+      var scaledHeight = contentHeight * scale;
+      var overflow = scaledHeight * MEASURE_PADDING > maxHeight + 1;
+      var atMin = scale <= MIN_SCALE + 0.001;
+      var estimatedPages = Math.max(
+        1,
+        Math.ceil((scaledHeight * MEASURE_PADDING) / maxHeight)
+      );
+      var multi = overflow && atMin && estimatedPages > 1;
+      root.classList.toggle("print-multi-page", multi);
+      if (multi) {
+        root.style.setProperty("--print-page-total", String(estimatedPages));
+      } else {
+        root.style.removeProperty("--print-page-total");
+      }
     }
 
     function fitPrintToA4() {
       var root = document.documentElement;
-      root.style.setProperty("--print-scale", "1");
+      applyPrintScale(1);
       root.classList.remove("print-multi-page");
+      root.style.removeProperty("--print-page-total");
       var maxHeight = measureA4HeightPx();
       if (!maxHeight) return;
 
       for (var i = 0; i < MAX_ITERATIONS; i++) {
-        var contentHeight = measurePrintContentHeight() * MEASURE_PADDING;
-        if (!contentHeight || contentHeight <= maxHeight) {
+        var contentHeight = measurePrintContentHeight();
+        var scaledHeight = contentHeight * readPrintScale();
+        if (!scaledHeight || scaledHeight * MEASURE_PADDING <= maxHeight) {
           updatePrintMode(maxHeight);
           return;
         }
@@ -617,10 +645,10 @@
           1,
           Math.max(
             MIN_SCALE,
-            currentScale * (maxHeight / contentHeight) * SCALE_SAFETY
+            currentScale * (maxHeight / (scaledHeight * MEASURE_PADDING)) * SCALE_SAFETY
           )
         );
-        root.style.setProperty("--print-scale", String(nextScale));
+        applyPrintScale(nextScale);
         if (currentScale - nextScale < 0.001) break;
       }
       updatePrintMode(maxHeight);
