@@ -545,7 +545,7 @@
   }
 
   function initPrintFit() {
-    var A4_HEIGHT_MM = 268.2; // A4 297mm − 2 × 14.4mm @page margins
+    var A4_HEIGHT_MM = 276.65; // A4 297mm − 14.4mm top − 6.35mm bottom (1.5rem)
     var MIN_SCALE = 0.75; // never shrink below 75%
     var SAFETY = 0.97; // leave a little slack so nothing spills over
     var root = document.documentElement;

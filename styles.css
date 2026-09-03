@@ -28,7 +28,7 @@
   --lang-width: 0.25s;
   --brand-fx-duration: 0.5s;
   --section-gap: 2.25rem;
-  --print-a4-height: 268.2mm; /* A4 297mm − 2 × 14.4mm @page margins */
+  --print-a4-height: 276.65mm; /* A4 297mm − 14.4mm top − 6.35mm bottom (1.5rem) */
   --print-scale: 1;
   --print-u: 1;
 }
@@ -768,7 +768,7 @@ footer {
 /* One A4 sheet — beforeprint JS may lower --print-scale to fit content */
 @page {
   size: A4 portrait;
-  margin: 14.4mm 14.4mm 1.5rem 14.4mm; /* bottom: 1.5rem to “Updated” line */
+  margin: 14.4mm 14.4mm 6.35mm 14.4mm; /* bottom ≈ 1.5rem */
 }
 
 @media print {
