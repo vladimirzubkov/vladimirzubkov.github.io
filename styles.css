@@ -624,9 +624,10 @@ footer {
   }
 
   html.is-print-measure body {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
     width: 100% !important;
-    min-height: 0 !important;
+    min-height: var(--print-a4-height) !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
@@ -751,7 +752,7 @@ footer {
   }
 
   html.is-print-measure footer {
-    margin-top: 0 !important;
+    margin-top: auto !important;
     padding: 0 !important;
     font-size: calc(10pt * var(--print-u)) !important;
   }
@@ -800,9 +801,10 @@ footer {
   }
 
   body {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
     width: auto !important;
-    min-height: 0 !important;
+    min-height: var(--print-a4-height) !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
@@ -977,7 +979,7 @@ footer {
   }
 
   footer {
-    margin-top: 0 !important;
+    margin-top: auto !important;
     padding: 0 !important;
     font-size: calc(10pt * var(--print-u)) !important;
     color: #555 !important;
@@ -1001,6 +1003,7 @@ footer {
   }
 
   html.print-multi-page body {
+    display: block !important;
     min-height: 0 !important;
   }
 
