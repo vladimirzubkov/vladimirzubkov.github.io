@@ -136,7 +136,7 @@
       work_name: "<s>Econophysica</s> Astrologia",
       work_oss: "Open-source a další projekty:",
       interests: "Zájmy",
-      interests_body: "Tenis, plavání, basketbal, běh trotem.",
+      interests_body: "Tenis, plavání, basketbal, běh klusem.",
       hosted: "Hostováno na GitHub Pages ·",
       updated: "Aktualizováno",
       lang_label: "Jazyk",
