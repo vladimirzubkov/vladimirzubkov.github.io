@@ -52,7 +52,7 @@
       languages: "Languages",
       lang_cs: "Czech — advanced (C1 CCE, ÚJOP, 2021)",
       lang_en: "English — upper intermediate (B2, IELTS Score 6.0)",
-      lang_ru: "Russian — native",
+      lang_ru: "Russian — native; understand spoken and written Belarusian, Ukrainian, Slovak languages",
       lang_de: "German — elementary (A2)",
       work: "Selected work",
       work_bot:
@@ -128,7 +128,7 @@
       languages: "Jazyky",
       lang_cs: "Čeština — pokročilá (C1 CCE, ÚJOP, 2021)",
       lang_en: "Angličtina — vyšší středně pokročilá, (B2, IELTS Score 6.0)",
-      lang_ru: "Ruština — mateřský jazyk",
+      lang_ru: "Ruština — mateřský jazyk; rozumím mluvené a psané běloruštině, ukrajinštině a slovenštině",
       lang_de: "Němčina — základní (A2)",
       work: "Vybraná práce",
       work_bot:
@@ -206,7 +206,7 @@
       languages: "Языки",
       lang_cs: "Чешский — продвинутый (C1 CCE, ÚJOP, 2021)",
       lang_en: "Английский — выше среднего, (B2, IELTS Score 6.0)",
-      lang_ru: "Русский — родной",
+      lang_ru: "Русский — родной; понимаю устную и письменную белорусскую, украинскую и словацкую речь",
       lang_de: "Немецкий — начальный (A2)",
       work: "Избранные проекты",
       work_bot:
