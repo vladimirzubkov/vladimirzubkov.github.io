@@ -4,6 +4,7 @@
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 130;
   var LANG_FADE_IN_MS = 250;
+  var LANG_WIDTH_MS = 250;
   var BRAND_FX_MS = 500;
   // Language switch: fade out, commit the whole layout change (text + column
   // width + height) instantly while invisible and pin the viewport to the same
@@ -12,6 +13,7 @@
   var langSwitching = false;
   var pendingScrollY = null;
   var refitPrintLayout = null;
+  var refitHeroCollapse = null;
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -423,6 +425,17 @@
     }
   }
 
+  function nudgeHeroCollapseDuringWidth() {
+    if (!refitHeroCollapse) return;
+    refitHeroCollapse();
+    var start = performance.now();
+    function tick(now) {
+      refitHeroCollapse();
+      if (now - start < LANG_WIDTH_MS + 80) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function switchLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = "en";
     if (lang === currentLang || langSwitching) return;
@@ -453,6 +466,7 @@
         apply(lang, { skipPrintFit: true });
       }
       finish();
+      nudgeHeroCollapseDuringWidth();
       return;
     }
 
@@ -469,6 +483,7 @@
       apply(lang, { skipBrand: brandChanges, skipPrintFit: true });
       void root.offsetHeight;
       pinScroll(scrollY);
+      nudgeHeroCollapseDuringWidth();
 
       var brandPromise = Promise.resolve();
       if (brandChanges) {
@@ -485,6 +500,7 @@
           })
           .then(function () {
             finish();
+            nudgeHeroCollapseDuringWidth();
             if (main) main.removeAttribute("aria-busy");
             langSwitching = false;
           });
@@ -583,9 +599,26 @@
     }
 
     function contentLeft() {
-      var rect = pageBody.getBoundingClientRect();
-      var pad = parseFloat(getComputedStyle(pageBody).paddingLeft);
+      var rect = topbar.getBoundingClientRect();
+      var pad = parseFloat(getComputedStyle(topbar).paddingLeft);
       return rect.left + (Number.isNaN(pad) ? 0 : pad);
+    }
+
+    function collapsedTargets(photoSize) {
+      var topbarRect = topbar.getBoundingClientRect();
+      var topbarH = topbar.offsetHeight;
+      var endPhotoLeft = contentLeft();
+      var endPhotoTop = topbarRect.top + (topbarH - photoSize) / 2;
+      var endBrandSize = Math.max(13, (topbarH - 4) * 0.44);
+      var endBrandLeft = endPhotoLeft + photoSize + 10;
+      var endBrandTop = topbarRect.top + (topbarH - endBrandSize * 1.1) / 2;
+      return {
+        photoTop: endPhotoTop,
+        photoLeft: endPhotoLeft,
+        brandTop: endBrandTop,
+        brandLeft: endBrandLeft,
+        brandSize: endBrandSize,
+      };
     }
 
     function captureMetrics() {
@@ -632,11 +665,12 @@
       hero.classList.toggle("is-hero-collapsed", progress >= 1);
 
       var photoSize = lerp(PHOTO_FULL, mini, progress);
-      var endPhotoTop = topbarH + 2;
-      var endPhotoLeft = contentLeft();
-      var endBrandSize = Math.max(13, mini * 0.44);
-      var endBrandLeft = endPhotoLeft + photoSize + 12;
-      var endBrandTop = endPhotoTop + (photoSize - endBrandSize * 1.1) / 2;
+      var targets = collapsedTargets(photoSize);
+      var endPhotoTop = targets.photoTop;
+      var endPhotoLeft = targets.photoLeft;
+      var endBrandSize = targets.brandSize;
+      var endBrandLeft = targets.brandLeft;
+      var endBrandTop = targets.brandTop;
 
       var startPhotoTop = metrics.photoTop - scrollY;
       var startBrandTop = metrics.brandTop - scrollY;
@@ -667,7 +701,7 @@
         shadowBlur +
         "px rgba(26,35,50," +
         shadowAlpha +
-        ");z-index:90;margin:0;";
+        ");z-index:101;margin:0;";
 
       brand.style.cssText =
         "position:fixed;top:" +
@@ -676,9 +710,10 @@
         brandLeft +
         "px;font-size:" +
         brandSize +
-        "px;line-height:1.1;margin:0;padding:0;z-index:90;";
+        "px;line-height:1.1;margin:0;padding:0;z-index:101;";
 
-      spacer.style.height = lerp(metrics.headHeight, mini + 4, progress) + "px";
+      spacer.style.height =
+        (progress >= 1 ? 0 : lerp(metrics.headHeight, mini + 4, progress)) + "px";
     }
 
     function schedule() {
@@ -689,6 +724,8 @@
       });
     }
 
+    refitHeroCollapse = schedule;
+
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", function () {
       metrics = null;
@@ -698,6 +735,13 @@
       metrics = null;
       schedule();
     });
+
+    if (typeof ResizeObserver !== "undefined") {
+      var topbarObserver = new ResizeObserver(schedule);
+      topbarObserver.observe(topbar);
+      topbarObserver.observe(pageBody);
+    }
+
     schedule();
   }
 
@@ -824,6 +868,9 @@
     t: t,
     refitPrint: function () {
       if (refitPrintLayout) refitPrintLayout();
+    },
+    refitHeroCollapse: function () {
+      if (refitHeroCollapse) refitHeroCollapse();
     },
   };
 })(window);
