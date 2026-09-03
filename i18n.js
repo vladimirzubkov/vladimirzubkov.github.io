@@ -539,8 +539,9 @@
 
   function initPrintFit() {
     var A4_HEIGHT_MM = 268.2;
-    var SCALE_SAFETY = 0.992;
-    var MAX_ITERATIONS = 6;
+    var SCALE_SAFETY = 0.99;
+    var MEASURE_PADDING = 1.04;
+    var MAX_ITERATIONS = 8;
 
     function measureA4HeightPx() {
       var probe = document.createElement("div");
@@ -555,10 +556,10 @@
     }
 
     function readPrintScale() {
-      var value = getComputedStyle(document.documentElement)
+      var inline = document.documentElement.style
         .getPropertyValue("--print-scale")
         .trim();
-      var scale = parseFloat(value);
+      var scale = parseFloat(inline);
       return Number.isFinite(scale) && scale > 0 ? scale : 1;
     }
 
@@ -579,18 +580,15 @@
       if (!maxHeight) return;
 
       for (var i = 0; i < MAX_ITERATIONS; i++) {
-        var contentHeight = measurePrintContentHeight();
+        var contentHeight = measurePrintContentHeight() * MEASURE_PADDING;
         if (!contentHeight || contentHeight <= maxHeight) return;
         var currentScale = readPrintScale();
         var nextScale = Math.min(
           1,
           currentScale * (maxHeight / contentHeight) * SCALE_SAFETY
         );
-        if (nextScale >= currentScale - 0.0005) {
-          root.style.setProperty("--print-scale", String(nextScale));
-          return;
-        }
         root.style.setProperty("--print-scale", String(nextScale));
+        if (currentScale - nextScale < 0.001) return;
       }
     }
 
@@ -601,7 +599,9 @@
     }
 
     function scheduleFit() {
+      fitPrintToA4();
       window.requestAnimationFrame(function () {
+        fitPrintToA4();
         window.requestAnimationFrame(fitPrintToA4);
       });
     }

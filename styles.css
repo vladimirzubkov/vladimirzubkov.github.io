@@ -30,6 +30,7 @@
   --section-gap: 2.25rem;
   --print-a4-height: 268.2mm; /* A4 297mm − 2 × 14.4mm @page margins */
   --print-scale: 1;
+  --print-u: 1;
 }
 
 html[lang="ru"] {
@@ -612,10 +613,10 @@ footer {
 /* Screen-only clone of print layout for accurate height measurement before zoom */
 @media screen {
   html.is-print-measure {
+    --print-u: var(--print-scale, 1);
     width: 181.2mm;
     margin: 0;
     background: #fff;
-    zoom: var(--print-scale, 1);
   }
 
   html.is-print-measure body {
@@ -627,7 +628,7 @@ footer {
     padding: 0 !important;
     background: #fff !important;
     color: #000 !important;
-    font-size: 14pt !important;
+    font-size: calc(14pt * var(--print-u)) !important;
     line-height: 1.35 !important;
   }
 
@@ -650,38 +651,40 @@ footer {
     display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
-    gap: 3.6mm !important;
-    padding: 0 0 3.6mm !important;
+    gap: calc(3.6mm * var(--print-u)) !important;
+    padding: 0 0 calc(3.6mm * var(--print-u)) !important;
     text-align: left !important;
   }
 
   html.is-print-measure .photo {
-    width: 32mm !important;
+    width: calc(32mm * var(--print-u)) !important;
+    max-height: calc(36mm * var(--print-u)) !important;
     height: auto !important;
     border-radius: 0 !important;
     border: 0.3pt solid #999 !important;
     box-shadow: none !important;
-    object-fit: unset !important;
+    object-fit: cover !important;
+    object-position: center top !important;
   }
 
   html.is-print-measure .brand {
-    font-size: 20pt !important;
-    margin: 0 0 1.2mm !important;
+    font-size: calc(20pt * var(--print-u)) !important;
+    margin: 0 0 calc(1.2mm * var(--print-u)) !important;
   }
 
   html.is-print-measure .hero h1 {
-    margin: 0 0 2.4mm !important;
-    font-size: 14pt !important;
+    margin: 0 0 calc(2.4mm * var(--print-u)) !important;
+    font-size: calc(14pt * var(--print-u)) !important;
     color: #333 !important;
   }
 
   html.is-print-measure .lede {
-    margin: 0 0 2.4mm !important;
+    margin: 0 0 calc(2.4mm * var(--print-u)) !important;
     max-width: none !important;
   }
 
   html.is-print-measure .contacts {
-    font-size: 12pt !important;
+    font-size: calc(12pt * var(--print-u)) !important;
     color: #333 !important;
   }
 
@@ -690,36 +693,36 @@ footer {
   }
 
   html.is-print-measure section {
-    margin-top: 3.6mm !important;
-    padding-top: 3mm !important;
+    margin-top: calc(3.6mm * var(--print-u)) !important;
+    padding-top: calc(3mm * var(--print-u)) !important;
     border-top: none !important;
   }
 
   html.is-print-measure h2 {
-    margin: 0 0 1.8mm !important;
-    font-size: 15pt !important;
+    margin: 0 0 calc(1.8mm * var(--print-u)) !important;
+    font-size: calc(15pt * var(--print-u)) !important;
   }
 
   html.is-print-measure .timeline {
-    gap: 2.4mm !important;
+    gap: calc(2.4mm * var(--print-u)) !important;
   }
 
   html.is-print-measure .timeline-head,
   html.is-print-measure .timeline-body {
     display: grid !important;
-    grid-template-columns: 32mm 1fr !important;
-    column-gap: 3.6mm !important;
+    grid-template-columns: calc(32mm * var(--print-u)) 1fr !important;
+    column-gap: calc(3.6mm * var(--print-u)) !important;
     align-items: baseline !important;
   }
 
   html.is-print-measure .timeline-body {
-    margin-top: 0.6mm !important;
+    margin-top: calc(0.6mm * var(--print-u)) !important;
     row-gap: 0 !important;
   }
 
   html.is-print-measure .when-primary,
   html.is-print-measure .when-secondary {
-    font-size: 10pt !important;
+    font-size: calc(10pt * var(--print-u)) !important;
     color: #444 !important;
     line-height: 1.25 !important;
   }
@@ -727,32 +730,32 @@ footer {
   html.is-print-measure .timeline p,
   html.is-print-measure section > p,
   html.is-print-measure .plain li {
-    margin: 0.6mm 0 0 !important;
+    margin: calc(0.6mm * var(--print-u)) 0 0 !important;
     color: #333 !important;
   }
 
   html.is-print-measure .chips {
-    gap: 1.8mm !important;
+    gap: calc(1.8mm * var(--print-u)) !important;
   }
 
   html.is-print-measure .chips li {
-    padding: 0.7mm 2.4mm !important;
-    font-size: 12pt !important;
+    padding: calc(0.7mm * var(--print-u)) calc(2.4mm * var(--print-u)) !important;
+    font-size: calc(12pt * var(--print-u)) !important;
   }
 
   html.is-print-measure .plain {
-    padding-left: 4.8mm !important;
+    padding-left: calc(4.8mm * var(--print-u)) !important;
   }
 
   html.is-print-measure footer {
     margin-top: auto !important;
     padding: 0 !important;
-    font-size: 10pt !important;
+    font-size: calc(10pt * var(--print-u)) !important;
   }
 
   html.is-print-measure .footer-line {
     margin: 0 !important;
-    padding-top: 3mm !important;
+    padding-top: calc(3mm * var(--print-u)) !important;
     border-top: none !important;
   }
 }
@@ -785,10 +788,10 @@ footer {
     padding: 0 !important;
     background: #fff !important;
     color: #000 !important;
-    font-size: 14pt !important;
+    --print-u: var(--print-scale, 1);
+    font-size: calc(14pt * var(--print-u)) !important;
     line-height: 1.35 !important;
     transition: none !important;
-    zoom: var(--print-scale, 1);
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -802,7 +805,7 @@ footer {
     padding: 0 !important;
     background: #fff !important;
     color: #000 !important;
-    font-size: 14pt !important;
+    font-size: 1em !important;
     line-height: 1.35 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -837,17 +840,17 @@ footer {
     display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
-    gap: 3.6mm !important;
-    padding: 0 0 3.6mm !important;
+    gap: calc(3.6mm * var(--print-u)) !important;
+    padding: 0 0 calc(3.6mm * var(--print-u)) !important;
     text-align: left !important;
   }
 
   /* Photo column matches timeline date column (32mm) + same 3.6mm gap → text aligns */
   .photo {
-    width: 32mm !important;
+    width: calc(32mm * var(--print-u)) !important;
+    max-height: calc(36mm * var(--print-u)) !important;
     height: auto !important;
     max-width: none !important;
-    max-height: none !important;
     padding: 0 !important;
     margin: 0 !important;
     display: block !important;
@@ -855,7 +858,8 @@ footer {
     border: 0.3pt solid #999 !important;
     box-shadow: none !important;
     background: transparent !important;
-    object-fit: unset !important;
+    object-fit: cover !important;
+    object-position: center top !important;
   }
 
   .hero-copy,
@@ -865,23 +869,23 @@ footer {
   }
 
   .brand {
-    font-size: 20pt !important;
-    margin: 0 0 1.2mm !important;
+    font-size: calc(20pt * var(--print-u)) !important;
+    margin: 0 0 calc(1.2mm * var(--print-u)) !important;
   }
 
   .hero h1 {
-    margin: 0 0 2.4mm !important;
-    font-size: 14pt !important;
+    margin: 0 0 calc(2.4mm * var(--print-u)) !important;
+    font-size: calc(14pt * var(--print-u)) !important;
     color: #333 !important;
   }
 
   .lede {
-    margin: 0 0 2.4mm !important;
+    margin: 0 0 calc(2.4mm * var(--print-u)) !important;
     max-width: none !important;
   }
 
   .contacts {
-    font-size: 12pt !important;
+    font-size: calc(12pt * var(--print-u)) !important;
     color: #333 !important;
   }
 
@@ -890,18 +894,18 @@ footer {
   }
 
   section {
-    margin-top: 3.6mm !important;
-    padding-top: 3mm !important;
+    margin-top: calc(3.6mm * var(--print-u)) !important;
+    padding-top: calc(3mm * var(--print-u)) !important;
     border-top: none !important;
   }
 
   h2 {
-    margin: 0 0 1.8mm !important;
-    font-size: 15pt !important;
+    margin: 0 0 calc(1.8mm * var(--print-u)) !important;
+    font-size: calc(15pt * var(--print-u)) !important;
   }
 
   .timeline {
-    gap: 2.4mm !important;
+    gap: calc(2.4mm * var(--print-u)) !important;
   }
 
   .timeline li {
@@ -911,19 +915,19 @@ footer {
   .timeline-head,
   .timeline-body {
     display: grid !important;
-    grid-template-columns: 32mm 1fr !important;
-    column-gap: 3.6mm !important;
+    grid-template-columns: calc(32mm * var(--print-u)) 1fr !important;
+    column-gap: calc(3.6mm * var(--print-u)) !important;
     align-items: baseline !important;
   }
 
   .timeline-body {
-    margin-top: 0.6mm !important;
+    margin-top: calc(0.6mm * var(--print-u)) !important;
     row-gap: 0 !important;
   }
 
   .when-primary,
   .when-secondary {
-    font-size: 10pt !important;
+    font-size: calc(10pt * var(--print-u)) !important;
     color: #444 !important;
     line-height: 1.25 !important;
   }
@@ -940,40 +944,40 @@ footer {
   .timeline p,
   .plain + .note,
   section > p {
-    margin: 0.6mm 0 0 !important;
+    margin: calc(0.6mm * var(--print-u)) 0 0 !important;
     color: #333 !important;
   }
 
   .chips {
-    gap: 1.8mm !important;
+    gap: calc(1.8mm * var(--print-u)) !important;
   }
 
   .chips li {
-    padding: 0.7mm 2.4mm !important;
-    font-size: 12pt !important;
+    padding: calc(0.7mm * var(--print-u)) calc(2.4mm * var(--print-u)) !important;
+    font-size: calc(12pt * var(--print-u)) !important;
     background: #eee !important;
     color: #000 !important;
     border: 0.3pt solid #ccc !important;
   }
 
   .plain {
-    padding-left: 4.8mm !important;
+    padding-left: calc(4.8mm * var(--print-u)) !important;
   }
 
   .plain li {
-    margin: 0.36mm 0 !important;
+    margin: calc(0.36mm * var(--print-u)) 0 !important;
   }
 
   .note {
-    margin-top: 1.8mm !important;
-    font-size: 12pt !important;
+    margin-top: calc(1.8mm * var(--print-u)) !important;
+    font-size: calc(12pt * var(--print-u)) !important;
     color: #333 !important;
   }
 
   footer {
     margin-top: auto !important;
     padding: 0 !important;
-    font-size: 10pt !important;
+    font-size: calc(10pt * var(--print-u)) !important;
     color: #555 !important;
   }
 
@@ -981,10 +985,10 @@ footer {
     display: flex !important;
     justify-content: space-between !important;
     align-items: baseline !important;
-    gap: 3mm !important;
+    gap: calc(3mm * var(--print-u)) !important;
     flex-wrap: nowrap !important;
     margin: 0 !important;
-    padding-top: 3mm !important;
+    padding-top: calc(3mm * var(--print-u)) !important;
     border-top: none !important;
   }
 
