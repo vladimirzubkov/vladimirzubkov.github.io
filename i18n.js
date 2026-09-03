@@ -575,6 +575,8 @@
     var PHOTO_FULL = 160;
     var PHOTO_MIN = 120;
     var BRAND_MIN = 28;
+    var PHOTO_DROP = 8;
+    var PHOTO_CROP_Y = 2;
     var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
@@ -624,7 +626,7 @@
       var topbarRect = topbar.getBoundingClientRect();
       var topbarH = topbar.offsetHeight;
       var endPhotoLeft = contentLeft();
-      var endPhotoTop = topbarRect.top + (topbarH - photoSize) / 2;
+      var endPhotoTop = topbarRect.top + (topbarH - photoSize) / 2 + PHOTO_DROP;
       var endBrandLeft = textColumnLeft();
       var endBrandTop = topbarRect.top + (topbarH - brandSize * 1.1) / 2;
       return {
@@ -703,7 +705,7 @@
       var shadowBlur = lerp(28, 10, progress);
       var shadowY = lerp(8, 3, progress);
       var shadowAlpha = lerp(0.12, 0.08, progress);
-      var objectPosY = lerp(0, 8, progress);
+      var objectPosY = lerp(0, PHOTO_CROP_Y, progress);
 
       photo.style.cssText =
         "position:fixed;top:" +
