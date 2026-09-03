@@ -544,6 +544,163 @@
     });
   }
 
+  function initHeroCollapse() {
+    var topbar = document.querySelector(".topbar");
+    var toggle = document.getElementById("sticky-lang");
+    var hero = document.querySelector(".hero");
+    var spacer = document.querySelector(".hero-top-spacer");
+    var photo = document.querySelector(".photo");
+    var brand = document.querySelector(".brand");
+    var pageBody = document.querySelector(".page-body");
+    if (!topbar || !toggle || !hero || !spacer || !photo || !brand || !pageBody) return;
+
+    var PHOTO_FULL = 160;
+    var COLLAPSE_RANGE = 150;
+    var metrics = null;
+    var raf = 0;
+
+    function disabled() {
+      return (
+        window.matchMedia("(max-width: 640px)").matches ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      );
+    }
+
+    function stickyOn() {
+      return topbar.classList.contains("is-sticky");
+    }
+
+    function reset() {
+      var root = document.documentElement;
+      root.classList.remove("is-hero-collapse-active");
+      root.style.removeProperty("--hero-collapse");
+      root.style.removeProperty("--topbar-height");
+      root.style.removeProperty("--hero-photo-mini");
+      hero.classList.remove("is-hero-collapsed");
+      photo.removeAttribute("style");
+      brand.removeAttribute("style");
+      spacer.style.height = "0";
+    }
+
+    function contentLeft() {
+      var rect = pageBody.getBoundingClientRect();
+      var pad = parseFloat(getComputedStyle(pageBody).paddingLeft);
+      return rect.left + (Number.isNaN(pad) ? 0 : pad);
+    }
+
+    function captureMetrics() {
+      var photoRect = photo.getBoundingClientRect();
+      var brandRect = brand.getBoundingClientRect();
+      metrics = {
+        photoTop: photoRect.top + window.scrollY,
+        photoLeft: photoRect.left,
+        brandTop: brandRect.top + window.scrollY,
+        brandLeft: brandRect.left,
+        brandSize: parseFloat(getComputedStyle(brand).fontSize) || 32,
+        headHeight: Math.max(photoRect.height, brandRect.height),
+      };
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function apply() {
+      if (!stickyOn() || disabled()) {
+        metrics = null;
+        reset();
+        return;
+      }
+
+      var scrollY = window.scrollY;
+      if (scrollY <= 0) {
+        metrics = null;
+        reset();
+        return;
+      }
+
+      if (!metrics) captureMetrics();
+
+      var topbarH = topbar.offsetHeight;
+      var mini = Math.max(28, topbarH - 4);
+      var progress = Math.min(1, scrollY / COLLAPSE_RANGE);
+      var root = document.documentElement;
+      root.style.setProperty("--hero-collapse", String(progress));
+      root.style.setProperty("--topbar-height", topbarH + "px");
+      root.style.setProperty("--hero-photo-mini", mini + "px");
+      root.classList.add("is-hero-collapse-active");
+      hero.classList.toggle("is-hero-collapsed", progress >= 1);
+
+      var photoSize = lerp(PHOTO_FULL, mini, progress);
+      var endPhotoTop = topbarH + 2;
+      var endPhotoLeft = contentLeft();
+      var endBrandSize = Math.max(13, mini * 0.44);
+      var endBrandLeft = endPhotoLeft + photoSize + 12;
+      var endBrandTop = endPhotoTop + (photoSize - endBrandSize * 1.1) / 2;
+
+      var startPhotoTop = metrics.photoTop - scrollY;
+      var startBrandTop = metrics.brandTop - scrollY;
+      var photoTop = lerp(startPhotoTop, endPhotoTop, progress);
+      var photoLeft = lerp(metrics.photoLeft, endPhotoLeft, progress);
+      var brandTop = lerp(startBrandTop, endBrandTop, progress);
+      var brandLeft = lerp(metrics.brandLeft, endBrandLeft, progress);
+      var brandSize = lerp(metrics.brandSize, endBrandSize, progress);
+      var borderW = lerp(3, 1.5, progress);
+      var shadowBlur = lerp(28, 8, progress);
+      var shadowY = lerp(8, 2, progress);
+      var shadowAlpha = lerp(0.12, 0.06, progress);
+
+      photo.style.cssText =
+        "position:fixed;top:" +
+        photoTop +
+        "px;left:" +
+        photoLeft +
+        "px;width:" +
+        photoSize +
+        "px;height:" +
+        photoSize +
+        "px;border-radius:50%;border:" +
+        borderW +
+        "px solid var(--paper);box-shadow:0 " +
+        shadowY +
+        "px " +
+        shadowBlur +
+        "px rgba(26,35,50," +
+        shadowAlpha +
+        ");z-index:90;margin:0;";
+
+      brand.style.cssText =
+        "position:fixed;top:" +
+        brandTop +
+        "px;left:" +
+        brandLeft +
+        "px;font-size:" +
+        brandSize +
+        "px;line-height:1.1;margin:0;padding:0;z-index:90;";
+
+      spacer.style.height = lerp(metrics.headHeight, mini + 4, progress) + "px";
+    }
+
+    function schedule() {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        apply();
+      });
+    }
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", function () {
+      metrics = null;
+      schedule();
+    });
+    toggle.addEventListener("change", function () {
+      metrics = null;
+      schedule();
+    });
+    schedule();
+  }
+
   function initPrintFit() {
     var A4_HEIGHT_MM = 276.65; // A4 297mm − 14.4mm top − 6.35mm bottom (1.5rem)
     var MIN_SCALE = 0.75; // never shrink below 75%
@@ -640,6 +797,7 @@
     apply(lang, { skipBrand: !!brand });
     loadVisitorCount();
     initStickyTopbar();
+    initHeroCollapse();
     initPrintFit();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {
       btn.addEventListener("pointerdown", rememberScrollY);

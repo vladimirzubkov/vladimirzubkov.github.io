@@ -334,30 +334,51 @@ a:hover {
 }
 
 .hero {
-  display: flex;
-  gap: 1.75rem;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 1.75rem;
+  row-gap: 0;
+  align-items: start;
   width: 100%;
   margin: 0;
   padding: 3.5rem 1.25rem 0;
 }
 
-.page-body {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  transition: max-width var(--lang-width) ease;
+.hero-top-spacer {
+  display: none;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  height: 0;
+  pointer-events: none;
 }
 
-.hero-copy {
-  flex: 1;
-  min-width: 0;
+html.is-hero-collapse-active .hero-top-spacer {
+  display: block;
 }
 
-.nowrap {
-  white-space: nowrap;
+.hero.is-hero-collapsed .hero-copy {
+  grid-column: 1 / -1;
+}
+
+html.is-hero-collapse-active::before {
+  content: "";
+  position: fixed;
+  top: var(--topbar-height, 0);
+  left: 0;
+  right: 0;
+  height: calc(var(--hero-photo-mini, 2.5rem) + 4px);
+  background: rgba(243, 246, 250, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 89;
+  opacity: var(--hero-collapse, 0);
+  pointer-events: none;
 }
 
 .photo {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: start;
   width: 160px;
   height: 160px;
   flex-shrink: 0;
@@ -367,9 +388,25 @@ a:hover {
   border: 3px solid var(--paper);
   box-shadow: 0 8px 28px rgba(26, 35, 50, 0.12);
   background: var(--paper);
+  transform-origin: top left;
+  will-change: transform, width, height;
+}
+
+html.is-hero-collapse-active .photo,
+html.is-hero-collapse-active .brand {
+  z-index: 90;
+}
+
+.page-body {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  transition: max-width var(--lang-width) ease;
 }
 
 .brand {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
   display: grid;
   position: relative;
   overflow: hidden;
@@ -380,6 +417,17 @@ a:hover {
   font-weight: 650;
   letter-spacing: -0.02em;
   line-height: 1.1;
+}
+
+.hero-copy {
+  grid-column: 2;
+  grid-row: 2;
+  flex: none;
+  min-width: 0;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .brand-text {
@@ -585,10 +633,22 @@ footer {
 
 @media (max-width: 640px) {
   .hero {
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding-top: 2.5rem;
+  }
+
+  .photo,
+  .brand,
+  .hero-copy {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .hero-top-spacer {
+    display: none !important;
   }
 
   .lede {
@@ -824,8 +884,25 @@ footer {
   .topbar,
   .lang-switch,
   .project-more,
-  .footer-left {
+  .footer-left,
+  html.is-hero-collapse-active::before {
     display: none !important;
+  }
+
+  .photo,
+  .brand {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    font-size: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .hero-top-spacer {
+    display: none !important;
+    height: 0 !important;
   }
 
   .hero,
