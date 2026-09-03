@@ -573,8 +573,8 @@
       return;
 
     var PHOTO_FULL = 160;
-    var PHOTO_MIN = 68;
-    var BRAND_MIN = 24;
+    var PHOTO_MIN = 100;
+    var BRAND_MIN = 28;
     var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
