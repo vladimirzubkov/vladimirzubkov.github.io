@@ -61,8 +61,10 @@ html.is-lang-fading .lang-fade-target {
   transition: opacity var(--lang-fade-out) ease;
 }
 
-/* While the content is faded out we commit the layout change instantly, so no
-   width/height animation is ever seen. The topbar keeps its own smooth slide. */
+html.is-lang-switching {
+  scroll-behavior: auto !important;
+}
+
 html.is-lang-instant,
 html.is-lang-instant .page-body,
 html.is-lang-instant .page-hero,

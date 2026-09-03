@@ -10,6 +10,7 @@
   // spot, then fade the new language in. Brand crossfades 500ms on RU boundary.
   var currentLang = null;
   var langSwitching = false;
+  var pendingScrollY = null;
   var refitPrintLayout = null;
   var SUPPORTED = ["en", "cs", "ru"];
 
@@ -309,39 +310,35 @@
     });
   }
 
-  function captureScrollAnchor() {
-    var probeY = Math.min(160, Math.max(80, window.innerHeight * 0.2));
-    var probeX = Math.min(
-      window.innerWidth,
-      document.documentElement.clientWidth
-    ) / 2;
-    var node = document.elementFromPoint(probeX, probeY);
-    if (!node) return { scrollY: window.scrollY };
-    var anchor = node.closest("section, header.hero, main, footer, .page-body");
-    if (!anchor) anchor = node;
-    return {
-      anchor: anchor,
-      top: anchor.getBoundingClientRect().top,
-      scrollY: window.scrollY,
-    };
+  function getScrollY() {
+    return window.scrollY || document.documentElement.scrollTop || 0;
   }
 
-  function restoreScrollAnchor(snapshot) {
-    if (!snapshot) return;
-    if (snapshot.anchor && snapshot.anchor.isConnected) {
-      var delta = snapshot.anchor.getBoundingClientRect().top - snapshot.top;
-      if (Math.abs(delta) > 0.5) {
-        var root = document.documentElement;
-        var prev = root.style.scrollBehavior;
-        root.style.scrollBehavior = "auto";
-        window.scrollBy(0, delta);
-        root.style.scrollBehavior = prev;
-        return;
-      }
+  function rememberScrollY() {
+    pendingScrollY = getScrollY();
+  }
+
+  function pinScroll(y) {
+    if (typeof y !== "number") return;
+    var root = document.documentElement;
+    root.style.scrollBehavior = "auto";
+    try {
+      window.scrollTo({ top: y, left: 0, behavior: "instant" });
+    } catch (e) {
+      window.scrollTo(0, y);
     }
-    if (typeof snapshot.scrollY === "number") {
-      window.scrollTo(0, snapshot.scrollY);
+  }
+
+  // Keep the viewport at y even if focus/layout tries to jump to top.
+  function holdScroll(y) {
+    pinScroll(y);
+    function onScroll() {
+      if (Math.abs(getScrollY() - y) > 0.5) pinScroll(y);
     }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return function release() {
+      window.removeEventListener("scroll", onScroll);
+    };
   }
 
   function beginLangFadeIn(root) {
@@ -421,7 +418,7 @@
     }
 
     currentLang = lang;
-    if (refitPrintLayout) {
+    if (refitPrintLayout && !opts.skipPrintFit) {
       window.requestAnimationFrame(refitPrintLayout);
     }
   }
@@ -432,37 +429,46 @@
 
     var fromLang = currentLang;
     var brandChanges = brandNameChanges(fromLang, lang);
+    var scrollY =
+      typeof pendingScrollY === "number" ? pendingScrollY : getScrollY();
+    pendingScrollY = null;
+
+    var root = document.documentElement;
+    root.classList.add("is-lang-switching");
+    var releaseHold = holdScroll(scrollY);
+
+    function finish() {
+      pinScroll(scrollY);
+      releaseHold();
+      root.classList.remove("is-lang-switching");
+      root.style.scrollBehavior = "";
+    }
 
     if (prefersReducedMotion()) {
-      var scrollAnchorReduced = captureScrollAnchor();
       if (brandChanges) {
         var brandReduced = getBrandEl();
         if (brandReduced) syncBrandState(brandReduced, lang, true);
-        apply(lang, { skipBrand: true });
+        apply(lang, { skipBrand: true, skipPrintFit: true });
       } else {
-        apply(lang);
+        apply(lang, { skipPrintFit: true });
       }
-      restoreScrollAnchor(scrollAnchorReduced);
+      finish();
       return;
     }
 
     langSwitching = true;
-    var root = document.documentElement;
     var main = document.querySelector("main");
     if (main) main.setAttribute("aria-busy", "true");
 
-    var scrollAnchor = captureScrollAnchor();
     root.classList.add("is-lang-fading");
 
     window.setTimeout(function () {
-      // Content is now invisible (opacity 0). Commit the whole layout change
-      // instantly here — text swap, column width, resulting height — and pin
-      // the viewport to the same spot. Nothing visible moves; when we fade the
-      // new language in, it is already in its final position.
+      // Content is invisible. Swap text/layout instantly and keep the same
+      // scroll offset — no visible jump to the top.
       root.classList.add("is-lang-instant");
-      apply(lang, { skipBrand: brandChanges });
-      void root.offsetHeight; // force reflow so final layout is measured
-      restoreScrollAnchor(scrollAnchor);
+      apply(lang, { skipBrand: brandChanges, skipPrintFit: true });
+      void root.offsetHeight;
+      pinScroll(scrollY);
 
       var brandPromise = Promise.resolve();
       if (brandChanges) {
@@ -471,12 +477,14 @@
       }
 
       window.requestAnimationFrame(function () {
+        pinScroll(scrollY);
         root.classList.remove("is-lang-instant");
         beginLangFadeIn(root)
           .then(function () {
             return brandPromise;
           })
           .then(function () {
+            finish();
             if (main) main.removeAttribute("aria-busy");
             langSwitching = false;
           });
@@ -634,7 +642,17 @@
     initStickyTopbar();
     initPrintFit();
     document.querySelectorAll(".lang-switch button").forEach(function (btn) {
+      btn.addEventListener("pointerdown", rememberScrollY);
+      btn.addEventListener("mousedown", function (e) {
+        rememberScrollY();
+        // Sticky bar sits at the top of the document flow; focusing it would
+        // scroll the page to the start. Click still fires after this.
+        e.preventDefault();
+      });
       btn.addEventListener("click", function () {
+        try {
+          btn.focus({ preventScroll: true });
+        } catch (e) {}
         switchLang(btn.getAttribute("data-lang"));
       });
     });
