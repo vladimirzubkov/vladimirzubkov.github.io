@@ -573,10 +573,10 @@
       return;
 
     var PHOTO_FULL = 160;
-    var PHOTO_MIN = 120;
+    var PHOTO_MIN = 110;
     var BRAND_MIN = 28;
     var PHOTO_DROP = 8;
-    var PHOTO_CROP_Y = 2;
+    var PHOTO_CROP_Y = 0.5;
     var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
