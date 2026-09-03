@@ -309,6 +309,51 @@
     });
   }
 
+  function captureScrollAnchor() {
+    var probeY = Math.min(160, Math.max(80, window.innerHeight * 0.2));
+    var probeX = Math.min(
+      window.innerWidth,
+      document.documentElement.clientWidth
+    ) / 2;
+    var node = document.elementFromPoint(probeX, probeY);
+    if (!node) return { scrollY: window.scrollY };
+    var anchor = node.closest("section, header.hero, main, footer, .page-body");
+    if (!anchor) anchor = node;
+    return {
+      anchor: anchor,
+      top: anchor.getBoundingClientRect().top,
+      scrollY: window.scrollY,
+    };
+  }
+
+  function restoreScrollAnchor(snapshot) {
+    if (!snapshot) return;
+    if (snapshot.anchor && snapshot.anchor.isConnected) {
+      var delta = snapshot.anchor.getBoundingClientRect().top - snapshot.top;
+      if (Math.abs(delta) > 0.5) {
+        var root = document.documentElement;
+        var prev = root.style.scrollBehavior;
+        root.style.scrollBehavior = "auto";
+        window.scrollBy(0, delta);
+        root.style.scrollBehavior = prev;
+        return;
+      }
+    }
+    if (typeof snapshot.scrollY === "number") {
+      window.scrollTo(0, snapshot.scrollY);
+    }
+  }
+
+  function restoreScrollAfterLayout(snapshot) {
+    restoreScrollAnchor(snapshot);
+    window.requestAnimationFrame(function () {
+      restoreScrollAnchor(snapshot);
+      window.requestAnimationFrame(function () {
+        restoreScrollAnchor(snapshot);
+      });
+    });
+  }
+
   function layoutWidthChanges(fromLang, toLang) {
     return brandNameChanges(fromLang, toLang);
   }
@@ -448,6 +493,7 @@
     var widthChanges = layoutWidthChanges(fromLang, lang);
 
     if (prefersReducedMotion()) {
+      var scrollAnchorReduced = captureScrollAnchor();
       if (brandChanges) {
         var brandReduced = getBrandEl();
         if (brandReduced) syncBrandState(brandReduced, lang, true);
@@ -455,10 +501,12 @@
       } else {
         apply(lang);
       }
+      restoreScrollAfterLayout(scrollAnchorReduced);
       return;
     }
 
     langSwitching = true;
+    var scrollAnchor = captureScrollAnchor();
     var root = document.documentElement;
     var main = document.querySelector("main");
     if (main) main.setAttribute("aria-busy", "true");
@@ -469,6 +517,7 @@
 
     window.setTimeout(function () {
       apply(lang, { skipBrand: brandChanges });
+      restoreScrollAnchor(scrollAnchor);
       if (brandChanges) {
         var brand = getBrandEl();
         if (brand) brandPromise = animateBrandCrossfade(brand, lang);
@@ -483,6 +532,7 @@
           return brandPromise;
         })
         .then(function () {
+          restoreScrollAfterLayout(scrollAnchor);
           if (main) main.removeAttribute("aria-busy");
           langSwitching = false;
         });
