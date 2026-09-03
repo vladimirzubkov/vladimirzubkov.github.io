@@ -30,7 +30,7 @@
         '09/2026 – <em class="accent-running">present</em>',
       edu_cvut_master_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_master_detail:
-        "Open Informatics, specialization Artificial Intelligence. Master studies.",
+        'Open Informatics, specialization Artificial Intelligence. Master studies <em>(from 8 September 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">present</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
@@ -106,7 +106,7 @@
         '09/2026 – <em class="accent-running">dosud</em>',
       edu_cvut_master_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_master_detail:
-        "Otevřená informatika, specializace Umělá inteligence. Magisterské studium.",
+        'Otevřená informatika, specializace Umělá inteligence. Magisterské studium <em>(od 8. září 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">dosud</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
@@ -183,7 +183,7 @@
       edu_cvut_master_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_master_detail:
-        "Открытая информатика, специализация «Искусственный интеллект». Магистратура.",
+        'Открытая информатика, специализация «Искусственный интеллект». Магистратура <em>(с 8. 9. 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 — <em class="accent-running">н.в.</em>',
       edu_cvut_when_secondary: "09/2021 — 05/2023",
