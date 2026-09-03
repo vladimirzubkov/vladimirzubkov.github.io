@@ -624,10 +624,9 @@ footer {
   }
 
   html.is-print-measure body {
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
     width: 100% !important;
-    min-height: var(--print-a4-height) !important;
+    min-height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
@@ -752,7 +751,7 @@ footer {
   }
 
   html.is-print-measure footer {
-    margin-top: auto !important;
+    margin-top: calc(2.4mm * var(--print-u)) !important;
     padding: 0 !important;
     font-size: calc(10pt * var(--print-u)) !important;
   }
@@ -804,7 +803,7 @@ footer {
     display: flex !important;
     flex-direction: column !important;
     width: auto !important;
-    min-height: var(--print-a4-height) !important;
+    min-height: calc(var(--print-a4-height) - 4mm) !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
@@ -1002,13 +1001,9 @@ footer {
     white-space: nowrap !important;
   }
 
+  /* Footer pinned to bottom of the LAST sheet across multiple pages */
   html.print-multi-page body {
-    display: block !important;
-    min-height: 0 !important;
-  }
-
-  html.print-multi-page footer {
-    margin-top: 0 !important;
+    min-height: calc(var(--print-page-total, 1) * var(--print-a4-height) - 4mm) !important;
   }
 
   html.print-multi-page .print-page-number {
@@ -1022,9 +1017,11 @@ footer {
     color: #555 !important;
     pointer-events: none;
     z-index: 9999;
+    /* current page via counter(page); total injected by JS as an integer */
+    counter-reset: print-pages var(--print-page-total, 1);
   }
 
   html.print-multi-page .print-page-number::after {
-    content: counter(page) " / " var(--print-page-total);
+    content: counter(page) " / " counter(print-pages);
   }
 }

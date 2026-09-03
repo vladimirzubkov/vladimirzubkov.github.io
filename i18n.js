@@ -542,127 +542,67 @@
   }
 
   function initPrintFit() {
-    var A4_HEIGHT_MM = 268.2;
-    var MIN_SCALE = 0.75;
-    var SCALE_SAFETY = 0.99;
-    var MEASURE_PADDING = 1.06;
-    var MAX_ITERATIONS = 10;
+    var A4_HEIGHT_MM = 268.2; // A4 297mm − 2 × 14.4mm @page margins
+    var MIN_SCALE = 0.75; // never shrink below 75%
+    var SAFETY = 0.97; // leave a little slack so nothing spills over
+    var root = document.documentElement;
 
-    function measureA4HeightPx() {
+    function mmToPx(mm) {
       var probe = document.createElement("div");
       probe.style.cssText =
-        "position:absolute;left:-9999px;top:0;height:" +
-        A4_HEIGHT_MM +
-        "mm;width:1px;pointer-events:none;visibility:hidden;";
+        "position:absolute;left:-9999px;top:0;width:1px;visibility:hidden;" +
+        "height:" + mm + "mm;";
       document.body.appendChild(probe);
-      var height = probe.offsetHeight;
+      var px = probe.offsetHeight;
       document.body.removeChild(probe);
-      return height;
+      return px;
     }
 
-    function readPrintScale() {
-      var root = document.documentElement;
-      var inline = root.style.getPropertyValue("--print-u").trim();
-      if (!inline) inline = root.style.getPropertyValue("--print-scale").trim();
-      var scale = parseFloat(inline);
-      return Number.isFinite(scale) && scale > 0 ? scale : 1;
-    }
-
-    function applyPrintScale(scale) {
-      var root = document.documentElement;
+    function applyScale(scale) {
       var value = String(scale);
       root.style.setProperty("--print-scale", value);
       root.style.setProperty("--print-u", value);
     }
 
-    function clearPrintScale() {
-      var root = document.documentElement;
-      root.style.removeProperty("--print-scale");
-      root.style.removeProperty("--print-u");
-      root.style.removeProperty("--print-page-total");
-    }
-
-    function withPrintMeasure(fn) {
-      var root = document.documentElement;
+    // Real, unpinned content height at the current --print-u scale.
+    function measureContentPx() {
       var inPrint = window.matchMedia && window.matchMedia("print").matches;
       if (!inPrint) root.classList.add("is-print-measure");
       void root.offsetHeight;
-      var result = fn();
+      var height = document.body.scrollHeight;
       if (!inPrint) root.classList.remove("is-print-measure");
-      return result;
-    }
-
-    function measurePrintContentHeight() {
-      return withPrintMeasure(function () {
-        var pageBody = document.querySelector(".page-body");
-        var footer = document.querySelector("footer");
-        if (pageBody && footer) {
-          var topRect = pageBody.getBoundingClientRect();
-          var footRect = footer.getBoundingClientRect();
-          return footRect.bottom - topRect.top;
-        }
-        return document.body.scrollHeight;
-      });
-    }
-
-    function updatePrintMode(maxHeight) {
-      var root = document.documentElement;
-      var contentHeight = measurePrintContentHeight();
-      var scale = readPrintScale();
-      var scaledHeight = contentHeight * scale;
-      var overflow = scaledHeight * MEASURE_PADDING > maxHeight + 1;
-      var atMin = scale <= MIN_SCALE + 0.001;
-      var estimatedPages = Math.max(
-        1,
-        Math.ceil((scaledHeight * MEASURE_PADDING) / maxHeight)
-      );
-      var multi = overflow && atMin && estimatedPages > 1;
-      root.classList.toggle("print-multi-page", multi);
-      if (multi) {
-        root.style.setProperty("--print-page-total", String(estimatedPages));
-      } else {
-        root.style.removeProperty("--print-page-total");
-      }
+      return height;
     }
 
     function fitPrintToA4() {
-      var root = document.documentElement;
-      applyPrintScale(1);
       root.classList.remove("print-multi-page");
       root.style.removeProperty("--print-page-total");
-      var maxHeight = measureA4HeightPx();
-      if (!maxHeight) return;
 
-      for (var i = 0; i < MAX_ITERATIONS; i++) {
-        var contentHeight = measurePrintContentHeight();
-        var scaledHeight = contentHeight * readPrintScale();
-        if (!scaledHeight || scaledHeight * MEASURE_PADDING <= maxHeight) {
-          updatePrintMode(maxHeight);
-          return;
-        }
-        var currentScale = readPrintScale();
-        var nextScale = Math.min(
-          1,
-          Math.max(
-            MIN_SCALE,
-            currentScale * (maxHeight / (scaledHeight * MEASURE_PADDING)) * SCALE_SAFETY
-          )
-        );
-        applyPrintScale(nextScale);
-        if (currentScale - nextScale < 0.001) break;
+      var pagePx = mmToPx(A4_HEIGHT_MM);
+      if (!pagePx) return;
+
+      applyScale(1);
+      var naturalPx = measureContentPx(); // height scales ~linearly with --print-u
+      if (!naturalPx) return;
+
+      var scale = Math.min(1, (pagePx * SAFETY) / naturalPx);
+      if (scale < MIN_SCALE) scale = MIN_SCALE;
+      applyScale(scale);
+
+      var pages = Math.max(1, Math.ceil((naturalPx * scale) / pagePx));
+      if (pages > 1) {
+        root.classList.add("print-multi-page");
+        root.style.setProperty("--print-page-total", String(pages));
       }
-      updatePrintMode(maxHeight);
     }
 
     function cleanupMeasure() {
-      document.documentElement.classList.remove("is-print-measure");
+      root.classList.remove("is-print-measure");
     }
 
     function scheduleFit() {
       fitPrintToA4();
-      window.requestAnimationFrame(function () {
-        fitPrintToA4();
-      });
+      window.requestAnimationFrame(fitPrintToA4);
     }
 
     refitPrintLayout = fitPrintToA4;
@@ -681,17 +621,12 @@
 
     if (window.matchMedia) {
       var printMql = window.matchMedia("print");
-      if (printMql.addEventListener) {
-        printMql.addEventListener("change", function (event) {
-          if (event.matches) scheduleFit();
-          else cleanupMeasure();
-        });
-      } else if (printMql.addListener) {
-        printMql.addListener(function (event) {
-          if (event.matches) scheduleFit();
-          else cleanupMeasure();
-        });
-      }
+      var onChange = function (event) {
+        if (event.matches) scheduleFit();
+        else cleanupMeasure();
+      };
+      if (printMql.addEventListener) printMql.addEventListener("change", onChange);
+      else if (printMql.addListener) printMql.addListener(onChange);
     }
   }
 
