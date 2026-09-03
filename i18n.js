@@ -31,13 +31,13 @@
         '09/2026 – <em class="accent-running">present</em>',
       edu_cvut_master_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_master_detail:
-        'Open Informatics, specialization Artificial Intelligence. Master studies <em>(from 8 September 2026)</em>.',
+        '<span class="edu-program">Open Informatics</span>, specialization <span class="edu-program">Artificial Intelligence</span>. Master studies <em>(from 8 September 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">present</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
-        'Software Engineering and Technology, specialization Enterprise Systems. Bachelor studies <em>(studying, completing)</em>.',
+        '<span class="edu-program">Software Engineering and Technology</span>, specialization <span class="edu-program">Enterprise Systems</span>. Bachelor studies <em>(studying, completing)</em>.',
       edu_upce_when: "09/2021 – 06/2024",
       edu_upce_school: "Jan Perner Transport Faculty, University of Pardubice (UPCE)",
       edu_upce_detail:
@@ -107,13 +107,13 @@
         '09/2026 – <em class="accent-running">dosud</em>',
       edu_cvut_master_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_master_detail:
-        'Otevřená informatika, specializace Umělá inteligence. Magisterské studium <em>(od 8. září 2026)</em>.',
+        '<span class="edu-program">Otevřená informatika</span>, specializace <span class="edu-program">Umělá inteligence</span>. Magisterské studium <em>(od 8. září 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">dosud</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_detail:
-        'Softwarové inženýrství a technologie, specializace Enterprise systémy. Bakalářské studium <em>(běží, dokončuji)</em>.',
+        '<span class="edu-program">Softwarové inženýrství a technologie</span>, specializace <span class="edu-program">Enterprise systémy</span>. Bakalářské studium <em>(běží, dokončuji)</em>.',
       edu_upce_when: "09/2021 – 06/2024",
       edu_upce_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPCE)",
       edu_upce_detail:
@@ -184,14 +184,14 @@
       edu_cvut_master_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_master_detail:
-        'Открытая информатика, специализация «Искусственный интеллект». Магистратура <em>(с 8. 9. 2026)</em>.',
+        '<span class="edu-program">Открытая информатика</span>, специализация <span class="edu-program">«Искусственный интеллект»</span>. Магистратура <em>(с 8. 9. 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 — <em class="accent-running">н.в.</em>',
       edu_cvut_when_secondary: "09/2021 — 05/2023",
       edu_cvut_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_detail:
-        'Программная инженерия и технологии, специализация «Корпоративные информационные системы». Бакалавриат <em>(в процессе обучения, оканчиваю)</em>.',
+        '<span class="edu-program">Программная инженерия и технологии</span>, специализация <span class="edu-program">«Корпоративные информационные системы»</span>. Бакалавриат <em>(в процессе обучения, оканчиваю)</em>.',
       edu_upce_when: "09/2021 — 06/2024",
       edu_upce_school: "Транспортный факультет Яна Пернера, Университет Пардубице (УПЦЕ)",
       edu_upce_detail:

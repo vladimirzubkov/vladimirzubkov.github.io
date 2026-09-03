@@ -477,6 +477,10 @@ a:hover {
   grid-column: 2;
 }
 
+.edu-program {
+  font-weight: 500;
+}
+
 .timeline-body > .timeline-detail:only-child {
   grid-column: 2;
 }
