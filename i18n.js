@@ -26,10 +26,11 @@
       contacts_line:
         'Contact: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Education <em class="accent-running">(currently studying)</em>',
-      edu_cvut_master_when_primary: "09/2026 –",
+      edu_cvut_master_when_primary:
+        '09/2026 – <em class="accent-running">present</em>',
       edu_cvut_master_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_master_detail:
-        'Open Informatics, specialization Artificial Intelligence. Master studies <em>(from 8 September 2026)</em>.',
+        "Open Informatics, specialization Artificial Intelligence. Master studies.",
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">present</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
@@ -48,8 +49,9 @@
       skills: "Skills",
       languages: "Languages",
       lang_cs: "Czech — advanced (C1 CCE, ÚJOP, 2021)",
-      lang_en: "English — advanced",
+      lang_en: "English — upper intermediate (B2, IELTS Score 6.0)",
       lang_ru: "Russian — native",
+      lang_de: "German — elementary (A2)",
       work: "Selected work",
       work_bot:
         "Telegram bot for MOEX quotes, portfolios, alerts and research signals. Built on Cloudflare Workers.",
@@ -100,10 +102,11 @@
       contacts_line:
         'Kontakt: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Vzdělání <em class="accent-running">(aktuálně studuji)</em>',
-      edu_cvut_master_when_primary: "09/2026 –",
+      edu_cvut_master_when_primary:
+        '09/2026 – <em class="accent-running">dosud</em>',
       edu_cvut_master_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_master_detail:
-        'Otevřená informatika, specializace Umělá inteligence. Magisterské studium <em>(od 8. září 2026)</em>.',
+        "Otevřená informatika, specializace Umělá inteligence. Magisterské studium.",
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">dosud</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
@@ -122,8 +125,9 @@
       skills: "Dovednosti",
       languages: "Jazyky",
       lang_cs: "Čeština — pokročilá (C1 CCE, ÚJOP, 2021)",
-      lang_en: "Angličtina — pokročilá",
+      lang_en: "Angličtina — vyšší středně pokročilá, (B2, IELTS Score 6.0)",
       lang_ru: "Ruština — mateřský jazyk",
+      lang_de: "Němčina — základní (A2)",
       work: "Vybraná práce",
       work_bot:
         "Telegram bot pro kotace MOEX, portfolia, alerty a výzkumné signály. Běží na Cloudflare Workers.",
@@ -174,11 +178,12 @@
       contacts_line:
         'Контакт: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Образование <em class="accent-running">(сейчас учусь)</em>',
-      edu_cvut_master_when_primary: "09/2026 —",
+      edu_cvut_master_when_primary:
+        '09/2026 — <em class="accent-running">н.в.</em>',
       edu_cvut_master_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_master_detail:
-        'Открытая информатика, специализация «Искусственный интеллект». Магистратура <em>(с 8. 9. 2026)</em>.',
+        "Открытая информатика, специализация «Искусственный интеллект». Магистратура.",
       edu_cvut_when_primary:
         '09/2024 — <em class="accent-running">н.в.</em>',
       edu_cvut_when_secondary: "09/2021 — 05/2023",
@@ -198,8 +203,9 @@
       skills: "Навыки",
       languages: "Языки",
       lang_cs: "Чешский — продвинутый (C1 CCE, ÚJOP, 2021)",
-      lang_en: "Английский — продвинутый",
+      lang_en: "Английский — выше среднего, (B2, IELTS Score 6.0)",
       lang_ru: "Русский — родной",
+      lang_de: "Немецкий — начальный (A2)",
       work: "Избранные проекты",
       work_bot:
         "Telegram-бот для котировок MOEX, портфелей, алертов и исследовательских сигналов. На Cloudflare Workers.",
