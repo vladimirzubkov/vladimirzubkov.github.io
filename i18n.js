@@ -16,7 +16,7 @@
 
   var strings = {
     en: {
-      meta_title: "Vladimir Zubkov",
+      meta_title: "Vladimir Zubkov, cv",
       brand_name: "Vladimir Zubkov",
       meta_desc:
         "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
@@ -92,7 +92,7 @@
       project_try: "Live worker health:",
     },
     cs: {
-      meta_title: "Vladimir Zubkov",
+      meta_title: "Vladimir Zubkov, životopis",
       brand_name: "Vladimir Zubkov",
       meta_desc:
         "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
@@ -168,7 +168,7 @@
       project_try: "Health live workeru:",
     },
     ru: {
-      meta_title: "Владимир Зубков",
+      meta_title: "Владимир Зубков, резюме",
       brand_name: "Владимир Зубков",
       meta_desc:
         "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
