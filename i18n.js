@@ -4,10 +4,10 @@
   var STICKY_KEY = "cv-sticky-lang";
   var LANG_FADE_OUT_MS = 130;
   var LANG_FADE_IN_MS = 250;
-  var LANG_WIDTH_MS = 250;
   var BRAND_FX_MS = 500;
-  // Baseline (2026-08-29): fade-in after width settle (LANG_WIDTH_MS + 60 buffer);
-  // height lock via ResizeObserver; brand crossfade 500ms on RU boundary only.
+  // Language switch: fade out, commit the whole layout change (text + column
+  // width + height) instantly while invisible and pin the viewport to the same
+  // spot, then fade the new language in. Brand crossfades 500ms on RU boundary.
   var currentLang = null;
   var langSwitching = false;
   var refitPrintLayout = null;
@@ -344,64 +344,6 @@
     }
   }
 
-  function restoreScrollAfterLayout(snapshot) {
-    restoreScrollAnchor(snapshot);
-    window.requestAnimationFrame(function () {
-      restoreScrollAnchor(snapshot);
-      window.requestAnimationFrame(function () {
-        restoreScrollAnchor(snapshot);
-      });
-    });
-  }
-
-  function layoutWidthChanges(fromLang, toLang) {
-    return brandNameChanges(fromLang, toLang);
-  }
-
-  function beginPageBodyHeightLock() {
-    var pageBody = document.querySelector(".page-body");
-    if (!pageBody) return null;
-    var startHeight = pageBody.getBoundingClientRect().height;
-    pageBody.classList.add("page-body--anim-height");
-    pageBody.style.height = startHeight + "px";
-    pageBody.style.overflow = "hidden";
-    return pageBody;
-  }
-
-  function syncPageBodyHeight(pageBody) {
-    if (!pageBody) return;
-    var nextHeight = pageBody.scrollHeight;
-    if (nextHeight > 0) pageBody.style.height = nextHeight + "px";
-  }
-
-  function finalizePageBodyHeight(pageBody) {
-    if (!pageBody) return;
-    syncPageBodyHeight(pageBody);
-    pageBody.classList.add("page-body--no-transition");
-    pageBody.classList.remove("page-body--anim-height");
-    pageBody.style.height = "auto";
-    pageBody.style.overflow = "";
-    requestAnimationFrame(function () {
-      pageBody.classList.remove("page-body--no-transition");
-    });
-  }
-
-  function animatePageBodyHeightDuringWidth(pageBody) {
-    if (!pageBody) return Promise.resolve();
-    syncPageBodyHeight(pageBody);
-    var resizeObserver = new ResizeObserver(function () {
-      syncPageBodyHeight(pageBody);
-    });
-    Array.prototype.forEach.call(pageBody.children, function (child) {
-      resizeObserver.observe(child);
-    });
-    resizeObserver.observe(pageBody);
-    return waitMs(LANG_WIDTH_MS).then(function () {
-      resizeObserver.disconnect();
-      finalizePageBodyHeight(pageBody);
-    });
-  }
-
   function beginLangFadeIn(root) {
     root.classList.remove("is-lang-fading");
     return waitMs(LANG_FADE_IN_MS);
@@ -490,7 +432,6 @@
 
     var fromLang = currentLang;
     var brandChanges = brandNameChanges(fromLang, lang);
-    var widthChanges = layoutWidthChanges(fromLang, lang);
 
     if (prefersReducedMotion()) {
       var scrollAnchorReduced = captureScrollAnchor();
@@ -501,41 +442,45 @@
       } else {
         apply(lang);
       }
-      restoreScrollAfterLayout(scrollAnchorReduced);
+      restoreScrollAnchor(scrollAnchorReduced);
       return;
     }
 
     langSwitching = true;
-    var scrollAnchor = captureScrollAnchor();
     var root = document.documentElement;
     var main = document.querySelector("main");
     if (main) main.setAttribute("aria-busy", "true");
 
-    var brandPromise = Promise.resolve();
-    var heightLock = widthChanges ? beginPageBodyHeightLock() : null;
+    var scrollAnchor = captureScrollAnchor();
     root.classList.add("is-lang-fading");
 
     window.setTimeout(function () {
+      // Content is now invisible (opacity 0). Commit the whole layout change
+      // instantly here — text swap, column width, resulting height — and pin
+      // the viewport to the same spot. Nothing visible moves; when we fade the
+      // new language in, it is already in its final position.
+      root.classList.add("is-lang-instant");
       apply(lang, { skipBrand: brandChanges });
+      void root.offsetHeight; // force reflow so final layout is measured
       restoreScrollAnchor(scrollAnchor);
+
+      var brandPromise = Promise.resolve();
       if (brandChanges) {
         var brand = getBrandEl();
         if (brand) brandPromise = animateBrandCrossfade(brand, lang);
       }
-      var heightPromise = widthChanges
-        ? animatePageBodyHeightDuringWidth(heightLock)
-        : Promise.resolve();
-      var fadeInPromise = beginLangFadeIn(root);
 
-      Promise.all([heightPromise, fadeInPromise])
-        .then(function () {
-          return brandPromise;
-        })
-        .then(function () {
-          restoreScrollAfterLayout(scrollAnchor);
-          if (main) main.removeAttribute("aria-busy");
-          langSwitching = false;
-        });
+      window.requestAnimationFrame(function () {
+        root.classList.remove("is-lang-instant");
+        beginLangFadeIn(root)
+          .then(function () {
+            return brandPromise;
+          })
+          .then(function () {
+            if (main) main.removeAttribute("aria-busy");
+            langSwitching = false;
+          });
+      });
     }, LANG_FADE_OUT_MS);
   }
 

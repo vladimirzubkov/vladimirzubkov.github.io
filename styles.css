@@ -61,6 +61,16 @@ html.is-lang-fading .lang-fade-target {
   transition: opacity var(--lang-fade-out) ease;
 }
 
+/* While the content is faded out we commit the layout change instantly, so no
+   width/height animation is ever seen. The topbar keeps its own smooth slide. */
+html.is-lang-instant,
+html.is-lang-instant .page-body,
+html.is-lang-instant .page-hero,
+html.is-lang-instant .page-main,
+html.is-lang-instant .lede {
+  transition: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     transition: none;
@@ -83,11 +93,6 @@ html.is-lang-fading .lang-fade-target {
   .brand,
   .brand-text--latin,
   .brand-text--cyrillic {
-    transition: none !important;
-  }
-
-  .page-body--anim-height,
-  .page-body--no-transition {
     transition: none !important;
   }
 }
@@ -339,15 +344,6 @@ a:hover {
   max-width: var(--content-max);
   margin: 0 auto;
   transition: max-width var(--lang-width) ease;
-}
-
-.page-body--anim-height {
-  overflow: hidden;
-  transition: height var(--lang-width) ease;
-}
-
-.page-body--no-transition {
-  transition: none !important;
 }
 
 .hero-copy {
