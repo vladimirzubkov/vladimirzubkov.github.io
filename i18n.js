@@ -26,6 +26,10 @@
       contacts_line:
         'Contact: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Education <em class="accent-running">(currently studying)</em>',
+      edu_cvut_master_when_primary: "09/2026 –",
+      edu_cvut_master_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
+      edu_cvut_master_detail:
+        'Open Informatics, specialization Artificial Intelligence. Master studies <em>(from 8 September 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">present</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
@@ -96,6 +100,10 @@
       contacts_line:
         'Kontakt: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Vzdělání <em class="accent-running">(aktuálně studuji)</em>',
+      edu_cvut_master_when_primary: "09/2026 –",
+      edu_cvut_master_school: "Fakulta elektrotechnická, ČVUT v Praze",
+      edu_cvut_master_detail:
+        'Otevřená informatika, specializace Umělá inteligence. Magisterské studium <em>(od 8. září 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 – <em class="accent-running">dosud</em>',
       edu_cvut_when_secondary: "09/2021 – 05/2023",
@@ -166,6 +174,11 @@
       contacts_line:
         'Контакт: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Образование <em class="accent-running">(сейчас учусь)</em>',
+      edu_cvut_master_when_primary: "09/2026 —",
+      edu_cvut_master_school:
+        "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
+      edu_cvut_master_detail:
+        'Открытая информатика, специализация «Искусственный интеллект». Магистратура <em>(с 8. 9. 2026)</em>.',
       edu_cvut_when_primary:
         '09/2024 — <em class="accent-running">н.в.</em>',
       edu_cvut_when_secondary: "09/2021 — 05/2023",
