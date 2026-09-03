@@ -768,7 +768,7 @@ footer {
 /* One A4 sheet — beforeprint JS may lower --print-scale to fit content */
 @page {
   size: A4 portrait;
-  margin: 14.4mm; /* 12mm + 20% */
+  margin: 14.4mm 14.4mm 1.5rem 14.4mm; /* bottom: 1.5rem to “Updated” line */
 }
 
 @media print {
