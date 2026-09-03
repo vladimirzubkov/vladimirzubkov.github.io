@@ -638,6 +638,10 @@
       return a + (b - a) * t;
     }
 
+    function smoothstep(t) {
+      return t * t * (3 - 2 * t);
+    }
+
     function apply() {
       if (!stickyOn() || disabled()) {
         metrics = null;
@@ -656,13 +660,20 @@
 
       var topbarH = topbar.offsetHeight;
       var mini = Math.max(28, topbarH - 4);
-      var progress = Math.min(1, scrollY / COLLAPSE_RANGE);
+      var rawProgress = Math.min(1, scrollY / COLLAPSE_RANGE);
+      if (rawProgress < 0.06) {
+        metrics = null;
+        reset();
+        return;
+      }
+      var progress = smoothstep(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
       root.style.setProperty("--topbar-height", topbarH + "px");
       root.style.setProperty("--hero-photo-mini", mini + "px");
       root.classList.add("is-hero-collapse-active");
-      hero.classList.toggle("is-hero-collapsed", progress >= 1);
+      if (rawProgress >= 0.99) hero.classList.add("is-hero-collapsed");
+      else if (rawProgress <= 0.88) hero.classList.remove("is-hero-collapsed");
 
       var photoSize = lerp(PHOTO_FULL, mini, progress);
       var targets = collapsedTargets(photoSize);
@@ -672,11 +683,16 @@
       var endBrandLeft = targets.brandLeft;
       var endBrandTop = targets.brandTop;
 
-      var startPhotoTop = metrics.photoTop - scrollY;
-      var startBrandTop = metrics.brandTop - scrollY;
-      var photoTop = lerp(startPhotoTop, endPhotoTop, progress);
+      // If the in-flow position would be above the topbar slot, clamp so the
+      // reverse scroll path does not punch through the top of the viewport.
+      var naturalPhotoTop = metrics.photoTop - scrollY;
+      var naturalBrandTop = metrics.brandTop - scrollY;
+      var expandPhotoTop = Math.max(naturalPhotoTop, endPhotoTop);
+      var expandBrandTop = Math.max(naturalBrandTop, endBrandTop);
+
+      var photoTop = lerp(expandPhotoTop, endPhotoTop, progress);
       var photoLeft = lerp(metrics.photoLeft, endPhotoLeft, progress);
-      var brandTop = lerp(startBrandTop, endBrandTop, progress);
+      var brandTop = lerp(expandBrandTop, endBrandTop, progress);
       var brandLeft = lerp(metrics.brandLeft, endBrandLeft, progress);
       var brandSize = lerp(metrics.brandSize, endBrandSize, progress);
       var borderW = lerp(3, 1.5, progress);
@@ -701,7 +717,7 @@
         shadowBlur +
         "px rgba(26,35,50," +
         shadowAlpha +
-        ");z-index:101;margin:0;";
+        ");z-index:101;margin:0;transform:translateZ(0);";
 
       brand.style.cssText =
         "position:fixed;top:" +
@@ -710,10 +726,9 @@
         brandLeft +
         "px;font-size:" +
         brandSize +
-        "px;line-height:1.1;margin:0;padding:0;z-index:101;";
+        "px;line-height:1.1;margin:0;padding:0;z-index:101;transform:translateZ(0);";
 
-      spacer.style.height =
-        (progress >= 1 ? 0 : lerp(metrics.headHeight, mini + 4, progress)) + "px";
+      spacer.style.height = Math.max(0, metrics.headHeight * (1 - rawProgress)) + "px";
     }
 
     function schedule() {
