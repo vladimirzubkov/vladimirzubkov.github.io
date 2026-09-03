@@ -564,21 +564,26 @@
     var topbar = document.querySelector(".topbar");
     var toggle = document.getElementById("sticky-lang");
     var hero = document.querySelector(".hero");
-    var spacer = document.querySelector(".hero-top-spacer");
+    var brandAnchor = document.querySelector(".hero-brand-anchor");
     var photo = document.querySelector(".photo");
     var brand = document.querySelector(".brand");
+    var heroText = document.querySelector(".hero-text");
     var pageBody = document.querySelector(".page-body");
-    if (!topbar || !toggle || !hero || !spacer || !photo || !brand || !pageBody) return;
+    if (!topbar || !toggle || !hero || !brandAnchor || !photo || !brand || !heroText || !pageBody)
+      return;
 
     var PHOTO_FULL = 160;
-    var COLLAPSE_RANGE = 150;
+    var PHOTO_MIN = 60;
+    var BRAND_MIN = 24;
+    var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
 
     function disabled() {
       return (
         window.matchMedia("(max-width: 640px)").matches ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        window.matchMedia("print").matches
       );
     }
 
@@ -595,7 +600,8 @@
       hero.classList.remove("is-hero-collapsed");
       photo.removeAttribute("style");
       brand.removeAttribute("style");
-      spacer.style.height = "0";
+      heroText.removeAttribute("style");
+      brandAnchor.style.minHeight = "";
     }
 
     function contentLeft() {
@@ -604,34 +610,43 @@
       return rect.left + (Number.isNaN(pad) ? 0 : pad);
     }
 
-    function collapsedTargets(photoSize) {
+    function eduTextLeft() {
+      var el = document.querySelector(".timeline-head strong");
+      if (!el) return contentLeft();
+      return el.getBoundingClientRect().left;
+    }
+
+    function collapsedTargets(photoSize, brandSize) {
       var topbarRect = topbar.getBoundingClientRect();
       var topbarH = topbar.offsetHeight;
       var endPhotoLeft = contentLeft();
       var endPhotoTop = topbarRect.top + (topbarH - photoSize) / 2;
-      var endBrandSize = Math.max(13, (topbarH - 4) * 0.44);
-      var endBrandLeft = endPhotoLeft + photoSize + 10;
-      var endBrandTop = topbarRect.top + (topbarH - endBrandSize * 1.1) / 2;
+      var endBrandLeft = endPhotoLeft + photoSize + 12;
+      var endBrandTop = topbarRect.top + (topbarH - brandSize * 1.1) / 2;
       return {
         photoTop: endPhotoTop,
         photoLeft: endPhotoLeft,
         brandTop: endBrandTop,
         brandLeft: endBrandLeft,
-        brandSize: endBrandSize,
+        brandSize: brandSize,
       };
     }
 
     function captureMetrics() {
       var photoRect = photo.getBoundingClientRect();
       var brandRect = brand.getBoundingClientRect();
+      var heroTextRect = heroText.getBoundingClientRect();
       metrics = {
         photoTop: photoRect.top + window.scrollY,
         photoLeft: photoRect.left,
         brandTop: brandRect.top + window.scrollY,
         brandLeft: brandRect.left,
         brandSize: parseFloat(getComputedStyle(brand).fontSize) || 32,
-        headHeight: Math.max(photoRect.height, brandRect.height),
+        brandHeight: brandRect.height,
+        heroTextLeft: heroTextRect.left,
+        eduTextLeft: eduTextLeft(),
       };
+      brandAnchor.style.minHeight = metrics.brandHeight + "px";
     }
 
     function lerp(a, b, t) {
@@ -658,47 +673,32 @@
 
       if (!metrics) captureMetrics();
 
-      var topbarH = topbar.offsetHeight;
-      var mini = Math.max(28, topbarH - 4);
       var rawProgress = Math.min(1, scrollY / COLLAPSE_RANGE);
-      if (rawProgress < 0.06) {
-        metrics = null;
-        reset();
-        return;
-      }
       var progress = smoothstep(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
-      root.style.setProperty("--topbar-height", topbarH + "px");
-      root.style.setProperty("--hero-photo-mini", mini + "px");
+      root.style.setProperty("--topbar-height", topbar.offsetHeight + "px");
+      root.style.setProperty("--hero-photo-mini", PHOTO_MIN + "px");
       root.classList.add("is-hero-collapse-active");
-      if (rawProgress >= 0.99) hero.classList.add("is-hero-collapsed");
-      else if (rawProgress <= 0.88) hero.classList.remove("is-hero-collapsed");
 
-      var photoSize = lerp(PHOTO_FULL, mini, progress);
-      var targets = collapsedTargets(photoSize);
-      var endPhotoTop = targets.photoTop;
-      var endPhotoLeft = targets.photoLeft;
-      var endBrandSize = targets.brandSize;
-      var endBrandLeft = targets.brandLeft;
-      var endBrandTop = targets.brandTop;
+      var photoSize = lerp(PHOTO_FULL, PHOTO_MIN, progress);
+      var endBrandSize = lerp(metrics.brandSize, BRAND_MIN, progress);
+      var targets = collapsedTargets(photoSize, endBrandSize);
 
-      // If the in-flow position would be above the topbar slot, clamp so the
-      // reverse scroll path does not punch through the top of the viewport.
       var naturalPhotoTop = metrics.photoTop - scrollY;
       var naturalBrandTop = metrics.brandTop - scrollY;
-      var expandPhotoTop = Math.max(naturalPhotoTop, endPhotoTop);
-      var expandBrandTop = Math.max(naturalBrandTop, endBrandTop);
+      var expandPhotoTop = Math.max(naturalPhotoTop, targets.photoTop);
+      var expandBrandTop = Math.max(naturalBrandTop, targets.brandTop);
 
-      var photoTop = lerp(expandPhotoTop, endPhotoTop, progress);
-      var photoLeft = lerp(metrics.photoLeft, endPhotoLeft, progress);
-      var brandTop = lerp(expandBrandTop, endBrandTop, progress);
-      var brandLeft = lerp(metrics.brandLeft, endBrandLeft, progress);
-      var brandSize = lerp(metrics.brandSize, endBrandSize, progress);
-      var borderW = lerp(3, 1.5, progress);
-      var shadowBlur = lerp(28, 8, progress);
-      var shadowY = lerp(8, 2, progress);
-      var shadowAlpha = lerp(0.12, 0.06, progress);
+      var photoTop = lerp(expandPhotoTop, targets.photoTop, progress);
+      var photoLeft = lerp(metrics.photoLeft, targets.photoLeft, progress);
+      var brandTop = lerp(expandBrandTop, targets.brandTop, progress);
+      var brandLeft = lerp(metrics.brandLeft, targets.brandLeft, progress);
+      var brandSize = lerp(metrics.brandSize, targets.brandSize, progress);
+      var borderW = lerp(3, 2, progress);
+      var shadowBlur = lerp(28, 10, progress);
+      var shadowY = lerp(8, 3, progress);
+      var shadowAlpha = lerp(0.12, 0.08, progress);
 
       photo.style.cssText =
         "position:fixed;top:" +
@@ -717,7 +717,7 @@
         shadowBlur +
         "px rgba(26,35,50," +
         shadowAlpha +
-        ");z-index:101;margin:0;transform:translateZ(0);";
+        ");z-index:101;margin:0;";
 
       brand.style.cssText =
         "position:fixed;top:" +
@@ -726,9 +726,11 @@
         brandLeft +
         "px;font-size:" +
         brandSize +
-        "px;line-height:1.1;margin:0;padding:0;z-index:101;transform:translateZ(0);";
+        "px;line-height:1.1;margin:0;padding:0;z-index:101;";
 
-      spacer.style.height = Math.max(0, metrics.headHeight * (1 - rawProgress)) + "px";
+      var maxTextShift = Math.max(0, metrics.heroTextLeft - eduTextLeft());
+      heroText.style.transform =
+        "translate3d(" + -maxTextShift * progress + "px,0,0)";
     }
 
     function schedule() {
@@ -750,11 +752,16 @@
       metrics = null;
       schedule();
     });
+    window.addEventListener("beforeprint", function () {
+      metrics = null;
+      reset();
+    });
+    window.addEventListener("afterprint", schedule);
 
     if (typeof ResizeObserver !== "undefined") {
-      var topbarObserver = new ResizeObserver(schedule);
-      topbarObserver.observe(topbar);
-      topbarObserver.observe(pageBody);
+      var layoutObserver = new ResizeObserver(schedule);
+      layoutObserver.observe(topbar);
+      layoutObserver.observe(pageBody);
     }
 
     schedule();

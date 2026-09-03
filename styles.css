@@ -351,20 +351,20 @@ a:hover {
   padding: 3.5rem 1.25rem 0;
 }
 
-.hero-top-spacer {
-  display: none;
-  grid-column: 1 / -1;
-  grid-row: 1;
-  height: 0;
+.hero-photo-anchor {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  width: 160px;
+  height: 160px;
   pointer-events: none;
+  visibility: hidden;
 }
 
-html.is-hero-collapse-active .hero-top-spacer {
-  display: block;
-}
-
-.hero.is-hero-collapsed .hero-copy {
-  grid-column: 1 / -1;
+.hero-brand-anchor {
+  grid-column: 2;
+  grid-row: 1;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .photo {
@@ -381,12 +381,16 @@ html.is-hero-collapse-active .hero-top-spacer {
   box-shadow: 0 8px 28px rgba(26, 35, 50, 0.12);
   background: var(--paper);
   transform-origin: top left;
-  will-change: transform, width, height;
 }
 
 html.is-hero-collapse-active .photo,
 html.is-hero-collapse-active .brand {
   z-index: 101;
+}
+
+.hero-text {
+  transform-origin: top left;
+  will-change: transform;
 }
 
 .page-body {
@@ -639,7 +643,8 @@ footer {
     grid-row: auto;
   }
 
-  .hero-top-spacer {
+  .hero-photo-anchor,
+  .hero-brand-anchor {
     display: none !important;
   }
 
@@ -705,15 +710,18 @@ footer {
   }
 
   html.is-print-measure .hero {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: calc(3.6mm * var(--print-u)) !important;
+    display: grid !important;
+    grid-template-columns: calc(32mm * var(--print-u)) 1fr !important;
+    column-gap: calc(3.6mm * var(--print-u)) !important;
+    row-gap: 0 !important;
+    align-items: start !important;
     padding: 0 0 calc(3.6mm * var(--print-u)) !important;
     text-align: left !important;
   }
 
   html.is-print-measure .photo {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
     width: calc(32mm * var(--print-u)) !important;
     max-height: calc(36mm * var(--print-u)) !important;
     height: auto !important;
@@ -725,8 +733,15 @@ footer {
   }
 
   html.is-print-measure .brand {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
     font-size: calc(20pt * var(--print-u)) !important;
     margin: 0 0 calc(1.2mm * var(--print-u)) !important;
+  }
+
+  html.is-print-measure .hero-copy {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
   }
 
   html.is-print-measure .hero h1 {
@@ -880,6 +895,17 @@ footer {
     display: none !important;
   }
 
+  .hero-photo-anchor,
+  .hero-brand-anchor {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .hero-text {
+    transform: none !important;
+  }
+
   .photo,
   .brand {
     position: static !important;
@@ -889,11 +915,46 @@ footer {
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
+    transform: none !important;
   }
 
-  .hero-top-spacer {
-    display: none !important;
-    height: 0 !important;
+  html.is-hero-collapse-active .photo,
+  html.is-hero-collapse-active .brand {
+    z-index: auto !important;
+  }
+
+  .hero {
+    display: grid !important;
+    grid-template-columns: calc(32mm * var(--print-u)) 1fr !important;
+    column-gap: calc(3.6mm * var(--print-u)) !important;
+    row-gap: 0 !important;
+    align-items: start !important;
+    padding: 0 0 calc(3.6mm * var(--print-u)) !important;
+    text-align: left !important;
+  }
+
+  .photo {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+    width: calc(32mm * var(--print-u)) !important;
+    max-height: calc(36mm * var(--print-u)) !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    border: 0.3pt solid #999 !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+  }
+
+  .brand {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    font-size: calc(20pt * var(--print-u)) !important;
+    margin: 0 0 calc(1.2mm * var(--print-u)) !important;
+  }
+
+  .hero-copy {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
   }
 
   .hero,
@@ -908,42 +969,9 @@ footer {
     transition: none !important;
   }
 
-  /* Gap is OUTSIDE the bordered photo */
-  .hero {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: calc(3.6mm * var(--print-u)) !important;
-    padding: 0 0 calc(3.6mm * var(--print-u)) !important;
-    text-align: left !important;
-  }
-
-  /* Photo column matches timeline date column (32mm) + same 3.6mm gap → text aligns */
-  .photo {
-    width: calc(32mm * var(--print-u)) !important;
-    max-height: calc(36mm * var(--print-u)) !important;
-    height: auto !important;
-    max-width: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: block !important;
-    border-radius: 0 !important;
-    border: 0.3pt solid #999 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    object-fit: cover !important;
-    object-position: center top !important;
-  }
-
   .hero-copy,
   .hero-text {
-    flex: 1 1 auto !important;
     min-width: 0 !important;
-  }
-
-  .brand {
-    font-size: calc(20pt * var(--print-u)) !important;
-    margin: 0 0 calc(1.2mm * var(--print-u)) !important;
   }
 
   .hero h1 {
