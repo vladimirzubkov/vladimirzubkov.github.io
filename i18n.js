@@ -14,6 +14,7 @@
   var pendingScrollY = null;
   var refitPrintLayout = null;
   var refitHeroCollapse = null;
+  var syncHeroTextColumnForWidth = null;
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -426,10 +427,12 @@
   }
 
   function nudgeHeroCollapseDuringWidth() {
+    if (syncHeroTextColumnForWidth) syncHeroTextColumnForWidth();
     if (!refitHeroCollapse) return;
     refitHeroCollapse();
     var start = performance.now();
     function tick(now) {
+      if (syncHeroTextColumnForWidth) syncHeroTextColumnForWidth();
       refitHeroCollapse();
       if (now - start < LANG_WIDTH_MS + 80) requestAnimationFrame(tick);
     }
@@ -655,6 +658,17 @@
       brandAnchor.style.minHeight = metrics.brandHeight + "px";
     }
 
+    // When page width changes (language), both text columns shift equally —
+    // keep the cached gap, only slide the stored left edges by the delta.
+    function syncTextColumnForWidth() {
+      if (!metrics) return;
+      var edu = eduTextLeft();
+      var delta = edu - metrics.eduTextLeft;
+      if (!delta) return;
+      metrics.eduTextLeft = edu;
+      metrics.heroTextLeft += delta;
+    }
+
     function lerp(a, b, t) {
       return a + (b - a) * t;
     }
@@ -740,7 +754,7 @@
         brandTop +
         "px,0);transform-origin:top left;margin:0;padding:0;z-index:101;";
 
-      var maxTextShift = Math.max(0, metrics.heroTextLeft - eduTextLeft());
+      var maxTextShift = Math.max(0, metrics.heroTextLeft - metrics.eduTextLeft);
       heroText.style.transform =
         "translate3d(" + -maxTextShift * progress + "px,0,0)";
     }
@@ -754,6 +768,7 @@
     }
 
     refitHeroCollapse = schedule;
+    syncHeroTextColumnForWidth = syncTextColumnForWidth;
 
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", function () {
