@@ -548,6 +548,12 @@
       );
     }
 
+    function lineHeight() {
+      var el = fadeContentEl() || document.body;
+      var lh = parseFloat(getComputedStyle(el).lineHeight);
+      return Number.isFinite(lh) && lh > 0 ? lh : 26;
+    }
+
     function updateStuck() {
       if (!topbar.classList.contains("is-sticky")) return;
       var stuck = window.scrollY > 0;
@@ -563,7 +569,11 @@
       }
       var topbarBottom = topbar.getBoundingClientRect().bottom;
       var contentTop = content.getBoundingClientRect().top;
-      var approach = 1 - Math.min(1, Math.max(0, (contentTop - topbarBottom) / FADE_RANGE));
+      var gap = contentTop - topbarBottom;
+      var fadeDelay = lineHeight();
+      var dist = gap - fadeDelay;
+      var approach =
+        dist <= 0 ? 1 : dist >= FADE_RANGE ? 0 : 1 - dist / FADE_RANGE;
       topbar.style.setProperty("--topbar-fade-opacity", String(approach));
     }
 
