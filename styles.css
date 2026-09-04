@@ -157,14 +157,12 @@ a:hover {
   left: 0;
   right: 0;
   top: 100%;
-  height: 7.5mm;
+  height: 1cm;
   pointer-events: none;
-  border: 2px solid red;
-  box-sizing: border-box;
   background: linear-gradient(
     to bottom,
-    rgba(255, 0, 0, 0.7) 0%,
-    rgba(255, 0, 0, 0) 100%
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0) 100%
   );
   opacity: 0;
 }
