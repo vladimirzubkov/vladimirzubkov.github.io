@@ -576,7 +576,6 @@
     var PHOTO_MIN = 110;
     var BRAND_MIN = 28;
     var PHOTO_CLIP_ABOVE = 9;
-    var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
 
@@ -678,7 +677,11 @@
 
       if (!metrics) captureMetrics();
 
-      var rawProgress = Math.min(1, scrollY / COLLAPSE_RANGE);
+      // Collapse finishes exactly when the photo reaches its slot, so the
+      // shrink/slide land together with the vertical travel (no leftover motion).
+      var photoTargetTop = -PHOTO_CLIP_ABOVE;
+      var travel = Math.max(1, metrics.photoTop - photoTargetTop);
+      var rawProgress = Math.min(1, scrollY / travel);
       var progress = smoothstep(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
@@ -690,11 +693,11 @@
       var endBrandSize = lerp(metrics.brandSize, BRAND_MIN, progress);
       var targets = collapsedTargets(photoSize, endBrandSize);
 
-      var naturalPhotoTop = metrics.photoTop - scrollY;
-      var naturalBrandTop = metrics.brandTop - scrollY;
-      var photoTop = lerp(naturalPhotoTop, targets.photoTop, progress);
+      // Vertical: move 1:1 with the page text (never slower), then pin at the
+      // slot. No easing here, so the photo/name never lag behind the text.
+      var photoTop = Math.max(metrics.photoTop - scrollY, targets.photoTop);
+      var brandTop = Math.max(metrics.brandTop - scrollY, targets.brandTop);
       var photoLeft = lerp(metrics.photoLeft, targets.photoLeft, progress);
-      var brandTop = lerp(naturalBrandTop, targets.brandTop, progress);
       var brandLeft = lerp(metrics.brandLeft, targets.brandLeft, progress);
       var brandSize = lerp(metrics.brandSize, targets.brandSize, progress);
       var borderW = lerp(3, 2, progress);
