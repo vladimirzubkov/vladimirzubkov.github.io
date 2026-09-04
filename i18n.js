@@ -716,9 +716,10 @@
 
       var naturalPhotoTop = metrics.photoTop - scrollY;
       var naturalBrandTop = metrics.brandTop - scrollY;
+      var expandPhotoTop = Math.max(naturalPhotoTop, targets.photoTop);
       var expandBrandTop = Math.max(naturalBrandTop, targets.brandTop);
 
-      var photoTop = lerp(naturalPhotoTop, targets.photoTop, progress);
+      var photoTop = lerp(expandPhotoTop, targets.photoTop, progress);
       var photoLeft = lerp(metrics.photoLeft, targets.photoLeft, progress);
       var brandTop = lerp(expandBrandTop, targets.brandTop, progress);
       var brandLeft = lerp(metrics.brandLeft, targets.brandLeft, progress);
