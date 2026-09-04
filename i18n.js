@@ -579,6 +579,21 @@
     var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
+    var photoStyleCache = Object.create(null);
+    var brandStyleCache = Object.create(null);
+    var lastHeroTextTransform = null;
+
+    function setStyleProp(el, cache, prop, value) {
+      if (cache[prop] === value) return;
+      el.style[prop] = value;
+      cache[prop] = value;
+    }
+
+    function clearStyleCaches() {
+      for (var k in photoStyleCache) delete photoStyleCache[k];
+      for (var k in brandStyleCache) delete brandStyleCache[k];
+      lastHeroTextTransform = null;
+    }
 
     function disabled() {
       return (
@@ -603,6 +618,7 @@
       brand.removeAttribute("style");
       heroText.removeAttribute("style");
       brandAnchor.style.minHeight = "";
+      clearStyleCaches();
     }
 
     function contentLeft() {
@@ -704,38 +720,37 @@
       var shadowBlur = lerp(28, 10, progress);
       var shadowY = lerp(8, 3, progress);
       var shadowAlpha = lerp(0.12, 0.08, progress);
+      var boxShadow =
+        "0 " + shadowY + "px " + shadowBlur + "px rgba(26,35,50," + shadowAlpha + ")";
 
-      photo.style.cssText =
-        "position:fixed;top:" +
-        photoTop +
-        "px;left:" +
-        photoLeft +
-        "px;width:" +
-        photoSize +
-        "px;height:" +
-        photoSize +
-        "px;border-radius:50%;border:" +
-        borderW +
-        "px solid var(--paper);box-shadow:0 " +
-        shadowY +
-        "px " +
-        shadowBlur +
-        "px rgba(26,35,50," +
-        shadowAlpha +
-        ");z-index:101;margin:0;";
+      setStyleProp(photo, photoStyleCache, "position", "fixed");
+      setStyleProp(photo, photoStyleCache, "top", photoTop + "px");
+      setStyleProp(photo, photoStyleCache, "left", photoLeft + "px");
+      setStyleProp(photo, photoStyleCache, "width", photoSize + "px");
+      setStyleProp(photo, photoStyleCache, "height", photoSize + "px");
+      setStyleProp(photo, photoStyleCache, "borderRadius", "50%");
+      setStyleProp(photo, photoStyleCache, "borderWidth", borderW + "px");
+      setStyleProp(photo, photoStyleCache, "borderStyle", "solid");
+      setStyleProp(photo, photoStyleCache, "borderColor", "var(--paper)");
+      setStyleProp(photo, photoStyleCache, "boxShadow", boxShadow);
+      setStyleProp(photo, photoStyleCache, "zIndex", "101");
+      setStyleProp(photo, photoStyleCache, "margin", "0");
 
-      brand.style.cssText =
-        "position:fixed;top:" +
-        brandTop +
-        "px;left:" +
-        brandLeft +
-        "px;font-size:" +
-        brandSize +
-        "px;line-height:1.1;margin:0;padding:0;z-index:101;";
+      setStyleProp(brand, brandStyleCache, "position", "fixed");
+      setStyleProp(brand, brandStyleCache, "top", brandTop + "px");
+      setStyleProp(brand, brandStyleCache, "left", brandLeft + "px");
+      setStyleProp(brand, brandStyleCache, "fontSize", brandSize + "px");
+      setStyleProp(brand, brandStyleCache, "lineHeight", "1.1");
+      setStyleProp(brand, brandStyleCache, "margin", "0");
+      setStyleProp(brand, brandStyleCache, "padding", "0");
+      setStyleProp(brand, brandStyleCache, "zIndex", "101");
 
       var maxTextShift = Math.max(0, metrics.heroTextLeft - eduTextLeft());
-      heroText.style.transform =
-        "translate3d(" + -maxTextShift * progress + "px,0,0)";
+      var heroTransform = "translate3d(" + -maxTextShift * progress + "px,0,0)";
+      if (lastHeroTextTransform !== heroTransform) {
+        heroText.style.transform = heroTransform;
+        lastHeroTextTransform = heroTransform;
+      }
     }
 
     function schedule() {
