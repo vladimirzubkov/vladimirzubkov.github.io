@@ -406,12 +406,6 @@ a:hover {
 html.is-hero-collapse-active .photo,
 html.is-hero-collapse-active .brand {
   z-index: 101;
-  will-change: transform;
-}
-
-.hero-text {
-  transform-origin: top left;
-  will-change: transform;
 }
 
 .page-body {
@@ -925,6 +919,7 @@ footer {
 
   .hero-text {
     transform: none !important;
+    margin-left: 0 !important;
   }
 
   .photo,
