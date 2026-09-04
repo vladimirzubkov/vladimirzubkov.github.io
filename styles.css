@@ -406,6 +406,7 @@ a:hover {
 html.is-hero-collapse-active .photo,
 html.is-hero-collapse-active .brand {
   z-index: 101;
+  will-change: transform;
 }
 
 .hero-text {

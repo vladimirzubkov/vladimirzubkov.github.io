@@ -706,11 +706,7 @@
       var shadowAlpha = lerp(0.12, 0.08, progress);
 
       photo.style.cssText =
-        "position:fixed;top:" +
-        photoTop +
-        "px;left:" +
-        photoLeft +
-        "px;width:" +
+        "position:fixed;top:0;left:0;width:" +
         photoSize +
         "px;height:" +
         photoSize +
@@ -722,16 +718,20 @@
         shadowBlur +
         "px rgba(26,35,50," +
         shadowAlpha +
-        ");z-index:101;margin:0;";
+        ");transform:translate3d(" +
+        photoLeft +
+        "px," +
+        photoTop +
+        "px,0);transform-origin:top left;z-index:101;margin:0;";
 
       brand.style.cssText =
-        "position:fixed;top:" +
-        brandTop +
-        "px;left:" +
-        brandLeft +
-        "px;font-size:" +
+        "position:fixed;top:0;left:0;font-size:" +
         brandSize +
-        "px;line-height:1.1;margin:0;padding:0;z-index:101;";
+        "px;line-height:1.1;transform:translate3d(" +
+        brandLeft +
+        "px," +
+        brandTop +
+        "px,0);transform-origin:top left;margin:0;padding:0;z-index:101;";
 
       var maxTextShift = Math.max(0, metrics.heroTextLeft - eduTextLeft());
       heroText.style.transform =
