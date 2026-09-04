@@ -14,7 +14,6 @@
   var pendingScrollY = null;
   var refitPrintLayout = null;
   var refitHeroCollapse = null;
-  var invalidateHeroCollapseMetrics = null;
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -427,7 +426,6 @@
   }
 
   function nudgeHeroCollapseDuringWidth() {
-    if (invalidateHeroCollapseMetrics) invalidateHeroCollapseMetrics();
     if (!refitHeroCollapse) return;
     refitHeroCollapse();
     var start = performance.now();
@@ -640,17 +638,6 @@
       };
     }
 
-    function heroTextTranslateX() {
-      var tx = heroText.style.transform;
-      if (!tx || tx === "none") return 0;
-      var match = tx.match(/translate3d\(([-\d.e]+)px/);
-      return match ? parseFloat(match[1]) : 0;
-    }
-
-    function heroTextNaturalLeft() {
-      return heroText.getBoundingClientRect().left - heroTextTranslateX();
-    }
-
     function captureMetrics() {
       var photoRect = photo.getBoundingClientRect();
       var brandRect = brand.getBoundingClientRect();
@@ -753,13 +740,9 @@
         brandTop +
         "px,0);transform-origin:top left;margin:0;padding:0;z-index:101;";
 
-      var maxTextShift = Math.max(0, heroTextNaturalLeft() - eduTextLeft());
+      var maxTextShift = Math.max(0, metrics.heroTextLeft - eduTextLeft());
       heroText.style.transform =
         "translate3d(" + -maxTextShift * progress + "px,0,0)";
-    }
-
-    function invalidateMetrics() {
-      metrics = null;
     }
 
     function schedule() {
@@ -771,7 +754,6 @@
     }
 
     refitHeroCollapse = schedule;
-    invalidateHeroCollapseMetrics = invalidateMetrics;
 
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", function () {
