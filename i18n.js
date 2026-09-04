@@ -533,22 +533,51 @@
     var toggle = document.getElementById("sticky-lang");
     if (!topbar || !toggle) return;
 
+    var FADE_RANGE = 160;
     var enabled = true;
     try {
       var saved = localStorage.getItem(STICKY_KEY);
       if (saved === "0") enabled = false;
     } catch (e) {}
 
+    function fadeContentEl() {
+      return (
+        document.querySelector(".hero-text") ||
+        document.querySelector(".page-hero .lede") ||
+        document.querySelector(".page-main")
+      );
+    }
+
+    function smoothstep(t) {
+      return t * t * (3 - 2 * t);
+    }
+
     function updateStuck() {
       if (!topbar.classList.contains("is-sticky")) return;
-      topbar.classList.toggle("is-stuck", window.scrollY > 0);
+      var stuck = window.scrollY > 0;
+      topbar.classList.toggle("is-stuck", stuck);
+      if (!stuck) {
+        topbar.style.removeProperty("--topbar-fade-opacity");
+        return;
+      }
+      var content = fadeContentEl();
+      if (!content) {
+        topbar.style.setProperty("--topbar-fade-opacity", "1");
+        return;
+      }
+      var topbarBottom = topbar.getBoundingClientRect().bottom;
+      var contentTop = content.getBoundingClientRect().top;
+      var approach = 1 - Math.min(1, Math.max(0, (contentTop - topbarBottom) / FADE_RANGE));
+      topbar.style.setProperty("--topbar-fade-opacity", String(smoothstep(approach)));
     }
 
     function setSticky(on) {
       topbar.classList.toggle("is-sticky", on);
       toggle.checked = on;
-      if (!on) topbar.classList.remove("is-stuck");
-      else updateStuck();
+      if (!on) {
+        topbar.classList.remove("is-stuck");
+        topbar.style.removeProperty("--topbar-fade-opacity");
+      } else updateStuck();
     }
 
     window.addEventListener("scroll", updateStuck, { passive: true });
