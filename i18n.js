@@ -658,10 +658,6 @@
       return a + (b - a) * t;
     }
 
-    function smoothstep(t) {
-      return t * t * (3 - 2 * t);
-    }
-
     function apply() {
       if (!stickyOn() || disabled()) {
         metrics = null;
@@ -680,7 +676,6 @@
 
       var rawProgress = Math.min(1, scrollY / COLLAPSE_RANGE);
       var progress = rawProgress;
-      var progressVertical = smoothstep(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
       root.style.setProperty("--topbar-height", topbar.offsetHeight + "px");
@@ -696,9 +691,9 @@
       var expandPhotoTop = Math.max(naturalPhotoTop, targets.photoTop);
       var expandBrandTop = Math.max(naturalBrandTop, targets.brandTop);
 
-      var photoTop = lerp(expandPhotoTop, targets.photoTop, progressVertical);
+      var photoTop = lerp(expandPhotoTop, targets.photoTop, progress);
       var photoLeft = lerp(metrics.photoLeft, targets.photoLeft, progress);
-      var brandTop = lerp(expandBrandTop, targets.brandTop, progressVertical);
+      var brandTop = lerp(expandBrandTop, targets.brandTop, progress);
       var brandLeft = lerp(metrics.brandLeft, targets.brandLeft, progress);
       var brandSize = lerp(metrics.brandSize, targets.brandSize, progress);
       var borderW = lerp(3, 2, progress);
