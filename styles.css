@@ -27,7 +27,7 @@
   --lang-fade-in: 0.25s;
   --lang-width: 0.25s;
   --brand-fx-duration: 0.5s;
-  --topbar-fade-lamp: 255, 236, 190;
+  --topbar-fade-lamp: 240, 237, 230;
   --section-gap: 2.25rem;
   --print-a4-height: 276.65mm; /* A4 297mm − 14.4mm top − 6.35mm bottom (1.5rem) */
   --print-scale: 1;
@@ -162,7 +162,7 @@ a:hover {
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(var(--topbar-fade-lamp), 0.9) 0%,
+    rgba(var(--topbar-fade-lamp), 0.72) 0%,
     rgba(var(--topbar-fade-lamp), 0) 100%
   );
   opacity: var(--topbar-fade-opacity, 0);
