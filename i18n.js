@@ -658,8 +658,8 @@
       brandAnchor.style.minHeight = metrics.brandHeight + "px";
     }
 
-    // When page width changes (language), both text columns shift equally —
-    // keep the cached gap, only slide the stored left edges by the delta.
+    // When page width changes (language), layout shifts horizontally —
+    // slide cached left edges by the delta (gap stays the same).
     function syncTextColumnForWidth() {
       if (!metrics) return;
       var edu = eduTextLeft();
@@ -667,6 +667,8 @@
       if (!delta) return;
       metrics.eduTextLeft = edu;
       metrics.heroTextLeft += delta;
+      metrics.photoLeft += delta;
+      metrics.brandLeft += delta;
     }
 
     function lerp(a, b, t) {
