@@ -626,22 +626,19 @@
     }
 
     function collapsedTargets(photoSize, brandSize) {
-      var topbarRect = topbar.getBoundingClientRect();
-      var topbarH = topbar.offsetHeight;
-      var endPhotoLeft = contentLeft();
-      var endPhotoTop = -PHOTO_CLIP_ABOVE;
-      var endBrandLeft = textColumnLeft();
-      var endBrandTop = topbarRect.top + (topbarH - brandSize * 1.1) / 2;
+      var endBrandTop =
+        metrics.topbarTop + (metrics.topbarHeight - brandSize * 1.1) / 2;
       return {
-        photoTop: endPhotoTop,
-        photoLeft: endPhotoLeft,
+        photoTop: -PHOTO_CLIP_ABOVE,
+        photoLeft: metrics.contentLeft,
         brandTop: endBrandTop,
-        brandLeft: endBrandLeft,
+        brandLeft: metrics.eduTextLeft,
         brandSize: brandSize,
       };
     }
 
     function captureMetrics() {
+      var topbarRect = topbar.getBoundingClientRect();
       var photoRect = photo.getBoundingClientRect();
       var brandRect = brand.getBoundingClientRect();
       var heroTextRect = heroText.getBoundingClientRect();
@@ -654,6 +651,9 @@
         brandHeight: brandRect.height,
         heroTextLeft: heroTextRect.left,
         eduTextLeft: eduTextLeft(),
+        contentLeft: contentLeft(),
+        topbarHeight: topbar.offsetHeight,
+        topbarTop: topbarRect.top,
       };
       brandAnchor.style.minHeight = metrics.brandHeight + "px";
     }
@@ -669,6 +669,7 @@
       metrics.heroTextLeft += delta;
       metrics.photoLeft += delta;
       metrics.brandLeft += delta;
+      metrics.contentLeft += delta;
     }
 
     function lerp(a, b, t) {
@@ -705,7 +706,7 @@
       var progress = smoothstepWithSeamlessStart(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
-      root.style.setProperty("--topbar-height", topbar.offsetHeight + "px");
+      root.style.setProperty("--topbar-height", metrics.topbarHeight + "px");
       root.style.setProperty("--hero-photo-mini", PHOTO_MIN + "px");
       root.classList.add("is-hero-collapse-active");
 
@@ -715,10 +716,9 @@
 
       var naturalPhotoTop = metrics.photoTop - scrollY;
       var naturalBrandTop = metrics.brandTop - scrollY;
-      var expandPhotoTop = Math.max(naturalPhotoTop, targets.photoTop);
       var expandBrandTop = Math.max(naturalBrandTop, targets.brandTop);
 
-      var photoTop = lerp(expandPhotoTop, targets.photoTop, progress);
+      var photoTop = lerp(naturalPhotoTop, targets.photoTop, progress);
       var photoLeft = lerp(metrics.photoLeft, targets.photoLeft, progress);
       var brandTop = lerp(expandBrandTop, targets.brandTop, progress);
       var brandLeft = lerp(metrics.brandLeft, targets.brandLeft, progress);
