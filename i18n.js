@@ -755,7 +755,7 @@
         brandLeft +
         "px;font-size:" +
         brandSize +
-        "px;line-height:1.1;margin:0;padding:0;z-index:101;";
+        "px;line-height:1.1;margin:0;z-index:101;";
 
       var maxTextShift = Math.max(0, metrics.heroTextLeft - metrics.eduTextLeft);
       heroText.style.marginLeft = -maxTextShift * progress + "px";
