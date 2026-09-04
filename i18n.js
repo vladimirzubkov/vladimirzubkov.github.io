@@ -679,7 +679,8 @@
       if (!metrics) captureMetrics();
 
       var rawProgress = Math.min(1, scrollY / COLLAPSE_RANGE);
-      var progress = smoothstep(rawProgress);
+      var progress = rawProgress;
+      var progressVertical = smoothstep(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
       root.style.setProperty("--topbar-height", topbar.offsetHeight + "px");
@@ -695,9 +696,9 @@
       var expandPhotoTop = Math.max(naturalPhotoTop, targets.photoTop);
       var expandBrandTop = Math.max(naturalBrandTop, targets.brandTop);
 
-      var photoTop = lerp(expandPhotoTop, targets.photoTop, progress);
+      var photoTop = lerp(expandPhotoTop, targets.photoTop, progressVertical);
       var photoLeft = lerp(metrics.photoLeft, targets.photoLeft, progress);
-      var brandTop = lerp(expandBrandTop, targets.brandTop, progress);
+      var brandTop = lerp(expandBrandTop, targets.brandTop, progressVertical);
       var brandLeft = lerp(metrics.brandLeft, targets.brandLeft, progress);
       var brandSize = lerp(metrics.brandSize, targets.brandSize, progress);
       var borderW = lerp(3, 2, progress);
