@@ -14,7 +14,6 @@
   var pendingScrollY = null;
   var refitPrintLayout = null;
   var refitHeroCollapse = null;
-  var invalidateHeroCollapseMetrics = null;
   var SUPPORTED = ["en", "cs", "ru"];
 
   var strings = {
@@ -427,7 +426,6 @@
   }
 
   function nudgeHeroCollapseDuringWidth() {
-    if (invalidateHeroCollapseMetrics) invalidateHeroCollapseMetrics();
     if (!refitHeroCollapse) return;
     refitHeroCollapse();
     var start = performance.now();
@@ -652,16 +650,22 @@
     }
 
     function captureMetrics() {
+      var collapseActive = document.documentElement.classList.contains(
+        "is-hero-collapse-active"
+      );
+      var anchorHeight = parseFloat(brandAnchor.style.minHeight);
       var photoRect = photo.getBoundingClientRect();
       var brandRect = brand.getBoundingClientRect();
       var heroTextRect = heroText.getBoundingClientRect();
+      var brandHeight =
+        collapseActive && anchorHeight > 0 ? anchorHeight : brandRect.height;
       metrics = {
         photoTop: photoRect.top + window.scrollY,
         photoLeft: photoRect.left,
         brandTop: brandRect.top + window.scrollY,
         brandLeft: brandRect.left,
         brandSize: parseFloat(getComputedStyle(brand).fontSize) || 32,
-        brandHeight: brandRect.height,
+        brandHeight: brandHeight,
         heroTextLeft: heroTextRect.left,
         eduTextLeft: eduTextLeft(),
       };
@@ -758,10 +762,6 @@
         "translate3d(" + -maxTextShift * progress + "px,0,0)";
     }
 
-    function invalidateMetrics() {
-      metrics = null;
-    }
-
     function schedule() {
       if (raf) return;
       raf = requestAnimationFrame(function () {
@@ -771,7 +771,6 @@
     }
 
     refitHeroCollapse = schedule;
-    invalidateHeroCollapseMetrics = invalidateMetrics;
 
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", function () {
