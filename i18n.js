@@ -576,7 +576,7 @@
     var PHOTO_MIN = 110;
     var BRAND_MIN = 28;
     var PHOTO_DROP = 8;
-    var PHOTO_CROP_Y = 0.5;
+    var PHOTO_CROP_Y = 0.1;
     var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
