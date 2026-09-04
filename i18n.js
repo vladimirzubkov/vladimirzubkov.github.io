@@ -576,7 +576,7 @@
     var PHOTO_MIN = 110;
     var BRAND_MIN = 28;
     var PHOTO_DROP = 8;
-    var PHOTO_CROP_Y = 0.1;
+    var PHOTO_CROP_TOP = 3;
     var COLLAPSE_RANGE = 180;
     var metrics = null;
     var raf = 0;
@@ -705,7 +705,7 @@
       var shadowBlur = lerp(28, 10, progress);
       var shadowY = lerp(8, 3, progress);
       var shadowAlpha = lerp(0.12, 0.08, progress);
-      var objectPosY = lerp(0, PHOTO_CROP_Y, progress);
+      var objectPosY = lerp(0, PHOTO_CROP_TOP, progress);
 
       photo.style.cssText =
         "position:fixed;top:" +
@@ -726,7 +726,7 @@
         shadowAlpha +
         ");object-fit:cover;object-position:center " +
         objectPosY +
-        "%;z-index:101;margin:0;";
+        "px;z-index:101;margin:0;";
 
       brand.style.cssText =
         "position:fixed;top:" +
