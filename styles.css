@@ -154,11 +154,10 @@ a:hover {
 .topbar.is-sticky::before {
   content: "";
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
   top: 100%;
-  width: 100vw;
   height: 7.5mm;
-  transform: translateX(-50%);
   pointer-events: none;
   background: linear-gradient(
     to bottom,
