@@ -577,6 +577,7 @@
     var BRAND_MIN = 28;
     var PHOTO_CLIP_ABOVE = 9;
     var COLLAPSE_RANGE = 180;
+    var SMOOTH_START_BIAS = 0.35;
     var metrics = null;
     var raf = 0;
 
@@ -658,6 +659,16 @@
       return a + (b - a) * t;
     }
 
+    function smoothstep(t) {
+      return t * t * (3 - 2 * t);
+    }
+
+    // Faster than smoothstep at the start (non-zero slope), still eases to a soft landing.
+    function smoothstepWithSeamlessStart(t) {
+      var s = smoothstep(t);
+      return s + SMOOTH_START_BIAS * t * (1 - s);
+    }
+
     function apply() {
       if (!stickyOn() || disabled()) {
         metrics = null;
@@ -675,7 +686,7 @@
       if (!metrics) captureMetrics();
 
       var rawProgress = Math.min(1, scrollY / COLLAPSE_RANGE);
-      var progress = rawProgress;
+      var progress = smoothstepWithSeamlessStart(rawProgress);
       var root = document.documentElement;
       root.style.setProperty("--hero-collapse", String(progress));
       root.style.setProperty("--topbar-height", topbar.offsetHeight + "px");
