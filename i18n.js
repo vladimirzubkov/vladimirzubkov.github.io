@@ -548,10 +548,6 @@
       );
     }
 
-    function smoothstep(t) {
-      return t * t * (3 - 2 * t);
-    }
-
     function updateStuck() {
       if (!topbar.classList.contains("is-sticky")) return;
       var stuck = window.scrollY > 0;
@@ -568,7 +564,7 @@
       var topbarBottom = topbar.getBoundingClientRect().bottom;
       var contentTop = content.getBoundingClientRect().top;
       var approach = 1 - Math.min(1, Math.max(0, (contentTop - topbarBottom) / FADE_RANGE));
-      topbar.style.setProperty("--topbar-fade-opacity", String(smoothstep(approach)));
+      topbar.style.setProperty("--topbar-fade-opacity", String(approach));
     }
 
     function setSticky(on) {
