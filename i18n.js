@@ -22,12 +22,16 @@
       meta_title: "Vladimir Zubkov, cv",
       brand_name: "Vladimir Zubkov",
       meta_desc:
-        "Personal page of Vladimir Zubkov — software engineering, Python, Java, Prague.",
+        "Vladimir Zubkov — backend / software developer in Prague. Java, Spring, enterprise systems, DevOps.",
       tagline_lead:
-        "Lifelong Learner, Software Developer located in Prague ",
+        "Backend / Software Developer located in Prague ",
       tagline_paren: "(Permanent Residence)",
-      lede:
-        "Learning to build useful tools. Background in finance, logistics and software engineering.",
+      lede_1:
+        "Learning to build useful tools. I combine a background in finance, logistics, and software engineering. My main focus is <strong>backend development, software architecture, and DevOps</strong>.",
+      lede_2:
+        "At CTU FEL I study <strong>Software Engineering and Technology — Enterprise Systems</strong>: Java, databases, requirements modeling, UML, software testing, enterprise and distributed systems, and computer networks.",
+      lede_3:
+        "My current priority is to join a professional team and gain hands-on experience building robust, multi-user enterprise systems. I am open to <strong>part-time work (~20 hours/week)</strong> alongside my studies, with a stable weekly schedule and flexibility around exam periods.",
       contacts_line:
         'Contact: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Education <em class="accent-running">(currently studying)</em>',
@@ -41,7 +45,7 @@
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Faculty of Electrical Engineering, CTU in Prague (ČVUT)",
       edu_cvut_detail:
-        '<span class="edu-program">Software Engineering and Technology</span>, specialization <span class="edu-program">Enterprise Systems</span>. Bachelor studies <em>(studying, completing)</em>.',
+        '<span class="edu-program">Software Engineering and Technology</span>, specialization <span class="edu-program">Enterprise Systems</span>. Bachelor studies <em>(currently finalizing)</em>. <em>Note: studies were paused between 2023 and 2024 to complete the bachelor&apos;s degree at the University of Pardubice (see below).</em>',
       edu_upce_when: "09/2021 – 06/2024",
       edu_upce_school: "Jan Perner Transport Faculty, University of Pardubice (UPCE)",
       edu_upce_detail:
@@ -51,7 +55,19 @@
       edu_bseu_when: "1999–2005",
       edu_bseu_school: "Belarus State Economic University",
       edu_bseu_detail: "Finance and banking — university degree.",
-      skills: "Skills",
+      experience: "Work & business background",
+      exp_osvc_title: "Self-employed (CZ) — Identifikovaná osoba",
+      exp_osvc_detail:
+        "Independent software development and IT services for small businesses.",
+      exp_logistics_title: "Logistics & transport",
+      exp_logistics_detail:
+        "Bachelor's degree, University of Pardubice (2024). Process thinking, optimization, and real-world supply-chain perspective.",
+      exp_finance_title: "Finance & banking",
+      exp_finance_detail:
+        "University degree, Belarus State Economic University (2005). Analytical mindset and comfort with structured business decisions.",
+      skills: "Skills (topics I'd love to discuss)",
+      skills_chips:
+        "<li>Java</li><li>Spring Boot</li><li>Spring Data JPA</li><li>JavaFX</li><li>JUnit</li><li>Python</li><li>Requirements modeling</li><li>UML</li><li>OOP</li><li>GoF design patterns</li><li>Architectural patterns</li><li>Distributed systems</li><li>Databases</li><li>SQL</li><li>Software testing</li><li>REST APIs</li><li>gRPC</li><li>CI/CD</li><li>Docker</li><li>Linux (Debian)</li><li>VPNs</li><li>BIND9</li><li>iptables</li><li>Cloudflare Workers</li><li>Data structures &amp; algorithms</li><li>Cybernetics</li><li>Evolutionary algorithms</li><li>Queuing theory</li>",
       languages: "Languages",
       lang_cs: "Czech — advanced (C1 CCE, ÚJOP, 2021)",
       lang_en: "English — upper intermediate (B2, IELTS Score 6.0)",
@@ -98,12 +114,16 @@
       meta_title: "Vladimir Zubkov, životopis",
       brand_name: "Vladimir Zubkov",
       meta_desc:
-        "Osobní stránka Vladimira Zubkova — softwarové inženýrství, Python, Java, Praha.",
+        "Vladimir Zubkov — backend / vývojář softwaru v Praze. Java, Spring, enterprise systémy, DevOps.",
       tagline_lead:
-        "Celoživotní student, vývojář softwaru se sídlem v Praze ",
+        "Backend / vývojář softwaru se sídlem v Praze ",
       tagline_paren: "(trvalý pobyt)",
-      lede:
-        "Učím se vytvářet užitečné nástroje. Zázemí ve financích, logistice a softwarovém inženýrství.",
+      lede_1:
+        "Učím se vytvářet užitečné nástroje. Kombinuji zázemí ve financích, logistice a softwarovém inženýrství. Hlavní zaměření: <strong>backend, softwarová architektura a DevOps</strong>.",
+      lede_2:
+        "Na FEL ČVUT studuji <strong>Softwarové inženýrství a technologie — Enterprise systémy</strong>: Java, databáze, modelování požadavků, UML, testování softwaru, podnikové a distribuované systémy a počítačové sítě.",
+      lede_3:
+        "Chci se připojit k profesionálnímu týmu a získat praxi při vývoji robustních víceuživatelských podnikových systémů. Jsem otevřen <strong>práci na částečný úvazek (~20 hodin týdně)</strong> vedle studia, s předvídatelným rozvrhem a flexibilitou v období zkoušek.",
       contacts_line:
         'Kontakt: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Vzdělání <em class="accent-running">(aktuálně studuji)</em>',
@@ -117,7 +137,7 @@
       edu_cvut_when_secondary: "09/2021 – 05/2023",
       edu_cvut_school: "Fakulta elektrotechnická, ČVUT v Praze",
       edu_cvut_detail:
-        '<span class="edu-program">Softwarové inženýrství a technologie</span>, specializace <span class="edu-program">Enterprise systémy</span>. Bakalářské studium <em>(běží, dokončuji)</em>.',
+        '<span class="edu-program">Softwarové inženýrství a technologie</span>, specializace <span class="edu-program">Enterprise systémy</span>. Bakalářské studium <em>(právě dokončuji)</em>. <em>Poznámka: studium bylo pozastaveno v letech 2023–2024 kvůli dokončení bakalářského studia na Univerzitě Pardubice (viz níže).</em>',
       edu_upce_when: "09/2021 – 06/2024",
       edu_upce_school: "Dopravní fakulta Jana Pernera, Univerzita Pardubice (UPCE)",
       edu_upce_detail:
@@ -127,7 +147,19 @@
       edu_bseu_when: "1999–2005",
       edu_bseu_school: "Běloruská státní ekonomická univerzita",
       edu_bseu_detail: "Finance a bankovnictví — vysokoškolské vzdělání.",
-      skills: "Dovednosti",
+      experience: "Pracovní a podnikatelské zázemí",
+      exp_osvc_title: "OSVČ (ČR) — Identifikovaná osoba",
+      exp_osvc_detail:
+        "Samostatný vývoj softwaru a IT služby pro malé firmy.",
+      exp_logistics_title: "Logistika a doprava",
+      exp_logistics_detail:
+        "Bakalářský titul, Univerzita Pardubice (2024). Procesní myšlení, optimalizace a pohled na reálné dodavatelské řetězce.",
+      exp_finance_title: "Finance a bankovnictví",
+      exp_finance_detail:
+        "Vysokoškolské vzdělání, Běloruská státní ekonomická univerzita (2005). Analytické myšlení a práce se strukturovanými obchodními rozhodnutími.",
+      skills: "Dovednosti (témata, o kterých rád diskutuji)",
+      skills_chips:
+        "<li>Java</li><li>Spring Boot</li><li>Spring Data JPA</li><li>JavaFX</li><li>JUnit</li><li>Python</li><li>Modelování požadavků</li><li>UML</li><li>OOP</li><li>GoF design patterns</li><li>Architektonické vzory</li><li>Distribuované systémy</li><li>Databáze</li><li>SQL</li><li>Testování softwaru</li><li>REST API</li><li>gRPC</li><li>CI/CD</li><li>Docker</li><li>Linux (Debian)</li><li>VPN</li><li>BIND9</li><li>iptables</li><li>Cloudflare Workers</li><li>Datové struktury a algoritmy</li><li>Kybernetika</li><li>Evoluční algoritmy</li><li>Teorie front</li>",
       languages: "Jazyky",
       lang_cs: "Čeština — pokročilá (C1 CCE, ÚJOP, 2021)",
       lang_en: "Angličtina — vyšší středně pokročilá, (B2, IELTS Score 6.0)",
@@ -174,12 +206,16 @@
       meta_title: "Владимир Зубков, резюме",
       brand_name: "Владимир Зубков",
       meta_desc:
-        "Личная страница Владимира Зубкова — программная инженерия, Python, Java, Прага.",
+        "Владимир Зубков — backend / разработчик ПО в Праге. Java, Spring, корпоративные системы, DevOps.",
       tagline_lead:
-        "Вечный ученик, разработчик ПО, живу в Праге ",
+        "Backend / разработчик ПО, живу в Праге ",
       tagline_paren: "(ПМЖ)",
-      lede:
-        "Учусь делать полезные инструменты. Бэкграунд в финансах, логистике и разработке программного обеспечения.",
+      lede_1:
+        "Учусь делать полезные инструменты. Сочетаю опыт в финансах, логистике и разработке ПО. Основной фокус — <strong>backend, архитектура ПО и DevOps</strong>.",
+      lede_2:
+        "На FEL ЧВУТ изучаю <strong>программную инженерию и технологии — корпоративные системы</strong>: Java, базы данных, моделирование требований, UML, тестирование ПО, корпоративные и распределённые системы, компьютерные сети.",
+      lede_3:
+        "Сейчас ищу профессиональную команду и практический опыт разработки надёжных многопользовательских корпоративных систем. Открыт к <strong>работе на ~20 часов в неделю</strong> параллельно с учёбой, с предсказуемым графиком и гибкостью в период сессии.",
       contacts_line:
         'Контакт: <a href="mailto:vladimir.zubkov@gmail.com">vladimir.zubkov@gmail.com</a> · GitHub: <a href="https://github.com/vladimirzubkov">github.com/vladimirzubkov</a>',
       education: 'Образование <em class="accent-running">(сейчас учусь)</em>',
@@ -195,7 +231,7 @@
       edu_cvut_school:
         "Факультет электротехники, Чешский технический университет (ЧВУТ) в Праге",
       edu_cvut_detail:
-        '<span class="edu-program">Программная инженерия и технологии</span>, специализация <span class="edu-program">«Корпоративные информационные системы»</span>. Бакалавриат <em>(в процессе обучения, оканчиваю)</em>.',
+        '<span class="edu-program">Программная инженерия и технологии</span>, специализация <span class="edu-program">«Корпоративные информационные системы»</span>. Бакалавриат <em>(завершаю)</em>. <em>Примечание: обучение было приостановлено в 2023–2024 гг., чтобы закончить бакалавриат в Университете Пардубице (см. ниже).</em>',
       edu_upce_when: "09/2021 — 06/2024",
       edu_upce_school: "Транспортный факультет Яна Пернера, Университет Пардубице (УПЦЕ)",
       edu_upce_detail:
@@ -205,7 +241,19 @@
       edu_bseu_when: "1999—2005",
       edu_bseu_school: "Белорусский государственный экономический университет",
       edu_bseu_detail: "Финансы и банковское дело — высшее образование.",
-      skills: "Навыки",
+      experience: "Опыт работы и предпринимательство",
+      exp_osvc_title: "ИП (Чехия) — Identifikovaná osoba",
+      exp_osvc_detail:
+        "Самостоятельная разработка ПО и IT-услуги для малого бизнеса.",
+      exp_logistics_title: "Логистика и транспорт",
+      exp_logistics_detail:
+        "Бакалавриат, Университет Пардубице (2024). Процессное мышление, оптимизация и понимание реальных цепочек поставок.",
+      exp_finance_title: "Финансы и банковское дело",
+      exp_finance_detail:
+        "Высшее образование, Белорусский государственный экономический университет (2005). Аналитический склад ума и работа со структурированными бизнес-решениями.",
+      skills: "Навыки (темы, которые мне интересно обсуждать)",
+      skills_chips:
+        "<li>Java</li><li>Spring Boot</li><li>Spring Data JPA</li><li>JavaFX</li><li>JUnit</li><li>Python</li><li>Моделирование требований</li><li>UML</li><li>ООП</li><li>GoF design patterns</li><li>Архитектурные паттерны</li><li>Распределённые системы</li><li>Базы данных</li><li>SQL</li><li>Тестирование ПО</li><li>REST API</li><li>gRPC</li><li>CI/CD</li><li>Docker</li><li>Linux (Debian)</li><li>VPN</li><li>BIND9</li><li>iptables</li><li>Cloudflare Workers</li><li>Структуры данных и алгоритмы</li><li>Кибернетика</li><li>Эволюционные алгоритмы</li><li>Теория массового обслуживания</li>",
       languages: "Языки",
       lang_cs: "Чешский — продвинутый (C1 CCE, ÚJOP, 2021)",
       lang_en: "Английский — выше среднего, (B2, IELTS Score 6.0)",
